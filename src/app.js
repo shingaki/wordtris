@@ -29,7 +29,7 @@ class App extends Component {
                     served: "Hot"
                 },
                 {
-                    title: "Ice Cream",
+                    title: "Ice Creams",
                     content: "Milk, Chocolate",
                     served: "Cold"
                 },
