@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
-import API from "../../utils/API"
+import API from "../../utils/API";
+import FormErrors from "../FormErrors";
 
 class SignUp extends Component {
 
@@ -8,10 +9,14 @@ class SignUp extends Component {
         username: "",
         email: "",
         password1: "",
-        password2: ""
+        password2: "",
+        error: ""
     }
 
     inputChange = event => {
+        this.setState({
+            error: ""
+        })
         const { name, value } = event.target;
         this.setState({
             [name]: value
@@ -32,13 +37,19 @@ class SignUp extends Component {
                     API.createUser(username, email, password1);
                 } else {
                     // show error message - username already taken
-                    document.getElementsByClassName("signup-error")[0].style.display = "block";
-                    document.getElementsByClassName("signup-error")[0].childNodes[0].innerHTML = "That username is already taken - try a different one.";
+                    // document.getElementsByClassName("signup-error")[0].style.display = "block";
+                    // document.getElementsByClassName("signup-error")[0].childNodes[0].innerHTML = "That username is already taken - try a different one.";
+                    this.setState({
+                        error: "Error: that username is already taken. Please try a different one."
+                    })
                 }
             });
         } else {
             // error passwords don't match
-            document.getElementsByClassName("signup-error")[0].style.display = "block";
+            // document.getElementsByClassName("signup-error")[0].style.display = "block";
+            this.setState({
+                error: "Error: passwords don't match.  Please enter the same password twice."
+            })
         }
         
     }
@@ -52,9 +63,12 @@ class SignUp extends Component {
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-md-8">
                         <form className="mt-3">
-                            <div style={{ display: "none" }} className="signup-error">
+                            { this.state.error !== "" ?
+                                <FormErrors>{this.state.error}</FormErrors>
+                                : "" }
+                            {/* <div style={{ display: "none" }} className="signup-error">
                                 <p style={{ fontWeight: "bold", color: "red" }}>Passwords don't match. Please enter your password twice.</p>
-                            </div>
+                            </div> */}
                             <div className="form-group">
                                 <label htmlFor="username" id="usernameText">Username</label>
                                 <input type="text" className="form-control" id="username" name="username"
