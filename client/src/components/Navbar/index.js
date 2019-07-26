@@ -13,13 +13,16 @@ class Navbar extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Login/SignUp</a>
+                            <a className="nav-link" href="/login">Login</a>
+                        </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/signup">SignUp</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">High Scores</a>
+                            <a className="nav-link" href="/scores">High Scores</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Play</a>
+                            <a className="nav-link" href="/play">Play</a>
                         </li>
                     </ul>
 
