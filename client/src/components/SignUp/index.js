@@ -26,7 +26,16 @@ class SignUp extends Component {
         const password2 = this.state.password2;
 
         if (password1 === password2) {
-            API.createUser(username, email, password1);
+            API.checkUsername(username).then(dbData => {
+                // if username isn't taken
+                if (dbData === true) {
+                    API.createUser(username, email, password1);
+                } else {
+                    // show error message - username already taken
+                    document.getElementsByClassName("signup-error")[0].style.display = "block";
+                    document.getElementsByClassName("signup-error")[0].childNodes[0].innerHTML = "That username is already taken - try a different one.";
+                }
+            });
         } else {
             // error passwords don't match
             document.getElementsByClassName("signup-error")[0].style.display = "block";
@@ -41,7 +50,7 @@ class SignUp extends Component {
                 <h1 className="text-center mt-5">Sign Up</h1>
 
                 <div className="row justify-content-center">
-                    <div className="col-md-6">
+                    <div className="col-lg-6 col-md-8">
                         <form className="mt-3">
                             <div style={{ display: "none" }} className="signup-error">
                                 <p style={{ fontWeight: "bold", color: "red" }}>Passwords don't match. Please enter your password twice.</p>

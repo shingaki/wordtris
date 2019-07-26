@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
+
 
 class Navbar extends Component {
     render() {
@@ -12,17 +14,17 @@ class Navbar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/login">Login</a>
-                        </li>
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/signup">SignUp</a>
+                        <li className="nav-item">
+                            <a className={window.location.pathname === "/login" ? "nav-link active" : "nav-link"} href="/login">Login</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/scores">High Scores</a>
+                            <a className={window.location.pathname === "/signup" ? "nav-link active" : "nav-link"} href="/signup">SignUp</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/play">Play</a>
+                            <a className={window.location.pathname === "/scores" ? "nav-link active" : "nav-link"}  href="/scores">High Scores</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className={window.location.pathname === "/play" ? "nav-link active" : "nav-link"} href="/play">Play</a>
                         </li>
                     </ul>
 
