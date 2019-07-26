@@ -15,12 +15,12 @@ class Login extends Component {
                                 <p style={{ fontWeight: "bold", color: "red" }}>Incorrect Username or password. Try again.</p>
                             </div>
                             <div className="form-group">
-                                <label for="username" id="usernameText">Username</label>
+                                <label htmlFor="username" id="usernameText">Username</label>
                                 <input type="text" className="form-control" id="username"
                                     placeholder="Enter username" />
                             </div>
                             <div className="form-group">
-                                <label for="pass" id="passText">Password</label>
+                                <label htmlFor="pass" id="passText">Password</label>
                                 <input type="password" className="form-control" id="pass" placeholder="Password" />
                             </div>
 
@@ -37,8 +37,6 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-
-                
 
             </div>
         );

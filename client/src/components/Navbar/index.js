@@ -19,10 +19,10 @@ class Navbar extends Component {
                             <a className="nav-link" href="/signup">SignUp</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">High Scores</a>
+                            <a className="nav-link" href="/scores">High Scores</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Play</a>
+                            <a className="nav-link" href="/play">Play</a>
                         </li>
                     </ul>
 
