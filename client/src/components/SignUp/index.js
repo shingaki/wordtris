@@ -37,8 +37,6 @@ class SignUp extends Component {
                     API.createUser(username, email, password1);
                 } else {
                     // show error message - username already taken
-                    // document.getElementsByClassName("signup-error")[0].style.display = "block";
-                    // document.getElementsByClassName("signup-error")[0].childNodes[0].innerHTML = "That username is already taken - try a different one.";
                     this.setState({
                         error: "Error: that username is already taken. Please try a different one."
                     })
@@ -46,7 +44,6 @@ class SignUp extends Component {
             });
         } else {
             // error passwords don't match
-            // document.getElementsByClassName("signup-error")[0].style.display = "block";
             this.setState({
                 error: "Error: passwords don't match.  Please enter the same password twice."
             })
@@ -66,9 +63,6 @@ class SignUp extends Component {
                             { this.state.error !== "" ?
                                 <FormErrors>{this.state.error}</FormErrors>
                                 : "" }
-                            {/* <div style={{ display: "none" }} className="signup-error">
-                                <p style={{ fontWeight: "bold", color: "red" }}>Passwords don't match. Please enter your password twice.</p>
-                            </div> */}
                             <div className="form-group">
                                 <label htmlFor="username" id="usernameText">Username</label>
                                 <input type="text" className="form-control" id="username" name="username"

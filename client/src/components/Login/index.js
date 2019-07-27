@@ -32,7 +32,6 @@ class Login extends Component {
                 // log them in - redirect to play page?
             } else {
                 // show error message - invalid login credentials
-                // document.getElementsByClassName("login-error")[0].style.display = "block";
                 this.setState({
                     error: "Error: invalid email address or password."
                 })
@@ -50,9 +49,6 @@ class Login extends Component {
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-md-8">
                         <form className="mt-3">
-                            {/* <div style={{ display: "none" }} className="login-error">
-                                <p style={{ fontWeight: "bold", color: "red" }}>Incorrect Username or password. Try again.</p>
-                            </div> */}
                             {this.state.error !== "" ?
                                 <FormErrors>{this.state.error}</FormErrors>
                                 : ""}
