@@ -1,5 +1,7 @@
 const express = require("express");
 const path = require("path");
+const trie = require('trie-prefix-tree');
+const fs = require("fs");
 const PORT = process.env.PORT || 3001;
 const app = express();
 var session = require("express-session");
@@ -61,4 +63,19 @@ app.get("*", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
+
+
+// Setup dictionary of words into the Trie
+
+let data = fs.readFileSync('dictionary.txt');
+
+// put the words into an array
+wordsArray = data.toString().split("\r\n");
+console.log(wordsArray);
+
+// put the words into the trie
+var myTrie = trie(wordsArray);
+
+module.exports = myTrie;
+
 
