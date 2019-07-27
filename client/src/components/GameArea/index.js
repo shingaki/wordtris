@@ -16,9 +16,11 @@ class GameArea extends PureComponent {
     return (
       <div style={boradStyle}>
         <Piece 
+          id = {this.props.currentPieceID}
           currentPieceX = {this.props.currentPieceX}
           currentPieceY = {this.props.currentPieceY}
         />
+
       </div>
     )
   }
