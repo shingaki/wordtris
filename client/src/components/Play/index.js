@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Piece from "../Piece"
 import "./style.css";
-// import NextPiece from "../NextPiece";
+import Next from "../Next";
 // import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
@@ -22,7 +22,7 @@ class Play extends Component {
 
                 <div className="row">
                     <div className="col-md-2">
-                        {/* <NextPiece /> */}
+                        <Next />
                     </div>
                     <div className="col-md-6">
                         {/* <GameArea /> */}
@@ -37,11 +37,6 @@ class Play extends Component {
                         </div>
                     </div>
                 </div>
-
-                <Piece />
-                
-
-
 
             </div>
         );
