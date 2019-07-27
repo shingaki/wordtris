@@ -12,10 +12,11 @@ class Play extends Component {
     state = {
         score: 0,
         level: 1,
-        fallSpeed: 2000,
+        fallSpeed: 250,
         currentPieceX: 0,
         currentPieceY: 0,
-        isCurrentPiecePlaced: false
+        isCurrentPiecePlaced: false,
+        currentPieceID: 0
     }
 
     componentWillMount = () => {
@@ -64,11 +65,14 @@ class Play extends Component {
 
     tick() {
         if (this.state.currentPieceY < 425){
-          this.setState({ currentPieceY: this.state.currentPieceY + 25 })
+          this.setState({ currentPieceY: this.state.currentPieceY + 5 })
         } else {
-          clearInterval(this.timerID);
+        //   clearInterval(this.timerID);
           this.setState({ isCurrentPiecePlaced: true})
+          this.setState({ currentPieceX: 0 })
+          this.setState({ currentPieceY: -25 })  
         }
+        console.log(this.state)
     }
   
     
@@ -85,7 +89,9 @@ class Play extends Component {
                     <div className="col-md-7 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
-                            currentPieceY={this.state.currentPieceY}               
+                            currentPieceY={this.state.currentPieceY} 
+                            isCurrentPiecePlaced={this.state.isCurrentPiecePlaced}   
+                            currentPieceID={this.state.currentPieceID}           
                         />
                         
                     </div>
