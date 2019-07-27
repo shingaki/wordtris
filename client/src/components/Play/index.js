@@ -30,11 +30,7 @@ class Play extends Component {
                     <div className="col-md-4">
                         <Scores score={this.state.score} level={this.state.level} />
 
-                        <div className="row">
-                            <div className="col-md-12">
-                                <Controls />
-                            </div>
-                        </div>
+                        <Controls />
                     </div>
                 </div>
 
