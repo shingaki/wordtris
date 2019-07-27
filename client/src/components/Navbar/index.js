@@ -5,6 +5,15 @@ import axios from "axios";
 
 class Navbar extends Component {
 
+    logout = event => {
+        event.preventDefault();
+        axios.get("/logout").then(data => {
+            console.log(data);
+            this.props.updateLoggedInState(false);
+            window.location.replace("/");
+        })
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,6 +40,11 @@ class Navbar extends Component {
                         <li className="nav-item">
                             <a className={window.location.pathname === "/play" ? "nav-link active" : "nav-link"} href="/play">Play</a>
                         </li>
+                        {this.props.loggedin ?
+                        <li className="nav-item">
+                            <a className="nav-link" href="/" onClick={this.logout}>Logout</a>
+                        </li>
+                        : ""}
                     </ul>
 
                 </div>
