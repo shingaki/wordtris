@@ -5,6 +5,7 @@ import Next from "../Next";
 import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
+import axios from "axios";
 
 class Play extends Component {
 
@@ -15,6 +16,12 @@ class Play extends Component {
         currentPieceX: 0,
         currentPieceY: 0,
         isCurrentPiecePlaced: false
+    }
+
+    componentWillMount = () => {
+        axios.get("/isloggedin").then(data => {
+            console.log(data.data);
+        })
     }
 
     startClick = () => {
