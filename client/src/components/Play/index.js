@@ -18,12 +18,6 @@ class Play extends Component {
         isCurrentPiecePlaced: false
     }
 
-    componentWillMount = () => {
-        axios.get("/isloggedin").then(data => {
-            console.log(data.data);
-        })
-    }
-
     startClick = () => {
         this.timerID = setInterval(
             () => this.tick(),
