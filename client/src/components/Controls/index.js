@@ -5,8 +5,8 @@ class Controls extends Component {
 
     render() {
         return (
-            <div className="row mt-5 align-items-center">
-                <div className="col-md-12">
+            <div className="row mt-5">
+                <div className="col-md-12 text-center">
                     {/* <button onClick={this.startClick}>Start</button>
                     
                     <button onClick={this.stopClick}>Stop</button><br />
@@ -20,11 +20,11 @@ class Controls extends Component {
                     <button onClick={this.rightClick}>Right</button> */}
 
 
-                    <button onClick={this.leftClick}>Left</button>
+                    <button onClick={this.props.leftClick}>Left</button>
 
                     <button className="cycle"></button>
 
-                    <button onClick={this.rightClick}>Right</button>
+                    <button onClick={this.props.rightClick}>Right</button>
 
                 </div>
             </div>
