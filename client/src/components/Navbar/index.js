@@ -5,13 +5,6 @@ import axios from "axios";
 
 class Navbar extends Component {
 
-    componentWillMount = () => {
-        axios.get("/isloggedin").then(UserInfo => {
-            console.log(UserInfo.data);
-            this.props.updateLoggedInState(UserInfo.data.loggedin);
-        })
-    }
-
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
