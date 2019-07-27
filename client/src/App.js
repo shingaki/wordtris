@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Play from "./components/Play"
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
             {/* <Route exact path="/login" render={this.SavedSection} /> */}
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/play" component={Play} />
             {/* <Route component={NotFound} /> */}
           </Switch>
         </Router>
