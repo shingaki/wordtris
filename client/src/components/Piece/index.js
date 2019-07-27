@@ -35,11 +35,20 @@ class Piece extends PureComponent {
                     transform: `translate3d(${x}px, ${y}px, 0)`,
                   }}>
                     A
+                    <div style={{
+                      position: "absolute",
+                      top: "13px",
+                      right: "1px",
+                      fontSize: "12px",
+                      lineHeight: "1",
+                      zIndex: "6"
+                    }}>1</div>
                 </div>
                 <br></br>
                 <div
                   style={{
                     position: 'absolute',
+                    top: 25,
                     width: 25,
                     height: 25,
                     borderRadius: 4,
@@ -49,11 +58,20 @@ class Piece extends PureComponent {
                     transform: `translate3d(${x}px, ${y}px, 0)`,
                   }}>
                     B
+                    <div style={{
+                      position: "absolute",
+                      top: "13px",
+                      right: "1px",
+                      fontSize: "12px",
+                      lineHeight: "1",
+                      zIndex: "6"
+                    }}>1</div>
                 </div>
                 <br></br>
                 <div
                   style={{
                     position: 'absolute',
+                    top: 50,
                     width: 25,
                     height: 25,
                     borderRadius: 4,
@@ -63,6 +81,14 @@ class Piece extends PureComponent {
                     transform: `translate3d(${x}px, ${y}px, 0)`,
                   }}>
                     C
+                    <div style={{
+                      position: "absolute",
+                      top: "13px",
+                      right: "1px",
+                      fontSize: "12px",
+                      lineHeight: "1",
+                      zIndex: "6"
+                    }}>1</div>
                 </div>
               </div>
             )

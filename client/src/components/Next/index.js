@@ -34,6 +34,14 @@ class Next extends PureComponent {
               // transform: `translate3d(${x}px, ${y}px, 0)`,
             }}>
               A
+              <div style={{
+                position: "absolute",
+                top: "13px",
+                right: "1px",
+                fontSize: "12px",
+                lineHeight: "1",
+                zIndex: "6"
+              }}>1</div>
           </div>
           <div
             style={{
@@ -49,6 +57,14 @@ class Next extends PureComponent {
               // transform: `translate3d(${x}px, ${y}px, 0)`,
             }}>
               B
+              <div style={{
+                position: "absolute",
+                top: "13px",
+                right: "1px",
+                fontSize: "12px",
+                lineHeight: "1",
+                zIndex: "6"
+              }}>1</div>
           </div>
           <div
             style={{
@@ -64,6 +80,14 @@ class Next extends PureComponent {
               // transform: `translate3d(${x}px, ${y}px, 0)`,
             }}>
               C
+              <div style={{
+                position: "absolute",
+                top: "13px",
+                right: "1px",
+                fontSize: "12px",
+                lineHeight: "1",
+                zIndex: "6"
+              }}>1</div>
           </div>
         </div>
       </div>

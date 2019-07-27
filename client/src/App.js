@@ -36,14 +36,14 @@ class App extends Component {
   render() {
     return (
       <>
-        <Navbar loggedin={this.state.loggedin} checkLoggedInState={this.checkLoggedInState} updateLoggedInState={this.updateLoggedInState} />
+        <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
           <Switch>
             {/* <Route exact path="/" render={this.ResultsSection} /> */}
             {/* <Route exact path="/login" render={this.SavedSection} /> */}
             <Route exact path="/" component={Login} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/login" component={Login} updateLoggedInState={this.updateLoggedInState} />
+            <Route exact path="/signup" component={SignUp} updateLoggedInState={this.updateLoggedInState} />
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
             }

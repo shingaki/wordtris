@@ -30,6 +30,7 @@ class Login extends Component {
             // if login data is correct
             if (dbData === true) {
                 // log them in - redirect to play page?
+                this.props.updateLoggedInState(true);
             } else {
                 // show error message - invalid login credentials
                 this.setState({
