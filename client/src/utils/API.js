@@ -32,5 +32,10 @@ export default {
 
         console.log("make post request to check user validity")
         return axios.post("/api/users", checkUser);
+    },
+
+    // check if user is logged in
+    loggedIn: function () {
+
     }
 }

@@ -8,10 +8,21 @@ import SignUp from "./components/SignUp";
 import Play from "./components/Play"
 
 class App extends Component {
+
+  state = {
+    loggedin: false
+  }
+
+  updateLoggedInState = (value) => {
+    this.setState({
+      loggedin: value
+    })
+  }
+
   render() {
     return (
       <>
-        <Navbar />
+        <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
           <Switch>
             {/* <Route exact path="/" render={this.ResultsSection} /> */}
