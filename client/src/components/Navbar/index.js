@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import "./style.css";
+import axios from "axios";
 
 
 class Navbar extends Component {
+
+    componentWillMount = () => {
+        axios.get("/isloggedin").then(UserInfo => {
+            console.log(UserInfo.data);
+            this.props.updateLoggedInState(UserInfo.data.loggedin);
+        })
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -13,12 +22,16 @@ class Navbar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <a className={window.location.pathname === "/login" ? "nav-link active" : "nav-link"} href="/login">Login</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className={window.location.pathname === "/signup" ? "nav-link active" : "nav-link"} href="/signup">SignUp</a>
-                        </li>
+                        {this.props.loggedin ? "" :
+                            <>
+                            <li className="nav-item">
+                                <a className={window.location.pathname === "/login" ? "nav-link active" : "nav-link"} href="/login">Login</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className={window.location.pathname === "/signup" ? "nav-link active" : "nav-link"} href="/signup">SignUp</a>
+                            </li>
+                            </>
+                        }
                         <li className="nav-item">
                             <a className={window.location.pathname === "/scores" ? "nav-link active" : "nav-link"}  href="/scores">High Scores</a>
                         </li>

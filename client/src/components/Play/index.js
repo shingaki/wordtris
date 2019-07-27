@@ -5,6 +5,7 @@ import Next from "../Next";
 // import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
+import axios from "axios";
 
 class Play extends Component {
 
@@ -14,6 +15,12 @@ class Play extends Component {
         fallSpeed: 2000,
         x: 0,
         y: 0,
+    }
+
+    componentWillMount = () => {
+        axios.get("/isloggedin").then(data => {
+            console.log(data.data);
+        })
     }
 
     startClick = () => {
