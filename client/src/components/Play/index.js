@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Piece from "../Piece"
 import "./style.css";
 import Next from "../Next";
-// import GameArea from "../GameArea";
+import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
 
@@ -12,8 +12,9 @@ class Play extends Component {
         score: 0,
         level: 1,
         fallSpeed: 2000,
-        x: 0,
-        y: 0,
+        currentPieceX: 0,
+        currentPieceY: 0,
+        isCurrentPiecePlaced: false
     }
 
     startClick = () => {
@@ -37,20 +38,29 @@ class Play extends Component {
     }
 
     downClick = () => {
-        if (this.state.y < 425) {
-            this.setState({ y: this.state.y + 25 })
+        if (this.state.currentPieceY < 425) {
+            this.setState({ currentPieceY: this.state.currentPieceY + 25 })
         }
     }
 
     leftClick = () => {
-        if (this.state.x > 0) {
-            this.setState({ x: this.state.x - 25 })
+        if (this.state.currentPieceX > 0) {
+            this.setState({ currentPieceX: this.state.currentPieceX - 25 })
         }
     }
 
     rightClick = () => {
-        if (this.state.x < 225) {
-            this.setState({ x: this.state.x + 25 })
+        if (this.state.currentPieceX < 225) {
+            this.setState({ currentPieceX: this.state.currentPieceX + 25 })
+        }
+    }
+
+    tick() {
+        if (this.state.currentPieceY < 425){
+          this.setState({ currentPieceY: this.state.currentPieceY + 25 })
+        } else {
+          clearInterval(this.timerID);
+          this.setState({ isCurrentPiecePlaced: true})
         }
     }
   
@@ -62,17 +72,27 @@ class Play extends Component {
                 <h1 className="text-center mt-5">Play</h1>
 
                 <div className="row">
-                    <div className="col-md-2">
+                    <div className="col-md-2 text-center">
                         <Next />
                     </div>
-                    <div className="col-md-7">
-                        {/* <GameArea /> */}
-                        <Piece />
+                    <div className="col-md-7 text-center">
+                        <GameArea 
+                            currentPieceX={this.state.currentPieceX}
+                            currentPieceY={this.state.currentPieceY}               
+                        />
+                        
                     </div>
                     <div className="col-md-3">
                         <Scores score={this.state.score} level={this.state.level} />
 
-                        <Controls startClick={this.startClick} stopClick={this.stopClick} increaseClick={this.increaseClick} downClick={this.downClick} leftClick={this.leftClick} rightClick={this.rightClick} />
+                        <Controls 
+                            startClick={this.startClick} 
+                            stopClick={this.stopClick} 
+                            increaseClick={this.increaseClick} 
+                            downClick={this.downClick} 
+                            leftClick={this.leftClick} 
+                            rightClick={this.rightClick} 
+                        />
                     </div>
                 </div>
 
