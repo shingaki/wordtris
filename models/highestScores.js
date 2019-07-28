@@ -8,8 +8,10 @@ module.exports = function(sequelize, DataTypes) {
     // HighestScores.hasMany(models.Players);
 
     HighestScores.associate = function (models) {
-        HighestScores.hasMany(models.Players, {
-            onDelete: "cascade"
+        HighestScores.belongsTo(models.Players, {
+            foreignKey: {
+                allowNull: false
+            }
         });
     };
 
