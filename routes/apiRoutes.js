@@ -26,6 +26,16 @@ module.exports = function(app) {
         })
     })
 
+    // auto login for dev purposes
+    app.get("/auto-login", function (req, res) {
+        req.session.loggedin = true;
+        req.session.playerName = "jpaul";
+        res.json({
+            loggedin: req.session.loggedin,
+            playerName: req.session.playerName
+        });
+    });
+
     // log player in
     app.post("/login", (req, res) => {
         console.log("req body")

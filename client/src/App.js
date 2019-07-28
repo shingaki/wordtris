@@ -20,6 +20,16 @@ class App extends Component {
     this.checkLoggedInState();
   }
 
+  autoLogin = event => {
+    event.preventDefault();
+    axios.get("/auto-login").then(UserInfo => {
+      console.log("are they logged in");
+      console.log(UserInfo);
+      this.updateLoggedInState(UserInfo.data.loggedin);
+      window.location.reload();
+    }).catch(err => console.log(err))
+  }
+
   checkLoggedInState = () => {
     axios.get("/isloggedin").then(UserInfo => {
       console.log("are they logged in");
@@ -38,7 +48,7 @@ class App extends Component {
 
   LoginSection = (props) => {
     return (
-      <Login updateLoggedInState={this.updateLoggedInState} test="test" />
+      <Login updateLoggedInState={this.updateLoggedInState} autoLogin={this.autoLogin} />
     );
   }
 
