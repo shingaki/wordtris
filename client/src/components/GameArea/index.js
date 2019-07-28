@@ -19,6 +19,7 @@ class GameArea extends PureComponent {
           id = {this.props.currentPieceID}
           currentPieceX = {this.props.currentPieceX}
           currentPieceY = {this.props.currentPieceY}
+          playLetters={this.props.playLetters}
         />
 
       </div>
