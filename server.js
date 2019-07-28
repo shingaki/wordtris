@@ -1,10 +1,13 @@
 const express = require("express");
+var session = require("express-session");
 const path = require("path");
 const trie = require('trie-prefix-tree');
 const fs = require("fs");
-const PORT = process.env.PORT || 3001;
+const apiRoutes = require("./routes/apiRoutes");
+var db = require("./models");
 const app = express();
-var session = require("express-session");
+const PORT = process.env.PORT || 3001;
+
 
 // SESSION SETUP
 var sess = {
@@ -33,36 +36,28 @@ if (process.env.NODE_ENV === "production") {
 
 // Send every other request to the React app
 // Define any API routes before this runs
-// test api route - used to check if user is logged in
-app.get("/isloggedin", (req, res) => {
-  req.session.loggedin = true;
-  req.session.username = "testUser";
-  if (req.session.loggedin) {
-    res.json({
-      loggedin: req.session.loggedin,
-      username: req.session.username
-    })
-  } else {
-    res.json({
-      loggedin: req.session.loggedin
-    })
-  }
-})
-
-// logout
-app.get("/logout", function (req, res) {
-  req.session.destroy(function (err) {
-    res.redirect("/");
-  });
-});
+apiRoutes(app);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`🌎 ==> API server now on port ${PORT}!`);
+
+db.sequelize.sync({ force: true }).then(function () {
+  app.listen(PORT, () => {
+    console.log(`🌎 ==> API server now on port ${PORT}!`);
+  });
+
+  // for testing
+  db.Players.create({
+    playerName: "jpaul",
+    password: "1234",
+    email: "j@test.com"
+  }).then(function (db) {
+    // console.log(db);
+  });
 });
+
 
 
 // Setup dictionary of words into the Trie

@@ -23,8 +23,10 @@
     "express-session": "^1.16.2",
     "fs": "0.0.1-security",
     "if-env": "^1.0.4",
+    "mysql2": "^1.6.5",
     "react": "^16.8.6",
     "react-router-dom": "^5.0.1",
+    "sequelize": "^5.11.0",
     "trie-prefix-tree": "^1.5.1"
   }
 }
