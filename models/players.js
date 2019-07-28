@@ -23,5 +23,18 @@ module.exports = function(sequelize, DataTypes) {
     // Players.hasMany(PlayerWords);
     // PlayerWords.belongsTo(Players);
 
+    Players.associate = function (models) {
+        Players.hasMany(models.HighestScores, {
+            onDelete: "cascade"
+        });
+    };
+
+
+    Players.associate = function (models) {
+        Players.hasMany(models.HighestWords, {
+            onDelete: "cascade"
+        });
+    };
+
     return Players;
 };

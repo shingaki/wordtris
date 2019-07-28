@@ -6,10 +6,11 @@ module.exports = function(sequelize, DataTypes) {
         score: DataTypes.INTEGER
     });
 
-    // HighestWords.hasMany(Players);
     HighestWords.associate = function (models) {
-        HighestWords.hasMany(models.Players, {
-            onDelete: "cascade"
+        HighestWords.belongsTo(models.Players, {
+            foreignKey: {
+                allowNull: false
+            }
         });
     };
 
