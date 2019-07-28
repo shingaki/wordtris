@@ -5,11 +5,23 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING
     });
 
-    Players.hasMany(PlayerScores);
-    PlayerScores.belongsTo(Players);
+    Players.associate = function (models) {
+        Players.hasMany(models.PlayerScores, {
+            onDelete: "cascade"
+        });
+    };
 
-    Players.hasMany(PlayerWords);
-    PlayerWords.belongsTo(Players);
+    // Players.hasMany(PlayerScores);
+    // PlayerScores.belongsTo(Players);
+
+    Players.associate = function (models) {
+        Players.hasMany(models.PlayerWords, {
+            onDelete: "cascade"
+        });
+    };
+
+    // Players.hasMany(PlayerWords);
+    // PlayerWords.belongsTo(Players);
 
     return Players;
 };

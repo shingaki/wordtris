@@ -6,7 +6,7 @@ import FormErrors from "../FormErrors";
 class Login extends Component {
 
     state = {
-        username: "",
+        playerName: "",
         password: "",
         error: ""
     }
@@ -21,16 +21,19 @@ class Login extends Component {
         })
     }
 
-    loginUser = event => {
+    loginPlayer = event => {
         event.preventDefault();
-        const username = this.state.username;
+        const playerName = this.state.playerName;
         const password = this.state.password;
 
-        API.loginUser(username, password).then(dbData => {
+        API.loginPlayer(playerName, password).then(dbData => {
             // if login data is correct
-            if (dbData === true) {
-                // log them in - redirect to play page?
+            console.log(this.props);
+            if (dbData.data !== false) {
+                // update logged in state - redirect to play page?
                 this.props.updateLoggedInState(true);
+                console.log("loggedin");
+                window.location.replace("/play");
             } else {
                 // show error message - invalid login credentials
                 this.setState({
@@ -46,6 +49,7 @@ class Login extends Component {
             <div className="container">
 
                 <h1 className="text-center mt-5">Login</h1>
+                <button onClick={this.props.autoLogin}>Auto-login</button>
 
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-md-8">
@@ -54,9 +58,9 @@ class Login extends Component {
                                 <FormErrors>{this.state.error}</FormErrors>
                                 : ""}
                             <div className="form-group">
-                                <label htmlFor="username" id="usernameText">Username</label>
-                                <input type="text" className="form-control" id="username" name="username"
-                                    placeholder="Enter username" onChange={this.inputChange} />
+                                <label htmlFor="playerName" id="playerNameText">Player Name</label>
+                                <input type="text" className="form-control" id="playerName" name="playerName"
+                                    placeholder="Enter player name" onChange={this.inputChange} />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="pass" id="passText">Password</label>
@@ -64,7 +68,7 @@ class Login extends Component {
                             </div>
 
                             <div className="text-center">
-                                <button type="submit" id="login" className="btn btn-primary" onClick={this.loginUser}>Submit</button>
+                                <button type="submit" id="login" className="btn btn-primary" onClick={this.loginPlayer}>Submit</button>
                             </div>
                         </form>
 

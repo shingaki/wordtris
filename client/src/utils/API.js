@@ -1,40 +1,40 @@
 import axios from "axios";
 
 export default {
-    // check that new user's username isn't taken
-    checkUsername: function (username) {
-        var checkUsername = {
-            username: username,
+    // check that new player's playerName isn't taken
+    checkPlayerName: function (playerName) {
+        var checkPlayerName = {
+            playerName: playerName,
         }
 
-        console.log("make post request to make sure username isn't already taken")
-        return axios.post("/api/users/new", checkUsername);
+        console.log("make post request to make sure playerName isn't already taken")
+        return axios.post("/api/playername", checkPlayerName);
     },
     
-    // create user from sign up form
-    createUser: function (username, email, password) {
-        var newUser = {
-            username: username,
+    // create player from sign up form
+    createPlayer: function (playerName, email, password) {
+        var newPlayer = {
+            playerName: playerName,
             email: email,
             password: password
         }
 
-        console.log("make post request with new user info")
-        return axios.post("/api/users/new", newUser);
+        console.log("make post request with new player info")
+        return axios.post("/api/players/new", newPlayer);
     },
 
-    // check user's login credentials
-    loginUser: function (username, password) {
-        var checkUser = {
-            username: username,
+    // login: check player's login credentials
+    loginPlayer: function (playerName, password) {
+        var checkPlayerName = {
+            playerName: playerName,
             password: password
         }
 
-        console.log("make post request to check user validity")
-        return axios.post("/api/users", checkUser);
+        console.log("make post request to check player validity")
+        return axios.post("/login", checkPlayerName);
     },
 
-    // check if user is logged in
+    // check if player is logged in
     loggedIn: function () {
 
     }

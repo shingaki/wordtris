@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import Piece from "../Piece"
 import "./style.css";
 import Next from "../Next";
 import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
-import axios from "axios";
 
 class Play extends Component {
 
@@ -18,6 +16,47 @@ class Play extends Component {
         isCurrentPiecePlaced: false,
         currentPieceID: 0
     }
+
+    letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+    letterPoints = {
+        A: 1,
+        B: 3,
+        C: 3,
+        D: 2,
+        E: 1,
+        F: 4,
+        G: 2,
+        H: 4,
+        I: 1,
+        J: 8,
+        K: 5,
+        L: 1,
+        M: 3,
+        N: 1,
+        O: 1,
+        P: 3,
+        Q: 10,
+        R: 1,
+        S: 1,
+        T: 1,
+        U: 1,
+        V: 4,
+        W: 4,
+        X: 8,
+        Y: 4,
+        Z: 10
+    }
+
+    pickThreeLetters = () => {
+        // console.log()
+        console.log(this.letterPoints[this.letters[0]])
+    }
+
+    componentDidMount = () => {
+        this.pickThreeLetters();
+    }
+
 
     startClick = () => {
         this.timerID = setInterval(

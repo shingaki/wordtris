@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
@@ -20,17 +20,36 @@ class App extends Component {
     this.checkLoggedInState();
   }
 
+  autoLogin = event => {
+    event.preventDefault();
+    axios.get("/auto-login").then(UserInfo => {
+      console.log("are they logged in");
+      console.log(UserInfo);
+      this.updateLoggedInState(UserInfo.data.loggedin);
+      window.location.reload();
+    }).catch(err => console.log(err))
+  }
+
   checkLoggedInState = () => {
     axios.get("/isloggedin").then(UserInfo => {
+      console.log("are they logged in");
       console.log(UserInfo.data);
       this.updateLoggedInState(UserInfo.data.loggedin);
-    })
+    }).catch(err => console.log(err))
   }
 
   updateLoggedInState = (value) => {
     this.setState({
       loggedin: value
     })
+  }
+
+
+
+  LoginSection = (props) => {
+    return (
+      <Login updateLoggedInState={this.updateLoggedInState} autoLogin={this.autoLogin} />
+    );
   }
 
   render() {
@@ -41,8 +60,8 @@ class App extends Component {
           <Switch>
             {/* <Route exact path="/" render={this.ResultsSection} /> */}
             {/* <Route exact path="/login" render={this.SavedSection} /> */}
-            <Route exact path="/" component={Login} />
-            <Route exact path="/login" component={Login} updateLoggedInState={this.updateLoggedInState} />
+            <Route exact path="/" render={this.LoginSection} />
+            <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" component={SignUp} updateLoggedInState={this.updateLoggedInState} />
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />

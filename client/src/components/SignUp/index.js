@@ -6,7 +6,7 @@ import FormErrors from "../FormErrors";
 class SignUp extends Component {
 
     state = {
-        username: "",
+        playerName: "",
         email: "",
         password1: "",
         password2: "",
@@ -25,20 +25,20 @@ class SignUp extends Component {
 
     submitForm = event => {
         event.preventDefault();
-        const username = this.state.username;
+        const playerName = this.state.playerName;
         const email = this.state.email;
         const password1 = this.state.password1;
         const password2 = this.state.password2;
 
         if (password1 === password2) {
-            API.checkUsername(username).then(dbData => {
-                // if username isn't taken
+            API.checkPlayerName(playerName).then(dbData => {
+                // if playerName isn't taken
                 if (dbData === true) {
-                    API.createUser(username, email, password1);
+                    API.createPlayer(playerName, email, password1);
                 } else {
-                    // show error message - username already taken
+                    // show error message - playerName already taken
                     this.setState({
-                        error: "Error: that username is already taken. Please try a different one."
+                        error: "Error: that player name is already taken. Please try a different one."
                     })
                 }
             });
@@ -64,12 +64,12 @@ class SignUp extends Component {
                                 <FormErrors>{this.state.error}</FormErrors>
                                 : "" }
                             <div className="form-group">
-                                <label htmlFor="username" id="usernameText">Username</label>
-                                <input type="text" className="form-control" id="username" name="username"
-                                    placeholder="Enter a username" value={this.username} onChange={this.inputChange} />
+                                <label htmlFor="playerName" id="playerNameText">Player Name</label>
+                                <input type="text" className="form-control" id="playerName" name="playerName"
+                                    placeholder="Enter a player name" value={this.playerName} onChange={this.inputChange} />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="email" id="usernameText">Email</label>
+                                <label htmlFor="email" id="emailText">Email</label>
                                 <input type="email" className="form-control" id="email" name="email"
                                     placeholder="Enter Email" value={this.email} onChange={this.inputChange} />
                             </div>
