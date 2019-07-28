@@ -4,10 +4,10 @@ CREATE DATABASE wordtris_local;
 
 USE wordtris_local;
 
-CREATE TABLE Players
+CREATE TABLE players
 (
     id          INT         NOT NULL AUTO_INCREMENT,
-    player_name VARCHAR(50) NOT NULL,
+    playerName VARCHAR(50) NOT NULL,
     password    VARCHAR(50) NOT NULL,
     email       VARCHAR(50) NOT NULL,
     createdAt   DATETIME    NOT NULL,
@@ -16,17 +16,17 @@ CREATE TABLE Players
 );
 
 
-CREATE TABLE PlayerScores
+CREATE TABLE playerScores
 (
     id           INT      NOT NULL AUTO_INCREMENT,
-    player_id    INT      NOT NULL,
-    player_score INT      NOT NULL,
+    -- player_id    INT      NOT NULL,
+    playerScore INT      NOT NULL,
     createdAt    DATETIME NOT NULL,
     updatedAt    DATETIME NOT NULL,
     PRIMARY KEY  (id)
 );
 
-CREATE TABLE PlayerWords
+CREATE TABLE playerWords
 (
     id           INT      NOT NULL AUTO_INCREMENT,
     player_id    INT      NOT NULL,
@@ -36,18 +36,18 @@ CREATE TABLE PlayerWords
     PRIMARY KEY  (id)
 );
 
-CREATE TABLE HighestScores
+CREATE TABLE highestScores
     (
         id             INT      NOT NULL AUTO_INCREMENT,
-        player_id      INT      NOT NULL,
-        score_position INT      NOT NULL,
-        highest_score  INT      NOT NULL,
+        playerID      INT      NOT NULL,
+        scorePosition INT      NOT NULL,
+        highestScore  INT      NOT NULL,
         createdAt      DATETIME NOT NULL,
         updatedAt      DATETIME NOT NULL,
         PRIMARY KEY (id)
     );
 
-CREATE TABLE HighestWords
+CREATE TABLE highestWords
 (
     id             INT      NOT NULL AUTO_INCREMENT,
     player_id      INT      NOT NULL,

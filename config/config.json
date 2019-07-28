@@ -1,7 +1,7 @@
 {
   "local": {
     "username": "root",
-    "password": "Koshima_2019",
+    "password": "",
     "database": "wordtris_db",
     "host": "127.0.0.1",
     "port": 3306,
@@ -22,10 +22,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "xjhdjtf82h9v4lqi",
-    "password": "a1iw5g0nthw9x5ph",
-    "database": "emm21ogqe8rj3gpj",
-    "host": "r4919aobtbi97j46.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "use_env_variable": "JAWSDB_URL",
     "dialect": "mysql"
   }
 }

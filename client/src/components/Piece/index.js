@@ -3,6 +3,7 @@ import { Animate } from 'react-move'
 import { easeExpOut } from 'd3-ease'
 
 class Piece extends PureComponent {
+
   render() {
     return (
       <div>
@@ -23,7 +24,47 @@ class Piece extends PureComponent {
 
             return (
               <div>
-                <div
+                {this.props.playLetters.map((item, i) => {
+                  let style = {
+                    position: 'absolute',
+                    width: 25,
+                    height: 25,
+                    borderRadius: 4,
+                    opacity: 0.7,
+                    backgroundColor: 'rgb(255, 255, 204)',
+                    WebkitTransform: `translate3d(${x}px, ${y}px, 0)`,
+                    transform: `translate3d(${x}px, ${y}px, 0)`,
+                  };
+
+                  if (i === 1) {
+                    style.top = 25;
+                  } else if (i === 2) {
+                    style.top = 50;
+                  }
+
+                  return (
+                    <div
+                      style={style}
+                      key={i}>
+                      {item.letter}
+                      <div style={{
+                        position: "absolute",
+                        top: "13px",
+                        right: "1px",
+                        fontSize: "12px",
+                        lineHeight: "1",
+                        zIndex: "6"
+                      }}>{item.points}</div>
+                    </div>
+                  )
+                })}
+
+
+
+
+
+
+                {/* <div
                   style={{
                     position: 'absolute',
                     width: 25,
@@ -89,7 +130,9 @@ class Piece extends PureComponent {
                       lineHeight: "1",
                       zIndex: "6"
                     }}>1</div>
-                </div>
+                </div> */}
+
+
               </div>
             )
           }}

@@ -20,7 +20,48 @@ class Next extends PureComponent {
         </div>
         <div style={trackStyles}>
 
-          <div
+
+
+
+          {this.props.nextUp.map((item, i) => {
+            let style = {
+              position: 'relative',
+              width: 25,
+              height: 25,
+              borderRadius: 4,
+              opacity: 0.7,
+              backgroundColor: 'rgb(255, 255, 204)',
+              top: 25,
+              left: 25,
+            };
+
+            return(
+              <div
+                style={ style }>
+                {item.letter}
+                <div style={{
+                  position: "absolute",
+                  top: "13px",
+                  right: "1px",
+                  fontSize: "12px",
+                  lineHeight: "1",
+                  zIndex: "6"
+                }}>{item.points}</div>
+              </div>
+            )
+          })}
+
+
+
+
+
+
+
+
+
+
+
+          {/* <div
             style={{
               position: 'relative',
               width: 25,
@@ -88,7 +129,7 @@ class Next extends PureComponent {
                 lineHeight: "1",
                 zIndex: "6"
               }}>1</div>
-          </div>
+          </div> */}
         </div>
       </div>
     )

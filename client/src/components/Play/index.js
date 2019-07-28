@@ -5,6 +5,8 @@ import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
 
+const nextList = [];
+
 class Play extends Component {
 
     state = {
@@ -14,7 +16,9 @@ class Play extends Component {
         currentPieceX: 0,
         currentPieceY: 0,
         isCurrentPiecePlaced: false,
-        currentPieceID: 0
+        currentPieceID: 0,
+        nextUp: [],
+        playLetters: []
     }
 
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -48,13 +52,66 @@ class Play extends Component {
         Z: 10
     }
 
-    pickThreeLetters = () => {
-        // console.log()
-        console.log(this.letterPoints[this.letters[0]])
+    initialSetup = () => {
+        var nextList = [];
+        var playNow = [];
+        // generate next up three letters
+        for (var i = 0; i < 3; i++) {
+            let random = Math.floor(Math.random() * 26);
+            let randomLetter = this.letters[random];
+            // save each letter and its score
+            nextList.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+
+        // generate play now three letters
+        for (var i = 0; i < 3; i++) {
+            let random = Math.floor(Math.random() * 26);
+            let randomLetter = this.letters[random];
+            // save each letter and its score
+            playNow.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+        console.log(nextList);
+        // move next up letters to play letters
+        // save new next up letters
+        this.setState({
+            playLetters: playNow,
+            nextUp: nextList
+        })
+
+        let playLetters = this.state.playLetters
+        console.log(playLetters[0])
+    }
+
+    pickNewLetters = () => {
+        var nextList = [];
+        // generate three letters
+        for (var i = 0; i < 3; i++) {
+            var random = Math.floor(Math.random() * 26);
+            var randomLetter = this.letters[random];
+            // save each letter and its score
+            nextList.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+        console.log(nextList);
+        // move next up letters to play letters
+        // save new next up letters
+        this.setState({
+            playLetters: this.state.nextUp,
+            nextUp: nextList
+        })
     }
 
     componentDidMount = () => {
-        this.pickThreeLetters();
+        // initial setup
+        this.initialSetup();
     }
 
 
@@ -107,6 +164,13 @@ class Play extends Component {
         }
         console.log(this.state)
     }
+
+    endOfRound = () => {
+        // pick new "next up" letters, move next up to play now
+        this.pickNewLetters();
+        // save dropping piece at its ending position as new pieces
+        // move dropping piece back to top
+    }
   
     
     render() {
@@ -117,14 +181,17 @@ class Play extends Component {
 
                 <div className="row">
                     <div className="col-md-2 text-center">
-                        <Next />
+                        <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
                     </div>
                     <div className="col-md-7 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
                             isCurrentPiecePlaced={this.state.isCurrentPiecePlaced}   
-                            currentPieceID={this.state.currentPieceID}           
+                            currentPieceID={this.state.currentPieceID}
+                            pickNewLetters={this.pickNewLetters}          
+                            endOfRound={this.endOfRound}
+                            playLetters={this.state.playLetters}         
                         />
                         
                     </div>
@@ -141,8 +208,12 @@ class Play extends Component {
                         />
                     </div>
                 </div>
+                {/* <div>Next up: {this.state.nextUp[0]}, {this.state.nextUp[1]}, {this.state.nextUp[2]}</div> */}
+                {/* <div>Playing now: {this.state.playLetters[0].letter}, {this.state.playLetters[1].letter}, {this.state.playLetters[2].letter}</div> */}
+                <button onClick={this.pickNewLetters}>NEW LETTERS</button>
 
             </div>
+    
         );
     }
 }
