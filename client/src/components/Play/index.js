@@ -13,12 +13,16 @@ class Play extends Component {
         score: 0,
         level: 1,
         fallSpeed: 250,
-        currentPieceX: 0,
+        currentPieceX: 100,
+        currentColumn: 4,
+        numLettersPerColumn: [0,0,0,0,0,0,0,0,0,2],
         currentPieceY: 0,
+        pieceSpeed: 0,
         isCurrentPiecePlaced: false,
         currentPieceID: 0,
         nextUp: [],
-        playLetters: []
+        playLetters: [],
+        placedLetters: []
     }
 
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -86,6 +90,23 @@ class Play extends Component {
 
         let playLetters = this.state.playLetters
         console.log(playLetters[0])
+
+        var emptyBoard = []
+        for (var i = 0; i < 200; i++) {
+            emptyBoard.push({
+                letter: "",
+                points: this.letterPoints[""]
+            })
+        }
+        emptyBoard[199].letter = "Z"
+        emptyBoard[199].points = this.letterPoints["Z"]
+        emptyBoard[189].letter = "B"
+        emptyBoard[189].points = this.letterPoints["B"]
+        
+        this.setState({placedLetters : emptyBoard})
+        // console.log("empty board = " + JSON.stringify(emptyBoard))
+        // console.log("placed letters array = " + this.state.placedLetters)
+        
     }
 
     pickNewLetters = () => {
@@ -107,6 +128,10 @@ class Play extends Component {
             playLetters: this.state.nextUp,
             nextUp: nextList
         })
+    }
+
+    placeLetters = () => {
+
     }
 
     componentDidMount = () => {
@@ -136,7 +161,7 @@ class Play extends Component {
     }
 
     downClick = () => {
-        if (this.state.currentPieceY < 425) {
+        if (this.state.currentPieceY < 425 - 25 * this.state.numLettersPerColumn[this.state.currentColumn]) {
             this.setState({ currentPieceY: this.state.currentPieceY + 25 })
         }
     }
@@ -144,31 +169,41 @@ class Play extends Component {
     leftClick = () => {
         if (this.state.currentPieceX > 0) {
             this.setState({ currentPieceX: this.state.currentPieceX - 25 })
+            this.setState({ currentColumn: this.state.currentColumn - 1 })
         }
     }
 
     rightClick = () => {
         if (this.state.currentPieceX < 225) {
             this.setState({ currentPieceX: this.state.currentPieceX + 25 })
+            this.setState({ currentColumn: this.state.currentColumn + 1 })
         }
     }
 
     tick() {
-        if (this.state.currentPieceY < 425){
-          this.setState({ currentPieceY: this.state.currentPieceY + 5 })
+        if (this.state.currentPieceY < 425 - 25 * this.state.numLettersPerColumn[this.state.currentColumn]){
+            this.setState({ pieceSpeed: 750})
+            this.setState({ currentPieceY: this.state.currentPieceY + 5 })
         } else {
-        //   clearInterval(this.timerID);
-          this.setState({ isCurrentPiecePlaced: true})
-          this.setState({ currentPieceX: 0 })
-          this.setState({ currentPieceY: -25 })  
+            clearInterval(this.timerID);
+            this.setState({ isCurrentPiecePlaced: true})
+            this.setState({ pieceSpeed: 0})
+            this.setState({ currentPieceX: 100 })
+            console.log(this.state.currentColumn)
+            this.setState({ currentColumn: 4 }) 
+            this.setState({ currentPieceY: 0 })  
+            this.endOfRound()
+
         }
-        console.log(this.state)
     }
+
+
 
     endOfRound = () => {
         // pick new "next up" letters, move next up to play now
         this.pickNewLetters();
         // save dropping piece at its ending position as new pieces
+        this.placeLetters();
         // move dropping piece back to top
     }
   
@@ -187,11 +222,13 @@ class Play extends Component {
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
+                            pieceSpeed = {this.state.pieceSpeed}
                             isCurrentPiecePlaced={this.state.isCurrentPiecePlaced}   
                             currentPieceID={this.state.currentPieceID}
                             pickNewLetters={this.pickNewLetters}          
                             endOfRound={this.endOfRound}
-                            playLetters={this.state.playLetters}         
+                            playLetters={this.state.playLetters}    
+                            placedLetters={this.state.placedLetters}       
                         />
                         
                     </div>
