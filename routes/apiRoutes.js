@@ -16,13 +16,39 @@ module.exports = function(app) {
     // )
 
     // check if playerName is taken
-    app.get("/api/playername", (req, res) => {
+    app.post("/api/playername", (req, res) => {
         db.Players.findOne({
             where: {
-                playerName: req.body
+                playerName: req.body.playerName
             }
         }).then(dbResponse => {
             console.log(dbResponse);
+            if (dbResponse === null) {
+                res.json({
+                    playerName: "available"
+                })
+            } else {
+                res.json({
+                    playerName: "taken"
+                })
+            }
+        })
+    })
+
+    // sign up new player
+    app.post("/api/players/new", (req, res) => {
+        db.Players.create({
+            playerName: req.body.playerName,
+            email: req.body.email,
+            password: req.body.password
+        }).then(response => {
+            req.session.loggedin = true;
+            req.session.playerName = req.body.playerName;
+            // res.json(response);
+            res.json({
+                loggedin: req.session.loggedin,
+                playerName: req.session.playerName
+            })
         })
     })
 
@@ -68,9 +94,6 @@ module.exports = function(app) {
 
     // check if player is logged in
     app.get("/isloggedin", (req, res) => {
-        
-        // req.session.loggedin = true;
-        // req.session.playerName = "testPlayer";
         if (req.session.loggedin) {
             res.json({
                 loggedin: req.session.loggedin,

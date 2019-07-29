@@ -8,7 +8,9 @@ class Login extends Component {
     state = {
         playerName: "",
         password: "",
-        error: ""
+        error: "",
+        playerNameError: "",
+        passwordError: ""
     }
 
     inputChange = event => {
@@ -19,6 +21,12 @@ class Login extends Component {
         this.setState({
             [name]: value
         })
+
+        // reset errors for this field
+        let stateName = name + "Error";
+        this.setState({
+            [stateName]: ""
+        })
     }
 
     loginPlayer = event => {
@@ -26,21 +34,40 @@ class Login extends Component {
         const playerName = this.state.playerName;
         const password = this.state.password;
 
-        API.loginPlayer(playerName, password).then(dbData => {
-            // if login data is correct
-            console.log(this.props);
-            if (dbData.data !== false) {
-                // update logged in state - redirect to play page?
-                this.props.updateLoggedInState(true);
-                console.log("loggedin");
-                window.location.replace("/play");
-            } else {
-                // show error message - invalid login credentials
-                this.setState({
-                    error: "Error: invalid email address or password."
-                })
-            }
-        });
+        if (playerName === "") {
+            this.setState({
+                playerNameError: "Please enter your player name."
+            })
+        }
+
+        if (password === "") {
+            this.setState({
+                passwordError: "Please enter your password."
+            })
+        }
+
+        if (playerName && password) {
+            API.loginPlayer(playerName, password).then(dbData => {
+                // if login data is correct
+                console.log(this.props);
+                if (dbData.data !== false) {
+                    // update logged in state - redirect to play page?
+                    this.props.updateLoggedInState(true);
+                    console.log("loggedin");
+                    window.location.replace("/play");
+                } else {
+                    // show error message - invalid login credentials
+                    this.setState({
+                        error: "Error: invalid email address or password."
+                    })
+                }
+            });
+        } else {
+            // show error message - fill out all fields
+            this.setState({
+                error: "Error: please fill out both fields."
+            })
+        }
 
     }
 
@@ -55,16 +82,26 @@ class Login extends Component {
                     <div className="col-lg-6 col-md-8">
                         <form className="mt-3">
                             {this.state.error !== "" ?
-                                <FormErrors>{this.state.error}</FormErrors>
+                                <FormErrors className="form-error">{this.state.error}</FormErrors>
                                 : ""}
                             <div className="form-group">
                                 <label htmlFor="playerName" id="playerNameText">Player Name</label>
-                                <input type="text" className="form-control" id="playerName" name="playerName"
-                                    placeholder="Enter player name" onChange={this.inputChange} />
+                                <input type="text"
+                                className={this.state.playerNameError !== "" ? "form-control check" : "form-control"}
+                                id="playerName" name="playerName"
+                                    placeholder="Enter player name" onChange={this.inputChange} required />
+                                {this.state.playerNameError !== "" ?
+                                    <FormErrors className="invalid">{this.state.playerNameError}</FormErrors>
+                                    : ""}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="pass" id="passText">Password</label>
-                                <input type="password" className="form-control" id="pass" name="password" placeholder="Password" onChange={this.inputChange} />
+                                <input type="password"
+                                className={this.state.passwordError !== "" ? "form-control check" : "form-control"}
+                                id="pass" name="password" placeholder="Password" onChange={this.inputChange} required />
+                                {this.state.passwordError !== "" ?
+                                    <FormErrors className="invalid">{this.state.passwordError}</FormErrors>
+                                    : ""}
                             </div>
 
                             <div className="text-center">
