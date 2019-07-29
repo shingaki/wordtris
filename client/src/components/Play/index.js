@@ -331,8 +331,11 @@ class Play extends Component {
             }
         }
 
+        //need to sort myPossibleWords
+        myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
         this.setState({ possibleWords : myPossibleWords })
         console.log(this.state.possibleWords)
+        
     }
 
 
