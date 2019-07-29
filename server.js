@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 
 // SESSION SETUP
 var sess = {
-  secret: "the bracket battle",
+  secret: "wordTris",
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
