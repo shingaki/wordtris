@@ -47,7 +47,7 @@ class PlacedPieces extends PureComponent {
                 position: "absolute",
                 top: "13px",
                 right: "1px",
-                fontSize: "12px",
+                fontSize: "10px",
                 lineHeight: "1",
                 zIndex: "6"
               }}>{item.points}</div>
