@@ -6,7 +6,7 @@ class FormErrors extends Component {
     render() {
         return (
             <div>
-                <p className="form-error">
+                <p className={this.props.className}>
                     {this.props.children}
                 </p>
             </div>               
