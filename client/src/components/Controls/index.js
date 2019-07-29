@@ -20,7 +20,7 @@ class Controls extends Component {
 
                     <button onClick={this.props.leftClick}>Left</button>
 
-                    <button className="cycle"></button>
+                    <button className="cycle" onClick={this.props.cycleClick}></button>
 
                     <button onClick={this.props.rightClick}>Right</button>
 
