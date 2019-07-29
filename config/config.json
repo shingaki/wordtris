@@ -1,11 +1,7 @@
 {
   "local": {
     "username": "root",
-<<<<<<< HEAD
     "password": "snizz11bre",
-=======
-    "password": "Koshima_2019",
->>>>>>> 09dd46f66d318f133e9dd1fbe93e14d55dae4563
     "database": "wordtris_db",
     "host": "127.0.0.1",
     "port": 3306,
