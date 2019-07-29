@@ -1,7 +1,7 @@
 const express = require("express");
 var session = require("express-session");
 const path = require("path");
-const trie = require('trie-prefix-tree');
+var trie = require('trie-prefix-tree');
 const fs = require("fs");
 const apiRoutes = require("./routes/apiRoutes");
 var db = require("./models");
@@ -61,7 +61,6 @@ db.sequelize.sync({ force: true }).then(function () {
 
 
 // Setup dictionary of words into the Trie
-
 let data = fs.readFileSync('dictionary.txt');
 
 // put the words into an array
@@ -71,6 +70,12 @@ console.log(wordsArray);
 // put the words into the trie
 var myTrie = trie(wordsArray);
 
-module.exports = myTrie;
+// if (myTrie.hasWord('catabases'))
+// {
+//   console.log("exists");
+// } else { console.log("does not exist")}
+// ;
+//
+module.exports.myTrie = myTrie;
 
 
