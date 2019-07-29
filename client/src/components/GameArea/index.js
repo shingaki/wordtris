@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import Piece from "../Piece"
+import PlacedPieces from "../PlacedPieces"
 
 const boradStyle = {
   borderRadius: 4,
@@ -19,7 +20,11 @@ class GameArea extends PureComponent {
           id = {this.props.currentPieceID}
           currentPieceX = {this.props.currentPieceX}
           currentPieceY = {this.props.currentPieceY}
+          pieceSpeed = {this.props.pieceSpeed}
           playLetters={this.props.playLetters}
+        />
+        <PlacedPieces 
+          placedLetters={this.props.placedLetters}
         />
 
       </div>
