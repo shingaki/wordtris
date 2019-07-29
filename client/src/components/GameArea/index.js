@@ -25,6 +25,7 @@ class GameArea extends PureComponent {
         />
         <PlacedPieces 
           placedLetters={this.props.placedLetters}
+          
         />
 
       </div>
