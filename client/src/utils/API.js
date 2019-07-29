@@ -46,9 +46,4 @@ export default {
         return axios.post("/verifyword", checkThisWord);
     },
 
-
-    // check if player is logged in
-    loggedIn: function () {
-
-    }
 }
