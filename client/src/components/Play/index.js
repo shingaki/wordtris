@@ -21,7 +21,9 @@ class Play extends Component {
         currentPieceID: 0,
         nextUp: [],
         playLetters: [],
-        placedLetters: []
+        placedLetters: [],
+        newPlacedLetters: [],
+        possibleWords: []
     }
 
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -79,7 +81,7 @@ class Play extends Component {
                 points: this.letterPoints[randomLetter]
             })
         }
-        console.log(nextList);
+        // console.log(nextList);
         // move next up letters to play letters
         // save new next up letters
         this.setState({
@@ -125,6 +127,7 @@ class Play extends Component {
     placeLetters = () => {
         var myBoard = [];
         var colmuns = [];
+        var myPlacedLetters = [];
 
         for (let x = 0; x<10; x++) {
             colmuns[x] = this.state.numLettersPerColumn[x]
@@ -143,10 +146,13 @@ class Play extends Component {
         myBoard[midLetterSpot] = this.state.playLetters[1]
         myBoard[botLetterSpot] = this.state.playLetters[2]
 
+        myPlacedLetters = [topLetterSpot, midLetterSpot, botLetterSpot]
         colmuns[this.state.currentColumn] = colmuns[this.state.currentColumn] + 3
 
-        this.setState({ numLettersPerColumn: colmuns})
+        this.setState({ newPlacedLetters : myPlacedLetters})
+        this.setState({ numLettersPerColumn : colmuns})
         this.setState({ placedLetters : myBoard })
+        // console.log(JSON.stringify(this.state.newPlacedLetters))
         // console.log("my board = " + JSON.stringify(this.state.placedLetters))
     }
 
@@ -198,9 +204,9 @@ class Play extends Component {
 
     cycleClick = () => {
         var cycleLetters = [];
-        cycleLetters[0] = this.state.playLetters[1]
-        cycleLetters[1] = this.state.playLetters[2]
-        cycleLetters[2] = this.state.playLetters[0]
+        cycleLetters[0] = this.state.playLetters[2]
+        cycleLetters[1] = this.state.playLetters[0]
+        cycleLetters[2] = this.state.playLetters[1]
         // console.log(cycleLetters);
         this.setState({
             playLetters: cycleLetters
@@ -228,11 +234,105 @@ class Play extends Component {
         this.setState({ placedLetters : myBoard })
     }
 
+    wordValue = (myWord) => {
+        let myValue = 0;
+        for (let x = 0; x < myWord.length; x++) {
+            myValue = myValue + this.letterPoints[myWord[x]]
+        }
+        return myValue
+    }
+
+    buildHorizontalWordFromBoard = (start, stop) => {
+        let myWord = ""
+
+        if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
+            // console.log(start, stop)
+            for (let x = start; x <= stop; x++) {
+                if (this.state.placedLetters[x].letter == "") {
+                    return ""
+                } else {
+                    myWord = myWord + this.state.placedLetters[x].letter
+                }
+                
+            }
+            // console.log(myWord)
+            return myWord;
+        }
+        return myWord
+    }
+
+    buildVerticalWordFromBoard = (start, stop) => {
+        let myWord = ""
+
+            for (let x = start; x <= stop; x=x+10) {
+                myWord = myWord + this.state.placedLetters[x].letter
+            }
+            // console.log(myWord)
+            return myWord;
+
+    }
+
+    buildPossibleWordsArray = () => {
+        var myPossibleWords = [];
+        var currentWord = "";
+        
+        for (let x = 0; x < 3; x++) {
+            //adds all horizontal words to myPossibleWords
+            let currentLetter = this.state.newPlacedLetters[x];
+            let minLetter = currentLetter - (currentLetter % 10);
+            let maxLetter = minLetter + 10;
+            for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter++) {
+                for (let lastLetter = currentLetter; lastLetter < maxLetter; lastLetter++) {
+                    if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && !(firstLetter === lastLetter)) {
+                        currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter);
+                        if (currentWord !== "") {
+                            myPossibleWords.push({
+                                value: this.wordValue(currentWord.trim()),
+                                word: currentWord,
+                                start: firstLetter,
+                                end: lastLetter,
+                                type: "horizontal"
+                            })
+                        }
+                    }
+                }
+            }
+            
+            //adds all vertical words to myPossibleWords
+            minLetter = currentLetter
+            maxLetter = 190 + this.state.currentColumn;
+            for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter=firstLetter+10) {
+                for (let lastLetter = currentLetter; lastLetter <= maxLetter; lastLetter=lastLetter+10) {
+                    if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && !(firstLetter === lastLetter)) {
+                        currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter);
+                        if (currentWord !== "") {
+                            myPossibleWords.push({
+                                value: this.wordValue(currentWord.trim()),
+                                word: currentWord,
+                                start: firstLetter,
+                                end: lastLetter,
+                                type: "vertical"
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+        this.setState({ possibleWords : myPossibleWords })
+        console.log(this.state.possibleWords)
+    }
+
 
     endOfRound = () => {
         
         // save dropping piece at its ending position as new pieces
         this.placeLetters();
+        //build array of possible words should be ordered in decreasing point value
+        this.buildPossibleWordsArray();
+        //go through array of posisble words to check if there is a word
+        //give points for word
+        //remove letters used from board and update column heights
         
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
             // pick new "next up" letters, move next up to play now
