@@ -52,6 +52,12 @@ class App extends Component {
     );
   }
 
+  SignUpSection = (props) => {
+    return (
+      <SignUp updateLoggedInState={this.updateLoggedInState} />
+    );
+  }
+
   render() {
     return (
       <>
@@ -62,7 +68,7 @@ class App extends Component {
             {/* <Route exact path="/login" render={this.SavedSection} /> */}
             <Route exact path="/" render={this.LoginSection} />
             <Route exact path="/login" render={this.LoginSection} />
-            <Route exact path="/signup" component={SignUp} updateLoggedInState={this.updateLoggedInState} />
+            <Route exact path="/signup" render={this.SignUpSection} />
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
             }
