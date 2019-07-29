@@ -40,6 +40,9 @@ class Play extends Component {
 
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
+    // weights = [10, 8, 8, 9, 10, 7, 9, 7, 10, 8, 5, 10, 8, 10, 10, 8, 1, 10, 10, 10, 10, 7, 7, 3, 7, 1]
+    weights = [67, 12, 28, 32, 104, 20, 16, 42, 63, 1, 5, 34, 21, 60, 64, 18, 1, 52, 54, 77, 23, 9, 14, 2, 14, 1]
+
     letterPoints = {
         A: 1,
         B: 3,
@@ -69,13 +72,33 @@ class Play extends Component {
         Z: 10
     }
 
+    makeWeightedArray = (array, weights) => {
+        let weightedArray = [];
+        // Loop over weights
+        for (let i = 0; i < weights.length; i++) {
+            // let multiples = weights[i] * 100;
+            let multiples = weights[i];
+
+            // Loop over the array of letters - adding each letter in x times for its weight
+            for (let j = 0; j < multiples; j++) {
+                weightedArray.push(array[i]);
+            }
+        }
+        return weightedArray;
+    }
+
+    // make array where each letter is weighted
+    weightedLetters = this.makeWeightedArray(this.letters, this.weights);
+
     initialSetup = () => {
         var nextList = [];
         var playNow = [];
+        console.log(this.weightedLetters);
         // generate next up three letters
         for (var i = 0; i < 3; i++) {
-            let random = Math.floor(Math.random() * 26);
-            let randomLetter = this.letters[random];
+            // let random = Math.floor(Math.random() * this.letters.length);
+            let random = Math.floor(Math.random() * this.weightedLetters.length);
+            let randomLetter = this.weightedLetters[random];
             // save each letter and its score
             nextList.push({
                 letter: randomLetter,
