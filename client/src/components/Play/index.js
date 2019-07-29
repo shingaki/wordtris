@@ -88,7 +88,7 @@ class Play extends Component {
         })
 
         let playLetters = this.state.playLetters
-        console.log(playLetters[0])
+        // console.log(playLetters[0])
 
         var emptyBoard = []
         for (var i = 0; i < 200; i++) {
@@ -113,7 +113,7 @@ class Play extends Component {
                 points: this.letterPoints[randomLetter]
             })
         }
-        console.log(nextList);
+        // console.log(nextList);
         // move next up letters to play letters
         // save new next up letters
         this.setState({
@@ -183,17 +183,28 @@ class Play extends Component {
     }
 
     leftClick = () => {
-        if (this.state.currentPieceX > 0) {
+        if (this.state.currentPieceX > 0 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn - 1]) {
             this.setState({ currentPieceX: this.state.currentPieceX - 25 })
             this.setState({ currentColumn: this.state.currentColumn - 1 })
         }
     }
 
     rightClick = () => {
-        if (this.state.currentPieceX < 225) {
+        if (this.state.currentPieceX < 225 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn + 1]) {
             this.setState({ currentPieceX: this.state.currentPieceX + 25 })
             this.setState({ currentColumn: this.state.currentColumn + 1 })
         }
+    }
+
+    cycleClick = () => {
+        var cycleLetters = [];
+        cycleLetters[0] = this.state.playLetters[1]
+        cycleLetters[1] = this.state.playLetters[2]
+        cycleLetters[2] = this.state.playLetters[0]
+        // console.log(cycleLetters);
+        this.setState({
+            playLetters: cycleLetters
+        })
     }
 
     tick() {
@@ -201,26 +212,19 @@ class Play extends Component {
             this.setState({ pieceSpeed: 750})
             this.setState({ currentPieceY: this.state.currentPieceY + 5 })
         } else {
-            // clearInterval(this.timerID);
             this.endOfRound()
-
-            
-
         }
     }
 
     updatePlacedLetters = () => {
         var myBoard = [];
-        
         for (let x = 0; x<200; x++) {
             myBoard[x] = this.state.placedLetters[x]
         }
         myBoard[0] = this.state.playLetters[0]
         myBoard[1] = this.state.playLetters[1]
         myBoard[2] = this.state.playLetters[2]
-
-        console.log("my board = " + JSON.stringify(this.state.placedLetters))
-        
+        // console.log("my board = " + JSON.stringify(this.state.placedLetters))
         this.setState({ placedLetters : myBoard })
     }
 
@@ -229,14 +233,25 @@ class Play extends Component {
         
         // save dropping piece at its ending position as new pieces
         this.placeLetters();
-        // pick new "next up" letters, move next up to play now
-        this.pickNewLetters();
-        // move dropping piece back to top
-        this.setState({ pieceSpeed: 0})
-        this.setState({ currentPieceX: 100 })
-        this.setState({ currentColumn: 4 }) 
-        this.setState({ currentPieceY: 0 })  
-        this.setState({ pieceSpeed: 750})
+        
+        if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
+            // pick new "next up" letters, move next up to play now
+            this.pickNewLetters();
+            // move dropping piece back to top
+            this.setState({ pieceSpeed: 0})
+            this.setState({ currentPieceX: 100 })
+            this.setState({ currentColumn: 4 }) 
+            this.setState({ currentPieceY: 0 })  
+            this.setState({ pieceSpeed: 750})
+        } else {
+            //Game over
+            //Modal?? - with option to play again??
+            //check to see if there is a new highscore
+            //check to see if there is a new high word
+            
+            clearInterval(this.timerID);
+        }
+
     }
   
     
@@ -272,6 +287,7 @@ class Play extends Component {
                             increaseClick={this.increaseClick} 
                             downClick={this.downClick} 
                             leftClick={this.leftClick} 
+                            cycleClick={this.cycleClick} 
                             rightClick={this.rightClick} 
                         />
                     </div>
