@@ -2,18 +2,13 @@
 // const axios = require("axios");
 const db = require("../models");
 const path = require("path");
-// const trie = require("./myTrie");
+var myTest = require('../server.js')
+// var trie = require('trie-prefix-tree');
+// const fs = require("fs");
+
+
 
 module.exports = function(app) {
-    // app.get("/checkWord", (req, res) => {
-
-    //    if (myTrie.hasWord(wordToCheck)) {
-    //        return true;
-    //     } else {
-    //        return false;
-    //    }
-    //     }
-    // )
 
     // check if playerName is taken
     app.post("/api/playername", (req, res) => {
@@ -92,6 +87,7 @@ module.exports = function(app) {
 
     })
 
+
     // check if player is logged in
     app.get("/isloggedin", (req, res) => {
         if (req.session.loggedin) {
@@ -111,6 +107,27 @@ module.exports = function(app) {
         req.session.destroy(function (err) {
             res.redirect("/");
         });
+    });
+
+    // check if word is valid
+    app.post("/verifyword", (req, res) => {
+        console.log("req body");
+        console.log(req.body)
+        var word = req.body.word;
+        console.log(word);
+
+        if (myTest.myTrie.hasWord(word)) {
+            console.log("word exists")
+            res.json(true);
+        } else {
+            console.log("word does not exist")
+            res.json(false);
+        }
+
+        // console.log(word);
+        // Setup dictionary of words into the Trie
+
+
     });
 
 }

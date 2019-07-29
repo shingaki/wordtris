@@ -34,6 +34,19 @@ export default {
         return axios.post("/login", checkPlayerName);
     },
 
+    // checkWord: Check if it is a word
+    checkWord: function (word) {
+
+        var checkThisWord = {
+            word: word
+        };
+        console.log(checkThisWord);
+
+        console.log("make post request to check word")
+        return axios.post("/verifyword", checkThisWord);
+    },
+
+
     // check if player is logged in
     loggedIn: function () {
 
