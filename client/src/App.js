@@ -71,7 +71,9 @@ class App extends Component {
         <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
           <Switch>
-            <Route exact path="/" render={this.LoginSection} />
+            {!this.state.loggedin ?
+              <Route exact path="/" render={this.LoginSection} /> : <Route exact path="/" render={this.StatsSection} />
+            }
             <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" render={this.SignUpSection} />
             {this.state.loggedin ?
