@@ -6,9 +6,10 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Play from "./components/Play"
-import NoMatch from "./components/NoMatch"
-import LoginPrompt from "./components/LoginPrompt"
+import Play from "./components/Play";
+import NoMatch from "./components/NoMatch";
+import LoginPrompt from "./components/LoginPrompt";
+import Stats from "./components/Stats";
 
 class App extends Component {
 
@@ -64,14 +65,13 @@ class App extends Component {
         <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
           <Switch>
-            {/* <Route exact path="/" render={this.ResultsSection} /> */}
-            {/* <Route exact path="/login" render={this.SavedSection} /> */}
             <Route exact path="/" render={this.LoginSection} />
             <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" render={this.SignUpSection} />
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
             }
+            <Route exact path="/scores" component={Stats} />
             <Route component={NoMatch} />
           </Switch>
         </Router>
