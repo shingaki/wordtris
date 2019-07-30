@@ -42,7 +42,7 @@ export default {
         };
         console.log(checkThisWord);
 
-        console.log("make post request to check word")
+        // console.log("make post request to check word")
         return axios.post("/verifyword", checkThisWord);
     },
 
