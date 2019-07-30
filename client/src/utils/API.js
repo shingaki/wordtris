@@ -40,7 +40,7 @@ export default {
         var checkThisWord = {
             word: word
         };
-        console.log(checkThisWord);
+        // console.log(checkThisWord);
 
         // console.log("make post request to check word")
         return axios.post("/verifyword", checkThisWord);
