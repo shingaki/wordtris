@@ -25,7 +25,13 @@ class Play extends Component {
         placedLetters: [],
         newPlacedLetters: [],
         possibleWords: [],
-        word: ""
+        word: "",
+        foundWordID: NaN,
+        foundWord: "",
+        foundWordValue: 0,
+        foundWordStart: NaN,
+        foundWordEnd: NaN,
+        foundWordType: ""
     }
 
     inputChange = event => {
@@ -393,7 +399,6 @@ class Play extends Component {
         
     }
 
-
     endOfRound = () => {
         
         // save dropping piece at its ending position as new pieces
@@ -401,8 +406,8 @@ class Play extends Component {
         //build array of possible words should be ordered in decreasing point value
         this.buildPossibleWordsArray();
         //go through array of posisble words to check if there is a word
-        //give points for word
-        //remove letters used from board and update column heights
+        this.setState({ foundWordID : NaN })
+        this.checkIfItIsAWord(0);
         
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
             // pick new "next up" letters, move next up to play now
@@ -424,23 +429,31 @@ class Play extends Component {
 
     }
 
-    checkIfItIsAWord = event => {
-        event.preventDefault();
-        const word = this.state.word;
-        console.log("what is the word " + word);
+    checkIfItIsAWord = (index) => {
+        //recursively checks possibleWords array... 
+        //if a word is found, updates score & removes letters from board
+        let word = this.state.possibleWords[index].word
 
         API.checkWord(word).then(wordData => {
-            // if login data is correct
-            console.log(this.props);
-            if (wordData.data !== false) {
-                // update logged in state - redirect to play page?
-                console.log("word exists from client");
+            if (wordData.data) {
+                this.setState({ foundWordID : index})
+                this.setState({ foundWord : this.state.possibleWords[index].word})
+                this.setState({ foundWordValue : this.state.possibleWords[index].value})
+                this.setState({ foundWordStart : this.state.possibleWords[index].start})
+                this.setState({ foundWordEnd : this.state.possibleWords[index].end})
+                this.setState({ foundWordType : this.state.possibleWords[index].type})
+                
+                // Update Score
+                this.setState({ score : this.state.score + this.state.foundWordValue})
+                // Remove Letter from Board
+            } else if (index + 1 === this.state.possibleWords.length) {
+                this.setState({ foundWordID : NaN}) 
             } else {
-                console.log("word does not exists from client");
+                this.checkIfItIsAWord( index + 1 )
             }
-    })
-}
-
+        })
+    }
+    
   
     
     render() {
@@ -483,29 +496,6 @@ class Play extends Component {
                 {/* <div>Next up: {this.state.nextUp[0]}, {this.state.nextUp[1]}, {this.state.nextUp[2]}</div> */}
                 {/* <div>Playing now: {this.state.playLetters[0].letter}, {this.state.playLetters[1].letter}, {this.state.playLetters[2].letter}</div> */}
                 <button onClick={this.pickNewLetters}>NEW LETTERS</button>
-
-                {/*The below is only used to test the Trie logic*/}
-                <div className="row justify-content-center">
-                    <div className="col-lg-6 col-md-8">
-                        <form className="mt-3">
-                            <div>
-                                <div className="form-group">
-                                    <label htmlFor="word" id="wordText">Enter Word</label>
-                                    <input type="text" className="form-control" id="word" name="word"
-                                           placeholder="Enter A Word" onChange={this.inputChange}/>
-                                </div>
-
-                                <div className="text-center">
-                                    <button type="submit" id="checkword" className="btn btn-primary"
-                                            onClick={this.checkIfItIsAWord}>Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-
             </div>
     
         );
