@@ -59,6 +59,12 @@ class App extends Component {
     );
   }
 
+  StatsSection = (props) => {
+    return (
+      <Stats loggedin={this.state.loggedin} />
+    );
+  }
+
   render() {
     return (
       <>
@@ -71,7 +77,7 @@ class App extends Component {
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
             }
-            <Route exact path="/scores" component={Stats} />
+            <Route exact path="/scores" render={this.StatsSection} />
             <Route component={NoMatch} />
           </Switch>
         </Router>
