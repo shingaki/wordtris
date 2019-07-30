@@ -25,7 +25,6 @@ class Play extends Component {
         placedLetters: [],
         newPlacedLetters: [],
         possibleWords: [],
-        word: "",
         foundWordID: NaN,
         foundWord: "",
         foundWordValue: 0,
@@ -168,9 +167,9 @@ class Play extends Component {
     }
 
     placeLetters = () => {
-        var myBoard = [];
-        var colmuns = [];
-        var myPlacedLetters = [];
+        let myBoard = [];
+        let colmuns = [];
+        let myPlacedLetters = [];
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
@@ -281,7 +280,7 @@ class Play extends Component {
 
     updatePlacedLetters = () => {
         //adds placed pieces to gameboard so that it can be visually updated 
-        var myBoard = [];
+        let myBoard = [];
         for (let x = 0; x<200; x++) {
             myBoard[x] = this.state.placedLetters[x]
         }
@@ -409,6 +408,7 @@ class Play extends Component {
         this.setState({ foundWordID : NaN })
         this.checkIfItIsAWord(0);
         
+        
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
             // pick new "next up" letters, move next up to play now
             this.pickNewLetters();
@@ -429,13 +429,54 @@ class Play extends Component {
 
     }
 
+    removeFoundWord = () => {
+        let myBoard = [];
+        let colmuns = [];
+        
+
+        //get current heights of gameboard columns
+        for (let x = 0; x<10; x++) {
+            colmuns[x] = this.state.numLettersPerColumn[x]
+        }
+        for (let x = 0; x<200; x++) {
+            myBoard[x] = this.state.placedLetters[x]
+        }
+
+        if (this.state.foundWordType === "horizontal") {
+            for (let x = this.state.foundWordStart; x <= this.state.foundWordEnd; x++) {
+                for (let y = x; y >= 10; y = y - 10) {
+                    myBoard[y].letter = myBoard[y-10].letter;
+                    myBoard[y].points = this.letterPoints[myBoard[y].letter];
+                }
+                colmuns[x % 10] = colmuns[x % 10] - 1;
+            }
+        } else if (this.state.foundWordType === "vertical") {
+            let wordLength = this.state.foundWordEnd - this.state.foundWordStart + 10;
+            for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
+                if (x>= this.state.foundWordStart) {
+                    myBoard[x].letter = myBoard[x-wordLength].letter;
+                    myBoard[x].points = this.letterPoints[myBoard[x].letter];
+                    colmuns[x % 10] = colmuns[x % 10] - 1;
+                } else {
+                    myBoard[x].letter = "";
+                    myBoard[x].points = this.letterPoints[myBoard[x].letter];
+                }
+            }
+        }
+        
+        this.setState({ numLettersPerColumn : colmuns})
+        console.log(myBoard)
+        this.setState({ placedLetters : myBoard })
+    }
+
     checkIfItIsAWord = (index) => {
         //recursively checks possibleWords array... 
         //if a word is found, updates score & removes letters from board
         let word = this.state.possibleWords[index].word
 
-        API.checkWord(word).then(wordData => {
-            if (wordData.data) {
+        API.checkWord(word).then(wordData => { 
+            if (wordData.data) { //is a word, update state, score and clear letters
+                console.log("found word: " + word)
                 this.setState({ foundWordID : index})
                 this.setState({ foundWord : this.state.possibleWords[index].word})
                 this.setState({ foundWordValue : this.state.possibleWords[index].value})
@@ -445,11 +486,16 @@ class Play extends Component {
                 
                 // Update Score
                 this.setState({ score : this.state.score + this.state.foundWordValue})
+                
                 // Remove Letter from Board
-            } else if (index + 1 === this.state.possibleWords.length) {
+                this.removeFoundWord()
+                console.log(this.state.numLettersPerColumn)
+            } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                 this.setState({ foundWordID : NaN}) 
-            } else {
+                console.log(this.state.numLettersPerColumn)
+            } else { //Not a word, go to next possible word in array (index + 1)
                 this.checkIfItIsAWord( index + 1 )
+                console.log(this.state.numLettersPerColumn)
             }
         })
     }
