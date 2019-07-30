@@ -320,7 +320,7 @@ class Play extends Component {
                 for (let lastLetter = currentLetter; lastLetter < maxLetter; lastLetter++) {
                     if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && !(firstLetter === lastLetter)) {
                         currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter);
-                        if (currentWord !== "") {
+                        if (currentWord !== "" && (lastLetter-firstLetter >=2)) { //2 insures that word is 3 letters or more
                             myPossibleWords.push({
                                 value: this.wordValue(currentWord.trim()),
                                 word: currentWord,
@@ -340,7 +340,7 @@ class Play extends Component {
                 for (let lastLetter = currentLetter; lastLetter <= maxLetter; lastLetter=lastLetter+10) {
                     if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && !(firstLetter === lastLetter)) {
                         currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter);
-                        if (currentWord !== "") {
+                        if (currentWord !== "" && (lastLetter-firstLetter >=20)) { //20 insures that word is 3 letters or more
                             myPossibleWords.push({
                                 value: this.wordValue(currentWord.trim()),
                                 word: currentWord,
