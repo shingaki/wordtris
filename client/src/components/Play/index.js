@@ -575,22 +575,22 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container">
+            <div className="container mb-5">
 
                 {this.state.instructions && !this.state.playGame ? 
                 <GameInstructions startGame={this.startGame}/>
                 :
                 <>
 
-                <h1 className="text-center mt-5 mb-4">Play</h1>
+                <h1 className="text-center mt-5 mb-4 bring-front">Play</h1>
 
-                <div className="row">
-                    <div className="col-md-2 text-center">
+                <div className="row desk">
+                    <div className="col-md-3 text-center">
                         <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
                         <br></br>
                         <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
                     </div>
-                    <div className="col-md-7 text-center">
+                    <div className="col-md-6 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
@@ -605,19 +605,68 @@ class Play extends Component {
                     <div className="col-md-3">
                         <Scores score={this.state.score} level={this.state.level} />
 
-                        <Controls 
-                            startClick={this.startClick} 
-                            stopClick={this.stopClick} 
-                            increaseClick={this.increaseClick} 
-                            downClick={this.downClick} 
-                            leftClick={this.leftClick} 
-                            cycleClick={this.cycleClick} 
-                            rightClick={this.rightClick} 
-                        />
+                        <div className="mt-5">
+                            <Controls 
+                                startClick={this.startClick} 
+                                stopClick={this.stopClick} 
+                                increaseClick={this.increaseClick} 
+                                downClick={this.downClick} 
+                                leftClick={this.leftClick} 
+                                cycleClick={this.cycleClick} 
+                                rightClick={this.rightClick} 
+                            />
+                        </div>
                     </div>
                 </div>
-                {/* <div>Next up: {this.state.nextUp[0]}, {this.state.nextUp[1]}, {this.state.nextUp[2]}</div> */}
-                {/* <div>Playing now: {this.state.playLetters[0].letter}, {this.state.playLetters[1].letter}, {this.state.playLetters[2].letter}</div> */}
+
+                {/* MOBILE LAYOUT */}
+                <div className="mobile">
+
+                    <div className="row align-items-center">
+                        <div className="col-md-6 no-split text-center">
+                            <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
+                        </div>
+
+                        <div className="col-md-6 no-split">
+                            <Scores score={this.state.score} level={this.state.level} />
+                        </div>
+                    </div>
+
+                    <div className="row mt-3 mb-5 bring-front">
+                        <div className="col-md-12 text-center">
+                            <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
+                        </div>
+                    </div>
+
+                    <div className="row mt-5">
+                        <div className="col-md-12 text-center">
+                            <GameArea 
+                                currentPieceX={this.state.currentPieceX}
+                                currentPieceY={this.state.currentPieceY} 
+                                pieceSpeed = {this.state.pieceSpeed}
+                                pickNewLetters={this.pickNewLetters}          
+                                playLetters={this.state.playLetters}    
+                                placedLetters={this.state.placedLetters} 
+   
+                            />
+                        
+                        </div>
+                    </div>
+
+                    <div className="row mt-2">
+                        <div className="col-md-12 text-center">
+                            <Controls 
+                                startClick={this.startClick} 
+                                stopClick={this.stopClick} 
+                                increaseClick={this.increaseClick} 
+                                downClick={this.downClick} 
+                                leftClick={this.leftClick} 
+                                cycleClick={this.cycleClick} 
+                                rightClick={this.rightClick} 
+                            />
+                        </div>
+                    </div>
+                </div>
                 </>
                 }
             </div>

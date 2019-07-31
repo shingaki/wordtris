@@ -7,6 +7,8 @@ const trackStyles = {
   backgroundColor: '#393e46',
   position: 'relative',
   margin: '5px 3px 10px',
+  marginLeft: "auto",
+  marginRight: "auto",
   width: 75,
   height: 125,
 }

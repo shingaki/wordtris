@@ -5,7 +5,7 @@ class Controls extends Component {
 
     render() {
         return (
-            <div className="row mt-5">
+            <div className="row">
                 <div className="col-md-12 text-center">
                     <button onClick={this.props.startClick}>Start</button>
 
