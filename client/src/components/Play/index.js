@@ -17,7 +17,7 @@ class Play extends Component {
         currentPieceX: 100,
         currentColumn: 4,
         numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0],
-        currentPieceY: 0,
+        currentPieceY: -75,
         pieceSpeed: 0,
         currentPieceID: 0,
         nextUp: [],
@@ -168,12 +168,12 @@ class Play extends Component {
 
     placeLetters = () => {
         let myBoard = [];
-        let colmuns = [];
+        let columns = [];
         let myPlacedLetters = [];
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
-            colmuns[x] = this.state.numLettersPerColumn[x]
+            columns[x] = this.state.numLettersPerColumn[x]
         }
 
         //get letters on gameboard
@@ -195,11 +195,11 @@ class Play extends Component {
         //add positions of newly placed letters to state to be accessed by buildPossibleWordsArray()
         myPlacedLetters = [topLetterSpot, midLetterSpot, botLetterSpot]
         //increase the saved height of current column for later use
-        colmuns[this.state.currentColumn] = colmuns[this.state.currentColumn] + 3
+        columns[this.state.currentColumn] = columns[this.state.currentColumn] + 3
 
         //set states
         this.setState({ newPlacedLetters : myPlacedLetters})
-        this.setState({ numLettersPerColumn : colmuns})
+        this.setState({ numLettersPerColumn : columns})
         this.setState({ placedLetters : myBoard })
         // console.log(JSON.stringify(this.state.newPlacedLetters))
         // console.log("my board = " + JSON.stringify(this.state.placedLetters))
@@ -276,19 +276,6 @@ class Play extends Component {
         } else {
             this.endOfRound() //piece is placed
         }
-    }
-
-    updatePlacedLetters = () => {
-        //adds placed pieces to gameboard so that it can be visually updated 
-        let myBoard = [];
-        for (let x = 0; x<200; x++) {
-            myBoard[x] = this.state.placedLetters[x]
-        }
-        myBoard[0] = this.state.playLetters[0]
-        myBoard[1] = this.state.playLetters[1]
-        myBoard[2] = this.state.playLetters[2]
-        // console.log("my board = " + JSON.stringify(this.state.placedLetters))
-        this.setState({ placedLetters : myBoard })
     }
 
     wordValue = (myWord) => {
@@ -418,7 +405,7 @@ class Play extends Component {
             this.setState({ pieceSpeed: 0}) //so piece doesn't visually move to top of board
             this.setState({ currentPieceX: 100 }) //set starting X position
             this.setState({ currentColumn: 4 }) //set starting column
-            this.setState({ currentPieceY: 0 }) //set starting Y position 
+            this.setState({ currentPieceY: -75 }) //set starting Y position 
             this.setState({ pieceSpeed: 750}) //reset visual effect for falling piece
         } else {
             //Game over
@@ -434,12 +421,12 @@ class Play extends Component {
 
     removeFoundWord = () => {
         let myBoard = [];
-        let colmuns = [];
+        let columns = [];
         
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
-            colmuns[x] = this.state.numLettersPerColumn[x]
+            columns[x] = this.state.numLettersPerColumn[x]
         }
 
         //get current board of letters
@@ -453,7 +440,7 @@ class Play extends Component {
                     myBoard[y].letter = myBoard[y-10].letter;
                     myBoard[y].points = this.letterPoints[myBoard[y].letter];
                 }
-                colmuns[x % 10] = colmuns[x % 10] - 1;
+                columns[x % 10] = columns[x % 10] - 1;
             }
         } else if (this.state.foundWordType === "vertical") {
             let wordLength = this.state.foundWordEnd - this.state.foundWordStart + 10;
@@ -461,7 +448,7 @@ class Play extends Component {
                 if (x>= this.state.foundWordStart) {
                     myBoard[x].letter = myBoard[x-wordLength].letter;
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
-                    colmuns[x % 10] = colmuns[x % 10] - 1;
+                    columns[x % 10] = columns[x % 10] - 1;
                 } else {
                     myBoard[x].letter = "";
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
@@ -469,7 +456,7 @@ class Play extends Component {
             }
         }
         
-        this.setState({ numLettersPerColumn : colmuns})
+        this.setState({ numLettersPerColumn : columns})
         console.log(myBoard)
         this.setState({ placedLetters : myBoard })
 
@@ -524,7 +511,7 @@ class Play extends Component {
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
                             pieceSpeed = {this.state.pieceSpeed}
-                            currentPieceID={this.state.currentPieceID}
+                            // currentPieceID={this.state.currentPieceID}
                             pickNewLetters={this.pickNewLetters}          
                             playLetters={this.state.playLetters}    
                             placedLetters={this.state.placedLetters} 
