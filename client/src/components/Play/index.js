@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./style.css";
 import Next from "../Next";
+import Found from "../Found";
 import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
@@ -96,41 +97,7 @@ class Play extends Component {
     weightedLetters = this.makeWeightedArray(this.letters, this.weights);
 
     initialSetup = () => {
-        var nextList = [];
-        var playNow = [];
-        console.log(this.weightedLetters);
-        // generate next up three letters
-        for (var i = 0; i < 3; i++) {
-            // let random = Math.floor(Math.random() * this.letters.length);
-            let random = Math.floor(Math.random() * this.weightedLetters.length);
-            let randomLetter = this.weightedLetters[random];
-            // save each letter and its score
-            nextList.push({
-                letter: randomLetter,
-                points: this.letterPoints[randomLetter]
-            })
-        }
 
-        // generate play now three letters
-        for (var i = 0; i < 3; i++) {
-            let random = Math.floor(Math.random() * 26);
-            let randomLetter = this.letters[random];
-            // save each letter and its score
-            playNow.push({
-                letter: randomLetter,
-                points: this.letterPoints[randomLetter]
-            })
-        }
-        // console.log(nextList);
-        // move next up letters to play letters
-        // save new next up letters
-        this.setState({
-            playLetters: playNow,
-            nextUp: nextList
-        })
-
-        let playLetters = this.state.playLetters
-        // console.log(playLetters[0])
 
         //creates empthy array representing the game board
         var emptyBoard = []
@@ -212,6 +179,39 @@ class Play extends Component {
 
 
     startClick = () => {
+        var nextList = [];
+        var playNow = [];
+        console.log(this.weightedLetters);
+        // generate next up three letters
+        for (var i = 0; i < 3; i++) {
+            // let random = Math.floor(Math.random() * this.letters.length);
+            let random = Math.floor(Math.random() * this.weightedLetters.length);
+            let randomLetter = this.weightedLetters[random];
+            // save each letter and its score
+            nextList.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+
+        // generate play now three letters
+        for (var i = 0; i < 3; i++) {
+            let random = Math.floor(Math.random() * 26);
+            let randomLetter = this.letters[random];
+            // save each letter and its score
+            playNow.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+        // console.log(nextList);
+        // move next up letters to play letters
+        // save new next up letters
+        this.setState({
+            playLetters: playNow,
+            nextUp: nextList,
+        })
+        
         //begins falling of first piece
         this.timerID = setInterval(
             () => this.tick(),
@@ -434,6 +434,7 @@ class Play extends Component {
             myBoard[x] = this.state.placedLetters[x]
         }
 
+
         if (this.state.foundWordType === "horizontal") {
             for (let x = this.state.foundWordStart; x <= this.state.foundWordEnd; x++) {
                 for (let y = x; y >= 10; y = y - 10) {
@@ -443,21 +444,21 @@ class Play extends Component {
                 columns[x % 10] = columns[x % 10] - 1;
             }
         } else if (this.state.foundWordType === "vertical") {
-            let wordLength = this.state.foundWordEnd - this.state.foundWordStart + 10;
-            for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
-                if (x>= this.state.foundWordStart) {
-                    myBoard[x].letter = myBoard[x-wordLength].letter;
-                    myBoard[x].points = this.letterPoints[myBoard[x].letter];
-                    columns[x % 10] = columns[x % 10] - 1;
-                } else {
-                    myBoard[x].letter = "";
+            let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10;
+            let myCol = this.state.foundWordEnd % 10;
+            for (let y = 0; y< wordLength; y++) {
+                for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
+                    myBoard[x].letter = myBoard[x-10].letter;
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
                 }
             }
+            myBoard[myCol].letter = ""
+            myBoard[myCol].points = this.letterPoints[myBoard[myCol].letter];
+            columns[myCol] = columns[myCol] - wordLength;
         }
         
         this.setState({ numLettersPerColumn : columns})
-        console.log(myBoard)
+        // console.log(myBoard)
         this.setState({ placedLetters : myBoard })
 
     }
@@ -505,13 +506,14 @@ class Play extends Component {
                 <div className="row">
                     <div className="col-md-2 text-center">
                         <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
+                        <br></br>
+                        <Found foundWord={this.state.foundWord} />
                     </div>
                     <div className="col-md-7 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
                             pieceSpeed = {this.state.pieceSpeed}
-                            // currentPieceID={this.state.currentPieceID}
                             pickNewLetters={this.pickNewLetters}          
                             playLetters={this.state.playLetters}    
                             placedLetters={this.state.placedLetters} 
