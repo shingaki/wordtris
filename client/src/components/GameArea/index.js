@@ -22,10 +22,10 @@ class GameArea extends PureComponent {
           currentPieceY = {this.props.currentPieceY}
           pieceSpeed = {this.props.pieceSpeed}
           playLetters={this.props.playLetters}
+          
         />
         <PlacedPieces 
           placedLetters={this.props.placedLetters}
-          
         />
 
       </div>

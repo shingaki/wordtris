@@ -5,7 +5,6 @@ let myLeft = 0;
 
 
 class PlacedPieces extends PureComponent {
-  
   render() {
     return (
       <div>

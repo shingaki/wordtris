@@ -306,8 +306,8 @@ class Play extends Component {
 
         if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
             for (let x = start; x <= stop; x++) {
-                if (this.state.placedLetters[x].letter == "") { 
-                    //if there is a black space between start and stop, return empty string, 
+                if (this.state.placedLetters[x].letter === "") { 
+                    //if there is a blank space between start and stop, return empty string, 
                     //this tells the function that called it that there wasn't a valid word between start and stop
                     return "" 
                 } else {
@@ -358,7 +358,8 @@ class Play extends Component {
                                 word: currentWord,
                                 start: firstLetter,
                                 end: lastLetter,
-                                type: "horizontal"
+                                type: "horizontal",
+                                row: parseInt(firstLetter / 10)
                             })
                         }
                     }
@@ -402,6 +403,7 @@ class Play extends Component {
         
         // save dropping piece at its ending position as new pieces
         this.placeLetters();
+  
         //build array of possible words should be ordered in decreasing point value
         this.buildPossibleWordsArray();
         //go through array of posisble words to check if there is a word
@@ -420,6 +422,7 @@ class Play extends Component {
             this.setState({ pieceSpeed: 750}) //reset visual effect for falling piece
         } else {
             //Game over
+            console.log("GAME OVER")
             //Modal?? - with option to play again??
             //check to see if there is a new highscore
             //check to see if there is a new high word
@@ -438,6 +441,8 @@ class Play extends Component {
         for (let x = 0; x<10; x++) {
             colmuns[x] = this.state.numLettersPerColumn[x]
         }
+
+        //get current board of letters
         for (let x = 0; x<200; x++) {
             myBoard[x] = this.state.placedLetters[x]
         }
@@ -467,6 +472,7 @@ class Play extends Component {
         this.setState({ numLettersPerColumn : colmuns})
         console.log(myBoard)
         this.setState({ placedLetters : myBoard })
+
     }
 
     checkIfItIsAWord = (index) => {
@@ -477,6 +483,7 @@ class Play extends Component {
         API.checkWord(word).then(wordData => { 
             if (wordData.data) { //is a word, update state, score and clear letters
                 console.log("found word: " + word)
+                
                 this.setState({ foundWordID : index})
                 this.setState({ foundWord : this.state.possibleWords[index].word})
                 this.setState({ foundWordValue : this.state.possibleWords[index].value})
@@ -489,13 +496,13 @@ class Play extends Component {
                 
                 // Remove Letter from Board
                 this.removeFoundWord()
+
                 console.log(this.state.numLettersPerColumn)
             } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                 this.setState({ foundWordID : NaN}) 
                 console.log(this.state.numLettersPerColumn)
             } else { //Not a word, go to next possible word in array (index + 1)
                 this.checkIfItIsAWord( index + 1 )
-                console.log(this.state.numLettersPerColumn)
             }
         })
     }
@@ -519,9 +526,9 @@ class Play extends Component {
                             pieceSpeed = {this.state.pieceSpeed}
                             currentPieceID={this.state.currentPieceID}
                             pickNewLetters={this.pickNewLetters}          
-                            endOfRound={this.endOfRound}
                             playLetters={this.state.playLetters}    
-                            placedLetters={this.state.placedLetters}       
+                            placedLetters={this.state.placedLetters} 
+   
                         />
                         
                     </div>
