@@ -11,7 +11,7 @@ class Found extends PureComponent {
           Last Found Word:
         </div>
         <div>
-          {this.props.foundWord}
+          {this.props.foundWord} ({this.props.foundWordValue})
         </div>
       </div>
     )

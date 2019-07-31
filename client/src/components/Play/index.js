@@ -6,12 +6,16 @@ import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
 import API from "../../utils/API";
+import GameInstructions from "../GameInstructions";
 
 const nextList = [];
 
 class Play extends Component {
 
     state = {
+        instructions: true,
+        playGame: false,
+
         score: 0,
         level: 1,
         fallSpeed: 250,
@@ -41,6 +45,13 @@ class Play extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
+        })
+    }
+
+    startGame = () => {
+        this.setState({
+            instructions: false,
+            playGame: true
         })
     }
 
@@ -501,13 +512,18 @@ class Play extends Component {
         return (
             <div className="container">
 
-                <h1 className="text-center mt-5">Play</h1>
+                {this.state.instructions && !this.state.playGame ? 
+                <GameInstructions startGame={this.startGame}/>
+                :
+                <>
+
+                <h1 className="text-center mt-5 mb-4">Play</h1>
 
                 <div className="row">
                     <div className="col-md-2 text-center">
                         <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
                         <br></br>
-                        <Found foundWord={this.state.foundWord} />
+                        <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
                     </div>
                     <div className="col-md-7 text-center">
                         <GameArea 
@@ -537,7 +553,8 @@ class Play extends Component {
                 </div>
                 {/* <div>Next up: {this.state.nextUp[0]}, {this.state.nextUp[1]}, {this.state.nextUp[2]}</div> */}
                 {/* <div>Playing now: {this.state.playLetters[0].letter}, {this.state.playLetters[1].letter}, {this.state.playLetters[2].letter}</div> */}
-                <button onClick={this.pickNewLetters}>NEW LETTERS</button>
+                </>
+                }
             </div>
     
         );

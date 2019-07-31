@@ -31,8 +31,8 @@ class Piece extends PureComponent {
                     width: 25,
                     height: 25,
                     borderRadius: 4,
-                    opacity: 0.7,
-                    backgroundColor: 'rgb(255, 255, 204)',
+                    opacity: 1,
+                    backgroundColor: 'rgb(216, 203, 187)',
                     WebkitTransform: `translate3d(${x}px, ${y}px, 0)`,
                     transform: `translate3d(${x}px, ${y}px, 0)`,
                   };

@@ -1,3 +1,11 @@
+.stat-header {
+    border-bottom: 2px solid black;
+}
+
+.odd-row {
+    background-color: #d8cbbb;
+}
+
 @media screen and (max-width: 767px) {
     .score-chart.col-md-1 {
         flex: 0 0 8.333333%;

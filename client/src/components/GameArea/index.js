@@ -4,7 +4,7 @@ import PlacedPieces from "../PlacedPieces"
 
 const boardStyle = {
   borderRadius: 4,
-  backgroundColor: 'gray',
+  backgroundColor: '#393e46',
   position: 'relative',
   margin: '5px 3px 10px',
   width: 250,
@@ -12,7 +12,7 @@ const boardStyle = {
 }
 const boardCover = {
   borderRadius: 4,
-  backgroundColor: 'white',
+  backgroundColor: '#eee',
   position: 'absolute',
   margin: '5px 3px 10px',
   width: 250,
