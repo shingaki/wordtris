@@ -64,7 +64,7 @@ db.sequelize.sync({ force: true }).then(function () {
 let data = fs.readFileSync('dictionary.txt');
 
 // put the words into an array
-wordsArray = data.toString().split("\r\n");
+wordsArray = data.toString().split("\n");
 console.log(wordsArray);
 
 // put the words into the trie
