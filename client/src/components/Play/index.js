@@ -192,7 +192,7 @@ class Play extends Component {
     startClick = () => {
         var nextList = [];
         var playNow = [];
-        console.log(this.weightedLetters);
+        // console.log(this.weightedLetters);
         // generate next up three letters
         for (var i = 0; i < 3; i++) {
             // let random = Math.floor(Math.random() * this.letters.length);
@@ -300,13 +300,44 @@ class Play extends Component {
 
     buildHorizontalWordFromBoard = (start, stop) => {
         //using state.placedLetters, builds a string based on given start & stop position (horizontal)
-        let myWord = ""
+        let myWord = "";
+        let invalidLetterCombinations = [
+            "bf", "bk", "bg", "bq", "bx", "bz", 
+            "cf", "cj", "cv", "cx", "cz", 
+            "dx", 
+            "fq", "fv", "fx", "fz",
+            "gq", "gv", "gx", "gz", 
+            "hx", "hz", 
+            "jb", "jc", "jd", "jf", "jg", "jh", "jj", "jk", "jl", "jm", "jn", "jp", "jq", "jr", "js", "jt", "jv", "jw", "jx", "jy", "jz",
+            "kj", "kq", "kv", "kx", "kz", 
+            "lq", "lx", "lz", 
+            "mq", "mx", "mz", 
+            "nx",
+            "pk", "pj", "pq", "pv", "px", "pz",
+            "qa", "qb", "qc", "qd", "qe", "qf", "qg", "qh", "qi", "qj", "qk", "ql", "qm", "qn", "qo", "qp", "qq", "qr", "qs", "qt", "qv", "qw", "qx", "qy", "qz", 
+            "rx", 
+            "sx", "sz",
+            "tq", "tx",
+            "uj", "uq", "uu",
+            "vb", "vc", "vd", "vf", "vg", "vh", "vj", "vk", "vl", "vm", "vn", "vp", "vq", "vt", "vu", "vv", "vw", "vx", "vz", 
+            "wj", "wq", "wv", "wx", "wz", 
+            "xb", "xd", "xg", "xj", "xk", "xl", "xn", "xq", "xr", "xv", "xx", "xz", 
+            "yq", "yx", "yy", "yz",
+            "zb", "zc", "zd", "zf", "zg", "zj", "zk", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zv", "zw", "zx"
+        ];
+        let current2LetterCombination;
 
         if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
             for (let x = start; x <= stop; x++) {
+                if (x > start) { 
+                    current2LetterCombination = this.state.placedLetters[x-1].letter + this.state.placedLetters[x].letter;
+                    console.log(current2LetterCombination.toLowerCase(), invalidLetterCombinations.includes(current2LetterCombination.toLowerCase()))
+                 };
                 if (this.state.placedLetters[x].letter === "") { 
                     //if there is a blank space between start and stop, return empty string, 
                     //this tells the function that called it that there wasn't a valid word between start and stop
+                    return "" 
+                } else if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
                     return "" 
                 } else {
                     myWord = myWord + this.state.placedLetters[x].letter //build string
@@ -321,9 +352,42 @@ class Play extends Component {
     buildVerticalWordFromBoard = (start, stop) => {
         //using state.placedLetters, builds a string based on given start & stop position (vertical)
         let myWord = ""
+        let invalidLetterCombinations = [
+            "bf", "bk", "bg", "bq", "bx", "bz", 
+            "cf", "cj", "cv", "cx", "cz", 
+            "dx", 
+            "fq", "fv", "fx", "fz",
+            "gq", "gv", "gx", "gz", 
+            "hx", "hz", 
+            "jb", "jc", "jd", "jf", "jg", "jh", "jj", "jk", "jl", "jm", "jn", "jp", "jq", "jr", "js", "jt", "jv", "jw", "jx", "jy", "jz",
+            "kj", "kq", "kv", "kx", "kz", 
+            "lq", "lx", "lz", 
+            "mq", "mx", "mz", 
+            "nx",
+            "pk", "pj", "pq", "pv", "px", "pz",
+            "qa", "qb", "qc", "qd", "qe", "qf", "qg", "qh", "qi", "qj", "qk", "ql", "qm", "qn", "qo", "qp", "qq", "qr", "qs", "qt", "qv", "qw", "qx", "qy", "qz", 
+            "rx", 
+            "sx", "sz",
+            "tq", "tx",
+            "uj", "uq", "uu",
+            "vb", "vc", "vd", "vf", "vg", "vh", "vj", "vk", "vl", "vm", "vn", "vp", "vq", "vt", "vu", "vv", "vw", "vx", "vz", 
+            "wj", "wq", "wv", "wx", "wz", 
+            "xb", "xd", "xg", "xj", "xk", "xl", "xn", "xq", "xr", "xv", "xx", "xz", 
+            "yq", "yx", "yy", "yz",
+            "zb", "zc", "zd", "zf", "zg", "zj", "zk", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zv", "zw", "zx"
+        ];
+        let current2LetterCombination;
 
         for (let x = start; x <= stop; x=x+10) {
-            myWord = myWord + this.state.placedLetters[x].letter
+            if (x > start) { 
+                current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
+                console.log(current2LetterCombination.toLowerCase(), invalidLetterCombinations.includes(current2LetterCombination.toLowerCase()))
+            };
+            if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
+                return "" 
+            } else {
+                myWord = myWord + this.state.placedLetters[x].letter //build string
+            }    
         }
         // console.log(myWord)
         return myWord;
@@ -406,7 +470,8 @@ class Play extends Component {
         this.buildPossibleWordsArray();
         //go through array of posisble words to check if there is a word
         this.setState({ foundWordID : NaN })
-        this.checkIfItIsAWord(0);
+        if (this.state.possibleWords.length > 0) {this.checkIfItIsAWord(0)};
+        
         
         
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
