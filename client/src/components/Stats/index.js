@@ -62,7 +62,7 @@ class Login extends Component {
 
                 {/* Player's Stats */}
                 {this.props.loggedin ?
-                <div className="row justify-content-center">
+                <div className="row justify-content-center mt-3">
                     <div className="col-md-6 mb-3">
                         <h3>Player's High Scores</h3>
                         <div className="row">
