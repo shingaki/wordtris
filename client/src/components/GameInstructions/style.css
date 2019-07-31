@@ -1,0 +1,11 @@
+@media screen and (max-width: 767px) {
+    .col-md-2.m-instructions {
+        flex: 0 0 16.666667%;
+        max-width: 16.666667%;
+    }
+
+    .col-md-10.m-instructions {
+        flex: 0 0 83.333333%;
+        max-width: 83.333333%;
+    }
+}

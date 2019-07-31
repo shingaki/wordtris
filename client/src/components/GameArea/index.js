@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import "./style.css";
 import Piece from "../Piece"
 import PlacedPieces from "../PlacedPieces"
 
@@ -7,6 +8,8 @@ const boardStyle = {
   backgroundColor: '#393e46',
   position: 'relative',
   margin: '5px 3px 10px',
+  marginLeft: "auto",
+  marginRight: "auto",
   width: 250,
   height: 500,
 }
@@ -18,6 +21,7 @@ const boardCover = {
   width: 250,
   height: 75,
   top: -75,
+  left: 115,
   zIndex: 7
 }
 
@@ -26,7 +30,7 @@ class GameArea extends PureComponent {
   render() {
     return (
       <>
-        <div style={boardCover} >
+        <div style={boardCover} className="board-cover" >
 
         </div>
         <div style={boardStyle} >
