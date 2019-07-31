@@ -59,19 +59,27 @@ class App extends Component {
     );
   }
 
+  StatsSection = (props) => {
+    return (
+      <Stats loggedin={this.state.loggedin} />
+    );
+  }
+
   render() {
     return (
       <>
         <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
           <Switch>
-            <Route exact path="/" render={this.LoginSection} />
+            {!this.state.loggedin ?
+              <Route exact path="/" render={this.LoginSection} /> : <Route exact path="/" render={this.StatsSection} />
+            }
             <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" render={this.SignUpSection} />
             {this.state.loggedin ?
               <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
             }
-            <Route exact path="/scores" component={Stats} />
+            <Route exact path="/scores" render={this.StatsSection} />
             <Route component={NoMatch} />
           </Switch>
         </Router>
