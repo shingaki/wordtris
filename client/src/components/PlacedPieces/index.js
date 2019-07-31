@@ -19,8 +19,8 @@ class PlacedPieces extends PureComponent {
             width: 25,
             height: 25,
             borderRadius: 4,
-            opacity: 0.7,
-            backgroundColor: 'rgb(255, 255, 204)',
+            opacity: 0.8,
+            backgroundColor: 'rgba(216, 203, 187)',
             top: myTop,
             left: myLeft
           };

@@ -112,7 +112,7 @@ class Login extends Component {
 
                         <div className="row mt-4 justify-content-center">
                             <div className="co-md-12" id="loginText">
-                                Don't have an account yet? <a href="/signup">Sign Up</a> here.
+                                Don't have an account yet? <a href="/signup" className="alink">Sign Up</a> here.
                             </div>
                         </div>
                     </div>
