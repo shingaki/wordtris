@@ -1,0 +1,22 @@
+.bring-front {
+    position: relative;
+    z-index: 10;
+}
+
+.mobile {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .desk {
+        display: none;
+    }
+    .mobile {
+        display: block;
+    }
+
+    .col-md-6.no-split {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}

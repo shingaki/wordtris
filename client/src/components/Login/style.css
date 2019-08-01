@@ -1,0 +1,28 @@
+.btn-primary {
+    color: #eee;
+    background-color: #560764;
+    border-color: #560764;
+}
+
+.btn-primary:hover {
+    color: #eee;
+    background-color: #bb8fa9;
+    border-color: #bb8fa9;
+}
+
+.alink {
+    color: #866ec7;
+}
+
+.alink:hover {
+    color: #bb8fa9;
+    text-decoration: none;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #bb8fa9;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(187, 143, 169, 0.25);
+}

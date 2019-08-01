@@ -1,23 +1,28 @@
 import React, { Component } from "react";
 import "./style.css";
 import Next from "../Next";
+import Found from "../Found";
 import GameArea from "../GameArea";
 import Scores from "../Scores";
 import Controls from "../Controls";
 import API from "../../utils/API";
+import GameInstructions from "../GameInstructions";
 
 const nextList = [];
 
 class Play extends Component {
 
     state = {
+        instructions: true,
+        playGame: false,
+
         score: 0,
         level: 1,
         fallSpeed: 250,
         currentPieceX: 100,
         currentColumn: 4,
         numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0],
-        currentPieceY: 0,
+        currentPieceY: -75,
         pieceSpeed: 0,
         currentPieceID: 0,
         nextUp: [],
@@ -40,6 +45,13 @@ class Play extends Component {
         const { name, value } = event.target;
         this.setState({
             [name]: value
+        })
+    }
+
+    startGame = () => {
+        this.setState({
+            instructions: false,
+            playGame: true
         })
     }
 
@@ -96,41 +108,7 @@ class Play extends Component {
     weightedLetters = this.makeWeightedArray(this.letters, this.weights);
 
     initialSetup = () => {
-        var nextList = [];
-        var playNow = [];
-        console.log(this.weightedLetters);
-        // generate next up three letters
-        for (var i = 0; i < 3; i++) {
-            // let random = Math.floor(Math.random() * this.letters.length);
-            let random = Math.floor(Math.random() * this.weightedLetters.length);
-            let randomLetter = this.weightedLetters[random];
-            // save each letter and its score
-            nextList.push({
-                letter: randomLetter,
-                points: this.letterPoints[randomLetter]
-            })
-        }
 
-        // generate play now three letters
-        for (var i = 0; i < 3; i++) {
-            let random = Math.floor(Math.random() * 26);
-            let randomLetter = this.letters[random];
-            // save each letter and its score
-            playNow.push({
-                letter: randomLetter,
-                points: this.letterPoints[randomLetter]
-            })
-        }
-        // console.log(nextList);
-        // move next up letters to play letters
-        // save new next up letters
-        this.setState({
-            playLetters: playNow,
-            nextUp: nextList
-        })
-
-        let playLetters = this.state.playLetters
-        // console.log(playLetters[0])
 
         //creates empthy array representing the game board
         var emptyBoard = []
@@ -168,12 +146,12 @@ class Play extends Component {
 
     placeLetters = () => {
         let myBoard = [];
-        let colmuns = [];
+        let columns = [];
         let myPlacedLetters = [];
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
-            colmuns[x] = this.state.numLettersPerColumn[x]
+            columns[x] = this.state.numLettersPerColumn[x]
         }
 
         //get letters on gameboard
@@ -195,11 +173,11 @@ class Play extends Component {
         //add positions of newly placed letters to state to be accessed by buildPossibleWordsArray()
         myPlacedLetters = [topLetterSpot, midLetterSpot, botLetterSpot]
         //increase the saved height of current column for later use
-        colmuns[this.state.currentColumn] = colmuns[this.state.currentColumn] + 3
+        columns[this.state.currentColumn] = columns[this.state.currentColumn] + 3
 
         //set states
         this.setState({ newPlacedLetters : myPlacedLetters})
-        this.setState({ numLettersPerColumn : colmuns})
+        this.setState({ numLettersPerColumn : columns})
         this.setState({ placedLetters : myBoard })
         // console.log(JSON.stringify(this.state.newPlacedLetters))
         // console.log("my board = " + JSON.stringify(this.state.placedLetters))
@@ -212,6 +190,39 @@ class Play extends Component {
 
 
     startClick = () => {
+        var nextList = [];
+        var playNow = [];
+        // console.log(this.weightedLetters);
+        // generate next up three letters
+        for (var i = 0; i < 3; i++) {
+            // let random = Math.floor(Math.random() * this.letters.length);
+            let random = Math.floor(Math.random() * this.weightedLetters.length);
+            let randomLetter = this.weightedLetters[random];
+            // save each letter and its score
+            nextList.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+
+        // generate play now three letters
+        for (var i = 0; i < 3; i++) {
+            let random = Math.floor(Math.random() * 26);
+            let randomLetter = this.letters[random];
+            // save each letter and its score
+            playNow.push({
+                letter: randomLetter,
+                points: this.letterPoints[randomLetter]
+            })
+        }
+        // console.log(nextList);
+        // move next up letters to play letters
+        // save new next up letters
+        this.setState({
+            playLetters: playNow,
+            nextUp: nextList,
+        })
+        
         //begins falling of first piece
         this.timerID = setInterval(
             () => this.tick(),
@@ -278,19 +289,6 @@ class Play extends Component {
         }
     }
 
-    updatePlacedLetters = () => {
-        //adds placed pieces to gameboard so that it can be visually updated 
-        let myBoard = [];
-        for (let x = 0; x<200; x++) {
-            myBoard[x] = this.state.placedLetters[x]
-        }
-        myBoard[0] = this.state.playLetters[0]
-        myBoard[1] = this.state.playLetters[1]
-        myBoard[2] = this.state.playLetters[2]
-        // console.log("my board = " + JSON.stringify(this.state.placedLetters))
-        this.setState({ placedLetters : myBoard })
-    }
-
     wordValue = (myWord) => {
         //gets value of myWord
         let myValue = 0;
@@ -302,13 +300,44 @@ class Play extends Component {
 
     buildHorizontalWordFromBoard = (start, stop) => {
         //using state.placedLetters, builds a string based on given start & stop position (horizontal)
-        let myWord = ""
+        let myWord = "";
+        let invalidLetterCombinations = [
+            "bf", "bk", "bg", "bq", "bx", "bz", 
+            "cf", "cj", "cv", "cx", "cz", 
+            "dx", 
+            "fq", "fv", "fx", "fz",
+            "gq", "gv", "gx", "gz", 
+            "hx", "hz", 
+            "jb", "jc", "jd", "jf", "jg", "jh", "jj", "jk", "jl", "jm", "jn", "jp", "jq", "jr", "js", "jt", "jv", "jw", "jx", "jy", "jz",
+            "kj", "kq", "kv", "kx", "kz", 
+            "lq", "lx", "lz", 
+            "mq", "mx", "mz", 
+            "nx",
+            "pk", "pj", "pq", "pv", "px", "pz",
+            "qa", "qb", "qc", "qd", "qe", "qf", "qg", "qh", "qi", "qj", "qk", "ql", "qm", "qn", "qo", "qp", "qq", "qr", "qs", "qt", "qv", "qw", "qx", "qy", "qz", 
+            "rx", 
+            "sx", "sz",
+            "tq", "tx",
+            "uj", "uq", "uu",
+            "vb", "vc", "vd", "vf", "vg", "vh", "vj", "vk", "vl", "vm", "vn", "vp", "vq", "vt", "vu", "vv", "vw", "vx", "vz", 
+            "wj", "wq", "wv", "wx", "wz", 
+            "xb", "xd", "xg", "xj", "xk", "xl", "xn", "xq", "xr", "xv", "xx", "xz", 
+            "yq", "yx", "yy", "yz",
+            "zb", "zc", "zd", "zf", "zg", "zj", "zk", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zv", "zw", "zx"
+        ];
+        let current2LetterCombination;
 
         if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
             for (let x = start; x <= stop; x++) {
+                if (x > start) { 
+                    current2LetterCombination = this.state.placedLetters[x-1].letter + this.state.placedLetters[x].letter;
+                    console.log(current2LetterCombination.toLowerCase(), invalidLetterCombinations.includes(current2LetterCombination.toLowerCase()))
+                 };
                 if (this.state.placedLetters[x].letter === "") { 
                     //if there is a blank space between start and stop, return empty string, 
                     //this tells the function that called it that there wasn't a valid word between start and stop
+                    return "" 
+                } else if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
                     return "" 
                 } else {
                     myWord = myWord + this.state.placedLetters[x].letter //build string
@@ -323,9 +352,42 @@ class Play extends Component {
     buildVerticalWordFromBoard = (start, stop) => {
         //using state.placedLetters, builds a string based on given start & stop position (vertical)
         let myWord = ""
+        let invalidLetterCombinations = [
+            "bf", "bk", "bg", "bq", "bx", "bz", 
+            "cf", "cj", "cv", "cx", "cz", 
+            "dx", 
+            "fq", "fv", "fx", "fz",
+            "gq", "gv", "gx", "gz", 
+            "hx", "hz", 
+            "jb", "jc", "jd", "jf", "jg", "jh", "jj", "jk", "jl", "jm", "jn", "jp", "jq", "jr", "js", "jt", "jv", "jw", "jx", "jy", "jz",
+            "kj", "kq", "kv", "kx", "kz", 
+            "lq", "lx", "lz", 
+            "mq", "mx", "mz", 
+            "nx",
+            "pk", "pj", "pq", "pv", "px", "pz",
+            "qa", "qb", "qc", "qd", "qe", "qf", "qg", "qh", "qi", "qj", "qk", "ql", "qm", "qn", "qo", "qp", "qq", "qr", "qs", "qt", "qv", "qw", "qx", "qy", "qz", 
+            "rx", 
+            "sx", "sz",
+            "tq", "tx",
+            "uj", "uq", "uu",
+            "vb", "vc", "vd", "vf", "vg", "vh", "vj", "vk", "vl", "vm", "vn", "vp", "vq", "vt", "vu", "vv", "vw", "vx", "vz", 
+            "wj", "wq", "wv", "wx", "wz", 
+            "xb", "xd", "xg", "xj", "xk", "xl", "xn", "xq", "xr", "xv", "xx", "xz", 
+            "yq", "yx", "yy", "yz",
+            "zb", "zc", "zd", "zf", "zg", "zj", "zk", "zl", "zm", "zn", "zp", "zq", "zr", "zt", "zv", "zw", "zx"
+        ];
+        let current2LetterCombination;
 
         for (let x = start; x <= stop; x=x+10) {
-            myWord = myWord + this.state.placedLetters[x].letter
+            if (x > start) { 
+                current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
+                console.log(current2LetterCombination.toLowerCase(), invalidLetterCombinations.includes(current2LetterCombination.toLowerCase()))
+            };
+            if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
+                return "" 
+            } else {
+                myWord = myWord + this.state.placedLetters[x].letter //build string
+            }    
         }
         // console.log(myWord)
         return myWord;
@@ -408,7 +470,8 @@ class Play extends Component {
         this.buildPossibleWordsArray();
         //go through array of posisble words to check if there is a word
         this.setState({ foundWordID : NaN })
-        this.checkIfItIsAWord(0);
+        if (this.state.possibleWords.length > 0) {this.checkIfItIsAWord(0)};
+        
         
         
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
@@ -418,7 +481,7 @@ class Play extends Component {
             this.setState({ pieceSpeed: 0}) //so piece doesn't visually move to top of board
             this.setState({ currentPieceX: 100 }) //set starting X position
             this.setState({ currentColumn: 4 }) //set starting column
-            this.setState({ currentPieceY: 0 }) //set starting Y position 
+            this.setState({ currentPieceY: -75 }) //set starting Y position 
             this.setState({ pieceSpeed: 750}) //reset visual effect for falling piece
         } else {
             //Game over
@@ -434,12 +497,12 @@ class Play extends Component {
 
     removeFoundWord = () => {
         let myBoard = [];
-        let colmuns = [];
+        let columns = [];
         
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
-            colmuns[x] = this.state.numLettersPerColumn[x]
+            columns[x] = this.state.numLettersPerColumn[x]
         }
 
         //get current board of letters
@@ -447,30 +510,31 @@ class Play extends Component {
             myBoard[x] = this.state.placedLetters[x]
         }
 
+
         if (this.state.foundWordType === "horizontal") {
             for (let x = this.state.foundWordStart; x <= this.state.foundWordEnd; x++) {
                 for (let y = x; y >= 10; y = y - 10) {
                     myBoard[y].letter = myBoard[y-10].letter;
                     myBoard[y].points = this.letterPoints[myBoard[y].letter];
                 }
-                colmuns[x % 10] = colmuns[x % 10] - 1;
+                columns[x % 10] = columns[x % 10] - 1;
             }
         } else if (this.state.foundWordType === "vertical") {
-            let wordLength = this.state.foundWordEnd - this.state.foundWordStart + 10;
-            for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
-                if (x>= this.state.foundWordStart) {
-                    myBoard[x].letter = myBoard[x-wordLength].letter;
-                    myBoard[x].points = this.letterPoints[myBoard[x].letter];
-                    colmuns[x % 10] = colmuns[x % 10] - 1;
-                } else {
-                    myBoard[x].letter = "";
+            let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10;
+            let myCol = this.state.foundWordEnd % 10;
+            for (let y = 0; y< wordLength; y++) {
+                for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
+                    myBoard[x].letter = myBoard[x-10].letter;
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
                 }
             }
+            myBoard[myCol].letter = ""
+            myBoard[myCol].points = this.letterPoints[myBoard[myCol].letter];
+            columns[myCol] = columns[myCol] - wordLength;
         }
         
-        this.setState({ numLettersPerColumn : colmuns})
-        console.log(myBoard)
+        this.setState({ numLettersPerColumn : columns})
+        // console.log(myBoard)
         this.setState({ placedLetters : myBoard })
 
     }
@@ -532,20 +596,26 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container" onKeyUp={this.ArrowKeys}>
+            <div className="container mb-5"  onKeyUp={this.ArrowKeys}>
 
-                <h1 className="text-center mt-5">Play</h1>
+                {this.state.instructions && !this.state.playGame ? 
+                <GameInstructions startGame={this.startGame}/>
+                :
+                <>
 
-                <div className="row">
-                    <div className="col-md-2 text-center">
+                <h1 className="text-center mt-5 mb-4 bring-front">Play</h1>
+
+                <div className="row desk">
+                    <div className="col-md-3 text-center">
                         <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
+                        <br></br>
+                        <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
                     </div>
-                    <div className="col-md-7 text-center">
+                    <div className="col-md-6 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
                             currentPieceY={this.state.currentPieceY} 
                             pieceSpeed = {this.state.pieceSpeed}
-                            currentPieceID={this.state.currentPieceID}
                             pickNewLetters={this.pickNewLetters}          
                             playLetters={this.state.playLetters}    
                             placedLetters={this.state.placedLetters} 
@@ -556,20 +626,70 @@ class Play extends Component {
                     <div className="col-md-3">
                         <Scores score={this.state.score} level={this.state.level} />
 
-                        <Controls 
-                            startClick={this.startClick} 
-                            stopClick={this.stopClick} 
-                            increaseClick={this.increaseClick} 
-                            downClick={this.downClick} 
-                            leftClick={this.leftClick} 
-                            cycleClick={this.cycleClick} 
-                            rightClick={this.rightClick} 
-                        />
+                        <div className="mt-5">
+                            <Controls 
+                                startClick={this.startClick} 
+                                stopClick={this.stopClick} 
+                                increaseClick={this.increaseClick} 
+                                downClick={this.downClick} 
+                                leftClick={this.leftClick} 
+                                cycleClick={this.cycleClick} 
+                                rightClick={this.rightClick} 
+                            />
+                        </div>
                     </div>
                 </div>
-                {/* <div>Next up: {this.state.nextUp[0]}, {this.state.nextUp[1]}, {this.state.nextUp[2]}</div> */}
-                {/* <div>Playing now: {this.state.playLetters[0].letter}, {this.state.playLetters[1].letter}, {this.state.playLetters[2].letter}</div> */}
-                <button onClick={this.pickNewLetters}>NEW LETTERS</button>
+
+                {/* MOBILE LAYOUT */}
+                <div className="mobile">
+
+                    <div className="row align-items-center">
+                        <div className="col-md-6 no-split text-center">
+                            <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
+                        </div>
+
+                        <div className="col-md-6 no-split">
+                            <Scores score={this.state.score} level={this.state.level} />
+                        </div>
+                    </div>
+
+                    <div className="row mt-3 mb-5 bring-front">
+                        <div className="col-md-12 text-center">
+                            <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
+                        </div>
+                    </div>
+
+                    <div className="row mt-5">
+                        <div className="col-md-12 text-center">
+                            <GameArea 
+                                currentPieceX={this.state.currentPieceX}
+                                currentPieceY={this.state.currentPieceY} 
+                                pieceSpeed = {this.state.pieceSpeed}
+                                pickNewLetters={this.pickNewLetters}          
+                                playLetters={this.state.playLetters}    
+                                placedLetters={this.state.placedLetters} 
+   
+                            />
+                        
+                        </div>
+                    </div>
+
+                    <div className="row mt-2">
+                        <div className="col-md-12 text-center">
+                            <Controls 
+                                startClick={this.startClick} 
+                                stopClick={this.stopClick} 
+                                increaseClick={this.increaseClick} 
+                                downClick={this.downClick} 
+                                leftClick={this.leftClick} 
+                                cycleClick={this.cycleClick} 
+                                rightClick={this.rightClick} 
+                            />
+                        </div>
+                    </div>
+                </div>
+                </>
+                }
             </div>
     
         );

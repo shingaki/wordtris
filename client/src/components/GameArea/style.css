@@ -1,0 +1,19 @@
+@media screen and (max-width: 991px) {
+    .board-cover {
+        left: 53px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .board-cover {
+        /* top: ; */
+        /* left: 53px; */
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .board-cover {
+        top: -75px !important;
+        left: 60px !important;
+    }
+}
