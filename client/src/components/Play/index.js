@@ -35,7 +35,8 @@ class Play extends Component {
         foundWordValue: 0,
         foundWordStart: NaN,
         foundWordEnd: NaN,
-        foundWordType: ""
+        foundWordType: "",
+        isGameOver: false
     }
 
     inputChange = event => {
@@ -486,6 +487,10 @@ class Play extends Component {
         } else {
             //Game over
             console.log("GAME OVER")
+            this.setState({
+                possibleWords : [],
+                isGameOver: true
+            })
             //Modal?? - with option to play again??
             //check to see if there is a new highscore
             //check to see if there is a new high word
@@ -542,55 +547,57 @@ class Play extends Component {
     checkIfItIsAWord = (index) => {
         //recursively checks possibleWords array... 
         //if a word is found, updates score & removes letters from board
-        let word = this.state.possibleWords[index].word
+        if (!this.state.isGameOver) {
+            let word = this.state.possibleWords[index].word
+            console.log(word, index, this.state.possibleWords.length);
+            API.checkWord(word).then(wordData => { 
+                if (wordData.data) { //is a word, update state, score and clear letters
+                    console.log("found word: " + word)
+                    
+                    this.setState({ foundWordID : index})
+                    this.setState({ foundWord : this.state.possibleWords[index].word})
+                    this.setState({ foundWordValue : this.state.possibleWords[index].value})
+                    this.setState({ foundWordStart : this.state.possibleWords[index].start})
+                    this.setState({ foundWordEnd : this.state.possibleWords[index].end})
+                    this.setState({ foundWordType : this.state.possibleWords[index].type})
+                    
+                    // Update Score
+                    this.setState({ score : this.state.score + this.state.foundWordValue})
+                    
+                    // Remove Letter from Board
+                    this.removeFoundWord()
 
-        API.checkWord(word).then(wordData => { 
-            if (wordData.data) { //is a word, update state, score and clear letters
-                console.log("found word: " + word)
-                
-                this.setState({ foundWordID : index})
-                this.setState({ foundWord : this.state.possibleWords[index].word})
-                this.setState({ foundWordValue : this.state.possibleWords[index].value})
-                this.setState({ foundWordStart : this.state.possibleWords[index].start})
-                this.setState({ foundWordEnd : this.state.possibleWords[index].end})
-                this.setState({ foundWordType : this.state.possibleWords[index].type})
-                
-                // Update Score
-                this.setState({ score : this.state.score + this.state.foundWordValue})
-                
-                // Remove Letter from Board
-                this.removeFoundWord()
-
-                console.log(this.state.numLettersPerColumn)
-            } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
-                this.setState({ foundWordID : NaN}) 
-                console.log(this.state.numLettersPerColumn)
-            } else { //Not a word, go to next possible word in array (index + 1)
-                this.checkIfItIsAWord( index + 1 )
-            }
-        })
+                    console.log(this.state.numLettersPerColumn)
+                } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
+                    this.setState({ foundWordID : NaN}) 
+                    console.log(this.state.numLettersPerColumn)
+                } else { //Not a word, go to next possible word in array (index + 1)
+                    this.checkIfItIsAWord( index + 1 )
+                }
+            })
+        }
     }
     
     ArrowKeys = (e) => {
         // left arrow move left
         if (e.keyCode == 37) {
-          console.log("left");
+        //   console.log("left");
           this.leftClick();
         }
         //right arrow move right
         if (e.keyCode === 39) {
           this.rightClick();
-          console.log("right");
+        //   console.log("right");
         }
         //down arrow move down
         if (e.keyCode === 40) {
           this.downClick();
-          console.log("down");
+        //   console.log("down");
         }
         //up arrow cycles
         if (e.keyCode === 38) {
           this.cycleClick();
-          console.log("cycle");
+        //   console.log("cycle");
         }
       }
     
