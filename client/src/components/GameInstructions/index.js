@@ -34,7 +34,6 @@ class GameInstructions extends Component {
         borderRadius: 4,
         opacity: 1,
         backgroundColor: 'rgb(216, 203, 187)',
-        // textAlign: "center"
     };
 
     render() {
@@ -94,18 +93,21 @@ class GameInstructions extends Component {
                         </div>
                     </div>
 
-                    <div className="row mt-4">
+                    <div className="row align-items-center mt-4">
                         <div className="col-md-2">
-                            <button className="cycle" style={{verticalAlign: "middle"}} onClick={this.props.cycleClick}></button>
+                            <button className="btn btn-secondary cycle"><i class="fas fa-sync-alt"></i></button>
                         </div>
                         <div className="col-md-10 text-left">
                             Cycle the order of the letters by pressing the up arrow on your keyboard or this button on the screen.
                         </div>
                     </div>
 
-                    <div className="row mt-4">
+                    <div className="row align-items-center mt-4">
                         <div className="col-md-2">
-                            {`< >`}
+                            <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
+
+                            <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
+
                         </div>
                         <div className="col-md-10 text-left">
                             Left and right arrows on your keyboard (or the arrows on the screen) will move the falling piece left and right, respectfully.
@@ -126,20 +128,11 @@ class GameInstructions extends Component {
                     <button onClick={this.props.startGame} className="btn btn-primary btn-lg">START &#8680;</button>
                 </div>
             </div>                
-            {/* <div className="row text-center mt-3">
-                <div className="col-md-12">
 
-                    When the piece lands, if it has formed a word (either horizontally or vertically), then that word's points will be added to your total score and those letters will disappear from the screen.<br /><br />
-
-                    Ready to play?<br /><br />
-
-                    <button onClick={this.props.startGame}>START</button>
-                </div>
-            </div> */}
-
-            <div className="mobile">
+            {/* MOBILE */}
+            <div className="mobile mt-3">
                 <div className="row justify-content-center align-items-center">
-                    <div className="col-md-2 m-instructions">
+                    <div className="col-md-2 col-sm-3 m-instructions">
                         <div style={{ maxWidth: 200, padding: 5, backgroundColor: "#393e46"}}>
                             <div style={this.style1} className="text-center">
                                 A
@@ -178,25 +171,27 @@ class GameInstructions extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-10 text-left m-instructions">
+                    <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Pieces fall from the top of the screen.  Each piece has three letters on it.
                     </div>
                 </div>
 
-                <div className="row mt-4">
-                    <div className="col-md-2 text-center m-instructions">
-                        <button className="cycle" style={{verticalAlign: "middle"}} onClick={this.props.cycleClick}></button>
+                <div className="row align-items-center mt-4">
+                    <div className="col-md-2 col-sm-3 text-center m-instructions">
+                        <button className="btn btn-secondary cycle cycle-sm"><i class="fas fa-sync-alt"></i></button>
                     </div>
-                    <div className="col-md-10 text-left m-instructions">
+                    <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Cycle the order of the letters by pressing the up arrow on your keyboard or this button on the screen.
                     </div>
                 </div>
 
-                <div className="row mt-4">
-                    <div className="col-md-2 text-center m-instructions">
-                        {`< >`}
+                <div className="row align-items-center mt-4">
+                    <div className="col-md-2 col-sm-3 text-center m-instructions">
+                        <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
+
+                        <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
                     </div>
-                    <div className="col-md-10 text-left m-instructions">
+                    <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Left and right arrows on your keyboard (or the arrows on the screen) will move the falling piece left and right, respectfully.
                     </div>
                 </div>
