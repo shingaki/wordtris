@@ -37,14 +37,18 @@ class Navbar extends Component {
                         <li className="nav-item">
                             <a className={window.location.pathname === "/scores" ? "nav-link active" : "nav-link"}  href="/scores">High Scores</a>
                         </li>
-                        <li className="nav-item">
-                            <a className={window.location.pathname === "/play" ? "nav-link active" : "nav-link"} href="/play">Play</a>
-                        </li>
                         {this.props.loggedin ?
-                        <li className="nav-item">
-                            <a className="nav-link" href="/" onClick={this.logout}>Logout</a>
-                        </li>
-                        : ""}
+                            <li className="nav-item">
+                                <a className={window.location.pathname === "/play" ? "nav-link active" : "nav-link"} href="/play">Play</a>
+                            </li>
+                            : ""
+                        }
+                        {this.props.loggedin ?
+                            <li className="nav-item">
+                                <a className="nav-link" href="/" onClick={this.logout}>Logout</a>
+                            </li>
+                            : ""
+                        }
                     </ul>
 
                 </div>

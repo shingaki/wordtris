@@ -34,6 +34,10 @@ export default {
         return axios.post("/login", checkPlayerName);
     },
 
+    getScores: function () {
+        return axios.get("/highscores");
+    },
+
     // checkWord: Check if it is a word
     checkWord: function (word) {
 

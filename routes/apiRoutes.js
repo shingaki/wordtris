@@ -37,23 +37,28 @@ module.exports = function(app) {
             email: req.body.email,
             password: req.body.password
         }).then(response => {
+            console.log(response);
             req.session.loggedin = true;
             req.session.playerName = req.body.playerName;
+            req.session.userId = response.dataValues.id;
             // res.json(response);
             res.json({
                 loggedin: req.session.loggedin,
-                playerName: req.session.playerName
+                playerName: req.session.playerName,
+                userId: req.session.userId
             })
         })
     })
 
     // auto login for dev purposes
-    app.get("/auto-login", function (req, res) {
+    app.get("/auto-login", (req, res) => {
         req.session.loggedin = true;
         req.session.playerName = "jpaul";
+        req.session.userId = 1;
         res.json({
             loggedin: req.session.loggedin,
-            playerName: req.session.playerName
+            playerName: req.session.playerName,
+            userId: req.session.userId
         });
     });
 
@@ -71,12 +76,14 @@ module.exports = function(app) {
             // if player with those credentials is found
             if (dbResponse !== null) {
                 // log them in
-                console.log("loggin in....")
+                console.log("logging in....")
                 req.session.loggedin = true;
                 req.session.playerName = dbResponse.dataValues.playerName;
+                req.session.userId = dbResponse.dataValues.id;
                 res.json({
                     loggedin: req.session.loggedin,
-                    playerName: req.session.playerName
+                    playerName: req.session.playerName,
+                    userId: req.session.userId
                 })
 
             } else {
@@ -93,7 +100,8 @@ module.exports = function(app) {
         if (req.session.loggedin) {
             res.json({
                 loggedin: req.session.loggedin,
-                playerName: req.session.playerName
+                playerName: req.session.playerName,
+                userId: req.session.userId
             })
         } else {
             res.json({
@@ -103,11 +111,47 @@ module.exports = function(app) {
     })
 
     // logout
-    app.get("/logout", function (req, res) {
-        req.session.destroy(function (err) {
+    app.get("/logout", (req, res) => {
+        req.session.destroy(err => {
             res.redirect("/");
         });
     });
+
+    // get scores from db
+    app.get("/highscores", (req, res) => {
+        console.log("getting scores!!!")
+
+        if (req.session.loggedin) {
+            console.log("logged in")
+            // get global and user scores
+            // db.highestScores.findAll({
+            //     where: {
+            //        id: {
+            //         $between: [0, 4]
+            //        } 
+            //     }
+            // }).then(dbRes => {
+            //     res.json({
+            //         // highestScores: ,
+            //         // highestWords: ,
+            //     })
+            // })
+
+            db.Players.findOne({
+                where: {
+                    id: req.session.userId,
+                },
+                // include: [db.playerScores, db.playerWords]
+            }).then(dbResponse => {
+                console.log(dbResponse);
+                res.json(dbResponse);
+            })
+        } else {
+            console.log("not logged in")
+            // just get global scores
+        }
+    
+    })
 
     // check if word is valid
     app.post("/verifyword", (req, res) => {

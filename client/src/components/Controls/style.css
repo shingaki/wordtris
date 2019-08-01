@@ -1,8 +1,13 @@
 .cycle {
     padding: 1rem;
     border-radius: 50%;
+    width: 58px;
 }
 
 button {
     margin: 0 .5rem;
+}
+
+.down {
+    margin-top: 1rem;
 }

@@ -105,7 +105,7 @@ class Login extends Component {
                             </div>
 
                             <div className="text-center">
-                                <button type="submit" id="login" className="btn btn-primary" onClick={this.loginPlayer}>Submit</button>
+                                <button type="submit" id="login" className="btn btn-primary" onClick={this.loginPlayer}>Login</button>
                             </div>
                         </form>
 

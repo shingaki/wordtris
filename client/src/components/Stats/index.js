@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
-import FormErrors from "../FormErrors";
 
-class Login extends Component {
+class Stats extends Component {
 
     state = {
 
+    }
+
+    componentWillMount = () => {
+        API.getScores().then(response => {
+            console.log(response.data);
+        })
     }
 
     
@@ -149,4 +154,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Stats;

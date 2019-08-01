@@ -151,7 +151,7 @@ class SignUp extends Component {
                             </div>
 
                             <div className="text-center">
-                                <button type="submit" id="signup" className="btn btn-primary" onClick={this.submitForm}>Submit</button>
+                                <button type="submit" id="signup" className="btn btn-primary" onClick={this.submitForm}>Sign Up</button>
                             </div>
                         </form>
 
