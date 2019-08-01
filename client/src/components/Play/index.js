@@ -571,11 +571,32 @@ class Play extends Component {
         })
     }
     
-  
+    ArrowKeys = (e) => {
+        // left arrow move left
+        if (e.keyCode == 37) {
+          console.log("left");
+          this.leftClick();
+        }
+        //right arrow move right
+        if (e.keyCode === 39) {
+          this.rightClick();
+          console.log("right");
+        }
+        //down arrow move down
+        if (e.keyCode === 40) {
+          this.downClick();
+          console.log("down");
+        }
+        //up arrow cycles
+        if (e.keyCode === 38) {
+          this.cycleClick();
+          console.log("cycle");
+        }
+      }
     
     render() {
         return (
-            <div className="container mb-5">
+            <div className="container mb-5"  onKeyUp={this.ArrowKeys}>
 
                 {this.state.instructions && !this.state.playGame ? 
                 <GameInstructions startGame={this.startGame}/>
