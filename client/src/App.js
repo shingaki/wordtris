@@ -4,6 +4,7 @@ import axios from "axios";
 // import logo from "./logo.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Play from "./components/Play";
@@ -53,6 +54,12 @@ class App extends Component {
     );
   }
 
+  HomePage = (props) => {
+    return (
+      <Home updateLoggedInState={this.updateLoggedInState} autoLogin={this.autoLogin} />
+    );
+  }
+
   SignUpSection = (props) => {
     return (
       <SignUp updateLoggedInState={this.updateLoggedInState} />
@@ -72,7 +79,7 @@ class App extends Component {
         <Router>
           <Switch>
             {!this.state.loggedin ?
-              <Route exact path="/" render={this.LoginSection} /> : <Route exact path="/" render={this.StatsSection} />
+              <Route exact path="/" render={this.HomePage} /> : <Route exact path="/" render={this.StatsSection} />
             }
             <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" render={this.SignUpSection} />
