@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./style.css";
-import gameScreenshot from "./game-board.png";
 import API from "../../utils/API";
 import FormErrors from "../FormErrors";
 
@@ -212,7 +211,6 @@ class Home extends Component {
                                 <p>Login or sign up to play!</p>
                             </div>
                         </div>
-                        {/* <img src={gameScreenshot} className="img-fluid" alt="Game Screenshot"/> */}
                     </div>
                     <div className="col-md-6 text-left">
                         <form className="">
