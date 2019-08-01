@@ -7,6 +7,7 @@ import Scores from "../Scores";
 import Controls from "../Controls";
 import API from "../../utils/API";
 import GameInstructions from "../GameInstructions";
+import GameOver from "../GameOver";
 
 const nextList = [];
 
@@ -600,10 +601,47 @@ class Play extends Component {
         //   console.log("cycle");
         }
       }
+
+      GameNotOver =()=>{
+        //
+        this.setState({instructions: true});
+        this.setState({playGame: false});
+        this.setState({score: 0});
+        this.setState({level: 1});
+        this.setState({fallSpeed: 250});
+        this.setState({currentPieceX: 100});
+        this.setState({currentColumn: 4});
+        this.setState({numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0]});
+        this.setState({currentPieceY: -75});
+        this.setState({pieceSpeed: 0});
+        this.setState({currentPieceID: 0});
+        this.setState({nextUp: []});
+        this.setState({playLetters: []});
+        this.setState({placedLetters: []});
+        this.setState({newPlacedLetters: []});
+        this.setState({possibleWords: []});
+        this.setState({foundWordID: NaN});
+        this.setState({foundWord: ""});
+        this.setState({foundWordValue: 0});
+        this.setState({foundWordStart: NaN});
+        this.setState({foundWordEnd: NaN});
+        this.setState({foundWordType: ""});
+        this.setState({isGameOver: false});
+        this.initialSetup();
+      }
     
     render() {
         return (
             <div className="container mb-5"  onKeyUp={this.ArrowKeys}>
+
+                {this.state.isGameOver ? 
+                <GameOver  
+                score={this.state.score} 
+                level={this.state.level}
+                GameNotOver ={this.GameNotOver}
+                /> 
+                :  <>
+            
 
                 {this.state.instructions && !this.state.playGame ? 
                 <GameInstructions startGame={this.startGame}/>
@@ -611,6 +649,7 @@ class Play extends Component {
                 <>
 
                 <h1 className="text-center mt-5 mb-4 bring-front">Play</h1>
+
 
                 <div className="row desk">
                     <div className="col-md-3 text-center">
@@ -646,6 +685,8 @@ class Play extends Component {
                         </div>
                     </div>
                 </div>
+
+                
 
                 {/* MOBILE LAYOUT */}
                 <div className="mobile">
@@ -697,6 +738,7 @@ class Play extends Component {
                 </div>
                 </>
                 }
+                </>}
             </div>
     
         );
