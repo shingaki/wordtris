@@ -30,7 +30,7 @@ class Navbar extends Component {
                                 <a className={window.location.pathname === "/login" ? "nav-link active" : "nav-link"} href="/login">Login</a>
                             </li>
                             <li className="nav-item">
-                                <a className={window.location.pathname === "/signup" ? "nav-link active" : "nav-link"} href="/signup">SignUp</a>
+                                <a className={window.location.pathname === "/signup" ? "nav-link active" : "nav-link"} href="/signup">Sign Up</a>
                             </li>
                             </>
                         }

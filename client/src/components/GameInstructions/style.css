@@ -1,11 +1,26 @@
 @media screen and (max-width: 767px) {
-    .col-md-2.m-instructions {
+    /* .col-md-2.m-instructions {
         flex: 0 0 16.666667%;
         max-width: 16.666667%;
+    } */
+
+    .col-sm-3.m-instructions {
+        flex: 0 0 25%;
+        max-width: 25%;
     }
 
-    .col-md-10.m-instructions {
+    /* .col-md-10.m-instructions {
         flex: 0 0 83.333333%;
         max-width: 83.333333%;
+    } */
+
+    .col-sm-9.m-instructions {
+        flex: 0 0 75%;
+        max-width: 75%;
     }
+}
+
+.cycle-sm {
+    padding: .5rem !important;
+    width: 42px !important;
 }
