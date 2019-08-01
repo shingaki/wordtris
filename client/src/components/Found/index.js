@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react'
-import { Animate } from 'react-move'
-import { easeExpOut } from 'd3-ease'
 
 
 class Found extends PureComponent {

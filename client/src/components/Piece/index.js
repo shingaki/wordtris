@@ -10,7 +10,7 @@ class Piece extends PureComponent {
         <Animate
           start={() => ({
             x: 0,
-            y: 0
+            y: -75
           })}
 
           update={() => ({
