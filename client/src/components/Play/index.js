@@ -9,8 +9,6 @@ import API from "../../utils/API";
 import GameInstructions from "../GameInstructions";
 import GameOver from "../GameOver";
 
-const nextList = [];
-
 class Play extends Component {
 
     state = {
@@ -331,10 +329,10 @@ class Play extends Component {
 
         if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
             for (let x = start; x <= stop; x++) {
-                if (x > start) { 
+                if (x > start && this.state.placedLetters[x].letter !== "") { 
                     current2LetterCombination = this.state.placedLetters[x-1].letter + this.state.placedLetters[x].letter;
                     console.log(current2LetterCombination.toLowerCase(), invalidLetterCombinations.includes(current2LetterCombination.toLowerCase()))
-                 };
+                };
                 if (this.state.placedLetters[x].letter === "") { 
                     //if there is a blank space between start and stop, return empty string, 
                     //this tells the function that called it that there wasn't a valid word between start and stop
@@ -581,7 +579,7 @@ class Play extends Component {
     
     ArrowKeys = (e) => {
         // left arrow move left
-        if (e.keyCode == 37) {
+        if (e.keyCode === 37) {
         //   console.log("left");
           this.leftClick();
         }
