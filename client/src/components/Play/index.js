@@ -637,7 +637,7 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container mb-5"  onKeyUp={this.ArrowKeys}>
+            <div className="container"  onKeyUp={this.ArrowKeys}>
 
                 {this.state.isGameOver ? 
                 <GameOver  
