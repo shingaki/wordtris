@@ -179,8 +179,6 @@ class Play extends Component {
         this.setState({ newPlacedLetters : myPlacedLetters})
         this.setState({ numLettersPerColumn : columns})
         this.setState({ placedLetters : myBoard })
-        // console.log(JSON.stringify(this.state.newPlacedLetters))
-        // console.log("my board = " + JSON.stringify(this.state.placedLetters))
     }
 
     componentDidMount = () => {
@@ -397,7 +395,7 @@ class Play extends Component {
         let minLetter; 
         let maxLetter; 
 
-        for (let x = 0; x < 3; x++) { //loops 3 times, once for each new placed letter
+        for (let x = 0; x < this.state.newPlacedLetters.length; x++) { //loops 3 times, once for each new placed letter
             currentLetter = this.state.newPlacedLetters[x];
             
             //adds all horizontal words to myPossibleWords
@@ -512,7 +510,7 @@ class Play extends Component {
     removeFoundWord = () => {
         let myBoard = [];
         let columns = [];
-        
+        let myPlacedLetters = [];
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
@@ -530,6 +528,7 @@ class Play extends Component {
                 for (let y = x; y >= 10; y = y - 10) {
                     myBoard[y].letter = myBoard[y-10].letter;
                     myBoard[y].points = this.letterPoints[myBoard[y].letter];
+                    if (myBoard[y].letter !== "") {myPlacedLetters.push(y)}
                 }
                 columns[x % 10] = columns[x % 10] - 1;
             }
@@ -540,6 +539,7 @@ class Play extends Component {
                 for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
                     myBoard[x].letter = myBoard[x-10].letter;
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
+                    if (y+1 === wordLength && myBoard[x].letter !== "") {myPlacedLetters.push(x)}
                 }
             }
             myBoard[myCol].letter = ""
@@ -547,10 +547,24 @@ class Play extends Component {
             columns[myCol] = columns[myCol] - wordLength;
         }
         
+        console.log(myPlacedLetters.length, myPlacedLetters)
         this.setState({ numLettersPerColumn : columns})
         // console.log(myBoard)
         this.setState({ placedLetters : myBoard })
-        this.startTick();
+        this.setState({ newPlacedLetters : myPlacedLetters})
+        if (myPlacedLetters.length === 0) {
+            this.startTick();
+        } else {
+            this.buildPossibleWordsArray();
+            //go through array of posisble words to check if there is a word
+            this.setState({ foundWordID : NaN })
+            if (this.state.possibleWords.length > 0) {
+                this.checkIfItIsAWord(0)
+            } else {
+                this.startTick();
+            };
+        }
+        
 
     }
 
@@ -576,6 +590,7 @@ class Play extends Component {
                     
                     // Remove Letter from Board
                     this.removeFoundWord()
+                    console.log("after found word remove, newPlacedLetters = " + this.state.newPlacedLetters)
 
                     console.log(this.state.numLettersPerColumn)
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
