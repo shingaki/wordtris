@@ -18,10 +18,10 @@ const boardCover = {
   backgroundColor: '#eee',
   position: 'absolute',
   margin: '5px 3px 10px',
-  width: 250,
+  width: 300,
   height: 75,
   top: -75,
-  left: 115,
+  left: 105,
   zIndex: 7
 }
 

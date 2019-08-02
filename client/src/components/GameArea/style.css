@@ -1,19 +1,47 @@
 @media screen and (max-width: 991px) {
     .board-cover {
-        left: 53px !important;
+        left: 43px !important;
     }
 }
 
 @media screen and (max-width: 767px) {
     .board-cover {
-        /* top: ; */
-        /* left: 53px; */
+        left: 117px !important;
     }
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 575px) {
     .board-cover {
-        top: -75px !important;
-        left: 60px !important;
+        left: 138px !important;
+    }
+}
+
+@media screen and (max-width: 532px) {
+    .board-cover {
+        left: 116px !important;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .board-cover {
+        left: 93px !important;
+    }
+}
+
+@media screen and (max-width: 441px) {
+    .board-cover {
+        left: 69px !important;
+    }
+}
+
+@media screen and (max-width: 396px) {
+    .board-cover {
+        left: 40px !important;
+    }
+}
+
+@media screen and (max-width: 337px) {
+    .board-cover {
+        left: 13px !important;
     }
 }
