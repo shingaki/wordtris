@@ -241,14 +241,14 @@ class Play extends Component {
 
     downClick = () => {
         //moves current piece down the 1 letter block in distance
-        if (this.state.currentPieceY < 425 - 25 * this.state.numLettersPerColumn[this.state.currentColumn]) {
+        if (this.state.currentPieceY > -75 && this.state.currentPieceY < 425 - 25 * this.state.numLettersPerColumn[this.state.currentColumn]) {
             this.setState({ currentPieceY: this.state.currentPieceY + 25 })
         }
     }
 
     leftClick = () => {
         //moves current piece left one column, checks to make sure current piece is clear of already placed letters and isn't at edge of gameboard
-        if (this.state.currentPieceX > 0 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn - 1]) {
+        if (this.state.currentPieceY > -75 && this.state.currentPieceX > 0 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn - 1]) {
             this.setState({ currentPieceX: this.state.currentPieceX - 25 })
             this.setState({ currentColumn: this.state.currentColumn - 1 })
         }
@@ -256,7 +256,7 @@ class Play extends Component {
 
     rightClick = () => {
         //moves current piece right one column, checks to make sure current piece is clear of already placed letters and isn't at edge of gameboard
-        if (this.state.currentPieceX < 225 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn + 1]) {
+        if (this.state.currentPieceY > -75 && this.state.currentPieceX < 225 && this.state.currentPieceY < 430 - 25 * this.state.numLettersPerColumn[this.state.currentColumn + 1]) {
             this.setState({ currentPieceX: this.state.currentPieceX + 25 })
             this.setState({ currentColumn: this.state.currentColumn + 1 })
         }
@@ -265,12 +265,15 @@ class Play extends Component {
     cycleClick = () => {
         //cycles the letters of the current piece
         var cycleLetters = [];
-        cycleLetters[0] = this.state.playLetters[2]
-        cycleLetters[1] = this.state.playLetters[0]
-        cycleLetters[2] = this.state.playLetters[1]
-        this.setState({
-            playLetters: cycleLetters
-        })
+
+        if (this.state.currentPieceY > -75) {
+            cycleLetters[0] = this.state.playLetters[2]
+            cycleLetters[1] = this.state.playLetters[0]
+            cycleLetters[2] = this.state.playLetters[1]
+            this.setState({
+                playLetters: cycleLetters
+            })
+        }
     }
 
     tick() {
