@@ -613,8 +613,6 @@ class Play extends Component {
       }
 
       GameNotOver =()=>{
-        //
-        this.setState({instructions: true});
         this.setState({playGame: false});
         this.setState({score: 0});
         this.setState({level: 1});
@@ -642,7 +640,7 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container mb-5"  onKeyUp={this.ArrowKeys}>
+            <div className="container"  onKeyUp={this.ArrowKeys}>
 
                 {this.state.isGameOver ? 
                 <GameOver  
