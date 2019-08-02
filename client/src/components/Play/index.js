@@ -610,8 +610,6 @@ class Play extends Component {
       }
 
       GameNotOver =()=>{
-        //
-        this.setState({instructions: true});
         this.setState({playGame: false});
         this.setState({score: 0});
         this.setState({level: 1});
