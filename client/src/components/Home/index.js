@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
 import FormErrors from "../FormErrors";
+import logo from "./logo.png";
 
 class Home extends Component {
   state = {
@@ -138,7 +139,7 @@ class Home extends Component {
     
           >
               {/*style={{ backgroundColor: "#bb8fa9" }} */}
-            <img src={process.env.PUBLIC_URL + "../../LogoOptions/Logo.png"} style={{ maxWidth: 400, padding: 5, position: "relative" }}/>
+            <img src={logo} style={{ maxWidth: 400, padding: 5, position: "relative" }}/>
             {/*
                         <h2 className="mt-3">Welcome to Wordtris!</h2>
                         <p>A mix between scrabble and tetris.</p>
