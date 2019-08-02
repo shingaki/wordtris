@@ -17,7 +17,7 @@ class Play extends Component {
 
         score: 0,
         level: 1,
-        fallSpeed: 250,
+        fallSpeed: 150,
         currentPieceX: 100,
         currentColumn: 4,
         numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0],
@@ -224,10 +224,7 @@ class Play extends Component {
         })
         
         //begins falling of first piece
-        this.timerID = setInterval(
-            () => this.tick(),
-            this.state.fallSpeed
-        );
+        this.startTick();
     }
 
     stopClick = () => {
@@ -239,10 +236,7 @@ class Play extends Component {
         //increases fallSpeed
         this.setState({ fallSpeed: this.state.fallSpeed / 2 })
         clearInterval(this.timerID);
-        this.timerID = setInterval(
-            () => this.tick(),
-            this.state.fallSpeed
-        );
+        this.startTick();
     }
 
     downClick = () => {
@@ -461,19 +455,7 @@ class Play extends Component {
         
     }
 
-    endOfRound = () => {
-        
-        // save dropping piece at its ending position as new pieces
-        this.placeLetters();
-  
-        //build array of possible words should be ordered in decreasing point value
-        this.buildPossibleWordsArray();
-        //go through array of posisble words to check if there is a word
-        this.setState({ foundWordID : NaN })
-        if (this.state.possibleWords.length > 0) {this.checkIfItIsAWord(0)};
-        
-        
-        
+    startNextRound = () => {
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
             // pick new "next up" letters, move next up to play now
             this.pickNewLetters();
@@ -483,6 +465,7 @@ class Play extends Component {
             this.setState({ currentColumn: 4 }) //set starting column
             this.setState({ currentPieceY: -75 }) //set starting Y position 
             this.setState({ pieceSpeed: 750}) //reset visual effect for falling piece
+
         } else {
             //Game over
             console.log("GAME OVER")
@@ -496,7 +479,31 @@ class Play extends Component {
             
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
+    }
 
+    startTick = () => {
+        this.timerID = setInterval(
+            () => this.tick(),
+            this.state.fallSpeed
+        );
+    }
+
+    endOfRound = () => {
+        
+        // save dropping piece at its ending position as new pieces
+        this.placeLetters();
+        clearInterval(this.timerID);
+        //build array of possible words should be ordered in decreasing point value
+        this.buildPossibleWordsArray();
+        //go through array of posisble words to check if there is a word
+        this.setState({ foundWordID : NaN })
+        if (this.state.possibleWords.length > 0) {
+            this.checkIfItIsAWord(0)
+        } else {
+            this.startTick();
+        };
+        this.startNextRound();
+    
     }
 
     removeFoundWord = () => {
@@ -540,6 +547,7 @@ class Play extends Component {
         this.setState({ numLettersPerColumn : columns})
         // console.log(myBoard)
         this.setState({ placedLetters : myBoard })
+        this.startTick();
 
     }
 
@@ -570,6 +578,7 @@ class Play extends Component {
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                     this.setState({ foundWordID : NaN}) 
                     console.log(this.state.numLettersPerColumn)
+                    this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
                     this.checkIfItIsAWord( index + 1 )
                 }
@@ -606,7 +615,7 @@ class Play extends Component {
         this.setState({playGame: false});
         this.setState({score: 0});
         this.setState({level: 1});
-        this.setState({fallSpeed: 250});
+        this.setState({fallSpeed: 150});
         this.setState({currentPieceX: 100});
         this.setState({currentColumn: 4});
         this.setState({numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0]});
