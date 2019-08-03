@@ -18,15 +18,15 @@ class Controls extends Component {
                     
                     <br></br>
 
-                    <button className="btn btn-secondary" onClick={this.props.leftClick}><i class="fas fa-chevron-left"></i></button>
+                    <button className="btn btn-secondary" onClick={this.props.leftClick}><i className="fas fa-chevron-left"></i></button>
 
-                    <button className="btn btn-secondary cycle" onClick={this.props.cycleClick}><i class="fas fa-sync-alt"></i></button>
+                    <button className="btn btn-secondary cycle" onClick={this.props.cycleClick}><i className="fas fa-sync-alt"></i></button>
 
-                    <button className="btn btn-secondary" onClick={this.props.rightClick}><i class="fas fa-chevron-right"></i></button>
+                    <button className="btn btn-secondary" onClick={this.props.rightClick}><i className="fas fa-chevron-right"></i></button>
 
                     <br />
 
-                    <button className="btn btn-secondary down" onClick={this.props.downClick}><i class="fas fa-chevron-down"></i></button>
+                    <button className="btn btn-secondary down" onClick={this.props.downClick}><i className="fas fa-chevron-down"></i></button>
 
                 </div>
             </div>
