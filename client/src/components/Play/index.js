@@ -731,7 +731,11 @@ class Play extends Component {
 
                     <div className="row mt-3 mb-5 bring-front">
                         <div className="col-md-12 text-center">
-                            <Found foundWord={this.state.foundWord} foundWordValue={this.state.foundWordValue} />
+                            <Found 
+                                foundWord={this.state.foundWord} 
+                                foundWordValue={this.state.foundWordValue}
+                                allFoundWords={this.state.allFoundWords}
+                            />
                         </div>
                     </div>
 

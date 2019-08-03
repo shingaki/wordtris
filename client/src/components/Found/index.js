@@ -9,9 +9,12 @@ class Found extends PureComponent {
           Last Found Word:
         </div>
         <div>
-          {this.props.foundWord} ({this.props.foundWordValue})
-
-
+          {/* {this.props.foundWord} ({this.props.foundWordValue}) */}
+          {this.props.allFoundWords.map(word => {
+            return (
+              <div>{word.word} ({word.value})</div>
+            )
+          })}
 
         </div>
       </div>
