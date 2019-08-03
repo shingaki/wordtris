@@ -23,7 +23,6 @@ class Play extends Component {
         numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0],
         currentPieceY: -75,
         pieceSpeed: 0,
-        currentPieceID: 0,
         nextUp: [],
         playLetters: [],
         placedLetters: [],
@@ -36,7 +35,9 @@ class Play extends Component {
         foundWordStart: NaN,
         foundWordEnd: NaN,
         foundWordType: "",
-        isGameOver: false
+        isGameOver: false,
+        numPiecesPlayed: 0,
+        lastPieceThatFoundWord: 0
     }
 
     inputChange = event => {
@@ -176,10 +177,16 @@ class Play extends Component {
         columns[this.state.currentColumn] = columns[this.state.currentColumn] + 3
 
         //set states
-        this.setState({ newPlacedLetters : myPlacedLetters})
-        this.setState({ numLettersPerColumn : columns})
-        this.setState({ placedLetters : myBoard })
-        this.setState({ allFoundWords : []})
+        this.setState({ 
+            newPlacedLetters : myPlacedLetters,
+            numLettersPerColumn : columns,
+            placedLetters : myBoard,
+            numPiecesPlayed : this.state.numPiecesPlayed + 1
+        })
+
+        console.log (this.state.numPiecesPlayed)
+
+        
     }
 
     componentDidMount = () => {
@@ -572,6 +579,12 @@ class Play extends Component {
             API.checkWord(word).then(wordData => { 
                 if (wordData.data) { //is a word, update state, score and clear letters
                     console.log("found word: " + word)
+                    if (this.state.numPiecesPlayed !== this.state.lastPieceThatFoundWord) {
+                        this.setState({ 
+                            allFoundWords : [],
+                            lastPieceThatFoundWord : this.state.numPiecesPlayed
+                        })
+                    }
                     let myWords = [];
                     let currentWord = {}
                     for (let x = 0; x< this.state.allFoundWords.length; x++) {
@@ -638,7 +651,6 @@ class Play extends Component {
         this.setState({numLettersPerColumn: [0,0,0,0,0,0,0,0,0,0]});
         this.setState({currentPieceY: -75});
         this.setState({pieceSpeed: 0});
-        this.setState({currentPieceID: 0});
         this.setState({nextUp: []});
         this.setState({playLetters: []});
         this.setState({placedLetters: []});
