@@ -95,7 +95,7 @@ class GameInstructions extends Component {
 
                     <div className="row align-items-center mt-4">
                         <div className="col-md-2">
-                            <button className="btn btn-secondary cycle"><i class="fas fa-sync-alt"></i></button>
+                            <button className="btn btn-secondary cycle"><i className="fas fa-sync-alt"></i></button>
                         </div>
                         <div className="col-md-10 text-left">
                             Cycle the order of the letters by pressing the up arrow on your keyboard or this button on the screen.
@@ -104,9 +104,9 @@ class GameInstructions extends Component {
 
                     <div className="row align-items-center mt-4">
                         <div className="col-md-2">
-                            <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
+                            <button className="btn btn-secondary btn-sm"><i className="fas fa-chevron-left"></i></button>
 
-                            <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
+                            <button className="btn btn-secondary btn-sm"><i className="fas fa-chevron-right"></i></button>
 
                         </div>
                         <div className="col-md-10 text-left">
@@ -178,7 +178,7 @@ class GameInstructions extends Component {
 
                 <div className="row align-items-center mt-4">
                     <div className="col-md-2 col-sm-3 text-center m-instructions">
-                        <button className="btn btn-secondary cycle cycle-sm"><i class="fas fa-sync-alt"></i></button>
+                        <button className="btn btn-secondary cycle cycle-sm"><i className="fas fa-sync-alt"></i></button>
                     </div>
                     <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Cycle the order of the letters by pressing the up arrow on your keyboard or this button on the screen.
@@ -187,9 +187,9 @@ class GameInstructions extends Component {
 
                 <div className="row align-items-center mt-4">
                     <div className="col-md-2 col-sm-3 text-center m-instructions">
-                        <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-left"></i></button>
+                        <button className="btn btn-secondary btn-sm"><i className="fas fa-chevron-left"></i></button>
 
-                        <button className="btn btn-secondary btn-sm"><i class="fas fa-chevron-right"></i></button>
+                        <button className="btn btn-secondary btn-sm"><i className="fas fa-chevron-right"></i></button>
                     </div>
                     <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Left and right arrows on your keyboard (or the arrows on the screen) will move the falling piece left and right, respectfully.
