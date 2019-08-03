@@ -20,9 +20,6 @@ class Next extends PureComponent {
         </div>
         <div style={trackStyles}>
 
-
-
-
           {this.props.nextUp.map((item, i) => {
             let style = {
               position: 'relative',

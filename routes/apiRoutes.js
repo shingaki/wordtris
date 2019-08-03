@@ -155,16 +155,16 @@ module.exports = function(app) {
 
     // check if word is valid
     app.post("/verifyword", (req, res) => {
-        console.log("req body");
-        console.log(req.body)
+        // console.log("req body");
+        // console.log(req.body)
         var word = req.body.word;
-        console.log(word);
+        // console.log(word);
 
         if (myTest.myTrie.hasWord(word)) {
-            console.log("word exists")
+            // console.log("word exists")
             res.json(true);
         } else {
-            console.log("word does not exist")
+            // console.log("word does not exist")
             res.json(false);
         }
 
