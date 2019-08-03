@@ -10,6 +10,9 @@ class Found extends PureComponent {
         </div>
         <div>
           {this.props.foundWord} ({this.props.foundWordValue})
+
+
+
         </div>
       </div>
     )
