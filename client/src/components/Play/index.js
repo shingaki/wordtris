@@ -183,10 +183,7 @@ class Play extends Component {
             placedLetters : myBoard,
             numPiecesPlayed : this.state.numPiecesPlayed + 1
         })
-
-        console.log (this.state.numPiecesPlayed)
-
-        
+      
     }
 
     componentDidMount = () => {
@@ -299,9 +296,20 @@ class Play extends Component {
         return myValue
     }
 
+    containsVowels = (word) => {
+        let vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
+        
+        for (let x = 0; x < word.length; x++) {
+           
+           if (vowels.includes(word[x])) {return true}
+        }
+        return false
+    }
+
     buildHorizontalWordFromBoard = (start, stop) => {
         //using state.placedLetters, builds a string based on given start & stop position (horizontal)
         let myWord = "";
+        
         let invalidLetterCombinations = [
             "bf", "bk", "bg", "bq", "bx", "bz", 
             "cf", "cj", "cv", "cx", "cz", 
@@ -382,7 +390,7 @@ class Play extends Component {
                 current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
             };
             if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
-                return "" 
+                return ""
             } else {
                 myWord = myWord + this.state.placedLetters[x].letter //build string
             }    
@@ -411,7 +419,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=2 insures that word is 3 letters or more
                         currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter); //convert letters on board into string
-                        if (currentWord !== "") { 
+                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(currentWord.trim()),
                                 word: currentWord,
@@ -435,7 +443,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=20 insures that word is 3 letters or more
                         currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter);
-                        if (currentWord !== "") { 
+                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(currentWord.trim()),
                                 word: currentWord,
@@ -453,6 +461,7 @@ class Play extends Component {
         myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
         //set state with possibleWords array
         this.setState({ possibleWords : myPossibleWords })
+        console.log(this.state.possibleWords)
     }
 
     startNextRound = () => {
@@ -605,7 +614,7 @@ class Play extends Component {
                     this.setState({ foundWordStart : this.state.possibleWords[index].start})
                     this.setState({ foundWordEnd : this.state.possibleWords[index].end})
                     this.setState({ foundWordType : this.state.possibleWords[index].type})
-                    console.log("list of current words: " + JSON.stringify(this.state.allFoundWords))
+
                     
                     // Update Score
                     this.setState({ score : this.state.score + this.state.foundWordValue * this.state.allFoundWords.length})
