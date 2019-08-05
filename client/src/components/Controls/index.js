@@ -8,14 +8,7 @@ class Controls extends Component {
             <div className="row">
                 <div className="col-md-12 text-center main">
                     <button onClick={this.props.startClick}>Start</button>
-
-                    
-                    <button onClick={this.props.stopClick}>Stop</button><br />
-                    
-                    <button onClick={this.props.increaseClick}>Increase Speed</button>
-                    
-                    <button onClick={this.props.downClick}>Down</button><br />
-                    
+                                                           
                     <br></br>
 
                     <button className="btn btn-secondary" onClick={this.props.leftClick}><i className="fas fa-chevron-left"></i></button>
@@ -34,13 +27,6 @@ class Controls extends Component {
 
                 <div className="col-md-12 text-center mid-mobile">
                     <button onClick={this.props.startClick}>Start</button>
-
-
-                    <button onClick={this.props.stopClick}>Stop</button><br />
-
-                    <button onClick={this.props.increaseClick}>Increase Speed</button>
-
-                    <button onClick={this.props.downClick}>Down</button><br />
 
                     <br></br>
 
