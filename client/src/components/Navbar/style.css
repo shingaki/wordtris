@@ -18,3 +18,11 @@ body {
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(238, 238, 238, 0.6);
 }
+
+.navbar-dark .navbar-toggler {
+    border: none;
+}
+
+button:focus.navbar-toggler {
+    outline: none;
+}
