@@ -36,6 +36,14 @@ class PlacedPieces extends PureComponent {
             style.opacity = 0
           }
 
+          if (item.bonus === 2) {
+            style.backgroundColor = "rgba(0, 204, 255)"
+          } else if (item.bonus === 3) {
+            style.backgroundColor = "rgba(0, 204, 153)"
+          } else if (item.bonus === 4) {
+            style.backgroundColor = "rgba(255, 153, 255)"
+          }
+
           return (
             
             <div

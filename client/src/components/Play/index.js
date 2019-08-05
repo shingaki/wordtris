@@ -29,7 +29,6 @@ class Play extends Component {
         newPlacedLetters: [],
         possibleWords: [],
         allFoundWords: [],
-        foundWordID: NaN,
         foundWord: "",
         foundWordValue: 0,
         foundWordStart: NaN,
@@ -117,7 +116,8 @@ class Play extends Component {
         for (var i = 0; i < 200; i++) {
             emptyBoard.push({
                 letter: "",
-                points: this.letterPoints[""]
+                points: this.letterPoints[""],
+                bonus: 1
             })
         }
 
@@ -129,12 +129,13 @@ class Play extends Component {
         var nextList = [];
         // generate three letters
         for (var i = 0; i < 3; i++) {
-            var random = Math.floor(Math.random() * 26);
-            var randomLetter = this.letters[random];
+            let random = Math.floor(Math.random() * this.weightedLetters.length);
+            let randomLetter = this.weightedLetters[random];
             // save each letter and its score
             nextList.push({
                 letter: randomLetter,
-                points: this.letterPoints[randomLetter]
+                points: this.letterPoints[randomLetter],
+                bonus: 1
             })
         }
         // move next up letters to play letters
@@ -181,12 +182,14 @@ class Play extends Component {
             newPlacedLetters : myPlacedLetters,
             numLettersPerColumn : columns,
             placedLetters : myBoard,
-            numPiecesPlayed : this.state.numPiecesPlayed + 1
+            numPiecesPlayed : this.state.numPiecesPlayed + 1,
+            foundWord : "",
+            foundWordValue : 0,
+            foundWordStart : NaN,
+            foundWordEnd : NaN,
+            foundWordType : ""
         })
-
-        console.log (this.state.numPiecesPlayed)
-
-        
+     
     }
 
     componentDidMount = () => {
@@ -206,18 +209,20 @@ class Play extends Component {
             // save each letter and its score
             nextList.push({
                 letter: randomLetter,
-                points: this.letterPoints[randomLetter]
+                points: this.letterPoints[randomLetter],
+                bonus: 1
             })
         }
 
         // generate play now three letters
         for (var i = 0; i < 3; i++) {
-            let random = Math.floor(Math.random() * 26);
-            let randomLetter = this.letters[random];
+            let random = Math.floor(Math.random() * this.weightedLetters.length);
+            let randomLetter = this.weightedLetters[random];
             // save each letter and its score
             playNow.push({
                 letter: randomLetter,
-                points: this.letterPoints[randomLetter]
+                points: this.letterPoints[randomLetter],
+                bonus: 1
             })
         }
         // move next up letters to play letters
@@ -290,18 +295,41 @@ class Play extends Component {
         }
     }
 
-    wordValue = (myWord) => {
-        //gets value of myWord
+    wordValue = (start, end, type) => {
         let myValue = 0;
-        for (let x = 0; x < myWord.length; x++) {
-            myValue = myValue + this.letterPoints[myWord[x]]
+        // let myBoard = [];
+        let delta = 0;
+
+        if (type === "horizontal") {
+            delta = 1
+        } else if (type === "vertical") {
+            delta = 10
+        }
+
+        // //get current board of letters
+        // for (let x = 0; x<200; x++) {
+        //     myBoard[x] = this.state.placedLetters[x]
+        // } 
+
+        for (let y = start; y <= end; y=y+delta) {
+            myValue = myValue + this.state.placedLetters[y].points * this.state.placedLetters[y].bonus
         }
         return myValue
     }
 
-    buildHorizontalWordFromBoard = (start, stop) => {
+    containsVowels = (word) => {
+        let vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
+        
+        for (let x = 0; x < word.length; x++) {
+           if (vowels.includes(word[x])) {return true}
+        }
+        return false
+    }
+
+    buildHorizontalWordFromBoard = (start, stop, check2letters) => {
         //using state.placedLetters, builds a string based on given start & stop position (horizontal)
         let myWord = "";
+        
         let invalidLetterCombinations = [
             "bf", "bk", "bg", "bq", "bx", "bz", 
             "cf", "cj", "cv", "cx", "cz", 
@@ -337,7 +365,7 @@ class Play extends Component {
                     //if there is a blank space between start and stop, return empty string, 
                     //this tells the function that called it that there wasn't a valid word between start and stop
                     return "" 
-                } else if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
+                } else if (x > start && check2letters && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
                     return "" 
                 } else {
                     myWord = myWord + this.state.placedLetters[x].letter //build string
@@ -348,7 +376,7 @@ class Play extends Component {
         return myWord
     }
 
-    buildVerticalWordFromBoard = (start, stop) => {
+    buildVerticalWordFromBoard = (start, stop, check2letters) => {
         //using state.placedLetters, builds a string based on given start & stop position (vertical)
         let myWord = ""
         let invalidLetterCombinations = [
@@ -381,8 +409,8 @@ class Play extends Component {
             if (x > start) { 
                 current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
             };
-            if (x > start && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
-                return "" 
+            if (x > start && check2letters && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
+                return ""
             } else {
                 myWord = myWord + this.state.placedLetters[x].letter //build string
             }    
@@ -410,10 +438,10 @@ class Play extends Component {
                     if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && (lastLetter-firstLetter >=2)) {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=2 insures that word is 3 letters or more
-                        currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter); //convert letters on board into string
-                        if (currentWord !== "") { 
+                        currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter, true); //convert letters on board into string
+                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
                             myPossibleWords.push({ //push string and other values to array
-                                value: this.wordValue(currentWord.trim()),
+                                value: this.wordValue(firstLetter, lastLetter, "horizontal"),
                                 word: currentWord,
                                 start: firstLetter,
                                 end: lastLetter,
@@ -434,10 +462,10 @@ class Play extends Component {
                     if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && (lastLetter-firstLetter >=20)) {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=20 insures that word is 3 letters or more
-                        currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter);
-                        if (currentWord !== "") { 
+                        currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter, true);
+                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
                             myPossibleWords.push({ //push string and other values to array
-                                value: this.wordValue(currentWord.trim()),
+                                value: this.wordValue(firstLetter, lastLetter, "vertical"),
                                 word: currentWord,
                                 start: firstLetter,
                                 end: lastLetter,
@@ -453,6 +481,7 @@ class Play extends Component {
         myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
         //set state with possibleWords array
         this.setState({ possibleWords : myPossibleWords })
+        console.log(this.state.possibleWords)
     }
 
     startNextRound = () => {
@@ -472,10 +501,7 @@ class Play extends Component {
                 possibleWords : [],
                 isGameOver: true
             })
-            //Modal?? - with option to play again??
-            //check to see if there is a new highscore
-            //check to see if there is a new high word
-            
+           
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
     }
@@ -487,15 +513,119 @@ class Play extends Component {
         );
     }
 
+    containsSingleLetter = (word) => {
+        let letter = word.charAt(0)
+        
+        for (let x = 1; x < word.length; x++) {
+           if (letter !== word.charAt(x)) {return false}
+        }
+        return true
+    }
+
+    checkForLetterBonuses = () => {
+        let currentWord = "";
+        let currentLetter;
+        let minLetter; 
+        let maxLetter;                             
+        this.setState({ 
+            foundWord : "",
+            foundWordValue : 0,
+            foundWordStart : NaN,
+            foundWordEnd : NaN,
+            foundWordType : ""
+        })
+
+
+        for (let x = 0; x < this.state.newPlacedLetters.length; x++) { //loops 3 times, once for each new placed letter
+            currentLetter = this.state.newPlacedLetters[x];
+            
+            //adds all horizontal words to myPossibleWords
+            //set paramenters of current row to be evaluated
+            minLetter = currentLetter - (currentLetter % 10);  //first spot on current row
+            maxLetter = minLetter + 10; //last spot on current row
+            //nested for loop runs through all combinations of minLetter & maxLetter
+            for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter++) {
+                for (let lastLetter = currentLetter; lastLetter < maxLetter; lastLetter++) {
+                    if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && (lastLetter-firstLetter >=2)) {
+                        //above if statement makes sure current letter is included in evaluation
+                        //and >=2 insures that word is 3 letters or more
+                        currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter, false); //convert letters on board into string
+                        if (currentWord !== "" && this.containsSingleLetter(currentWord) && currentWord.length > this.state.foundWord.length) { 
+                            this.setState({ 
+                                foundWord : currentWord,
+                                foundWordValue : 0,
+                                foundWordStart : firstLetter,
+                                foundWordEnd : lastLetter,
+                                foundWordType : "horizontal"
+                            })
+                        }
+                    }
+                }
+            }
+            
+            //adds all vertical words to myPossibleWords
+            //set paramenters of current row to be evaluated
+            minLetter = currentLetter  
+            maxLetter = 190 + this.state.currentColumn; //bottom of current column
+            //nested for loop runs through all combinations of minLetter & maxLetter
+            for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter=firstLetter+10) {
+                for (let lastLetter = currentLetter; lastLetter <= maxLetter; lastLetter=lastLetter+10) {
+                    if (!(firstLetter < currentLetter && lastLetter < currentLetter) && !(firstLetter > currentLetter && lastLetter > currentLetter) && (lastLetter-firstLetter >=20)) {
+                        //above if statement makes sure current letter is included in evaluation
+                        //and >=20 insures that word is 3 letters or more
+                        currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter, false);
+                        if (currentWord !== "" && this.containsSingleLetter(currentWord) && currentWord.length > this.state.foundWord.length) { 
+                            this.setState({ 
+                                foundWord : currentWord,
+                                foundWordValue : 0,
+                                foundWordStart : firstLetter,
+                                foundWordEnd : lastLetter,
+                                foundWordType : "vertical"
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+        if (this.state.foundWord.length > 0) {
+            let myLetter = this.state.foundWord.charAt(0)
+            let myBonus = this.state.foundWord.length - 1
+            this.updateLetterBonuses(myLetter, myBonus)
+            this.removeFoundWord(false)
+
+            //update bonus of all remaing letters
+        }
+    }
+
+    updateLetterBonuses = (letter, bonus) => {
+        let myBoard = [];
+       
+        //get current board of letters
+        for (let x = 0; x<200; x++) {
+            myBoard[x] = this.state.placedLetters[x]
+        } 
+
+        for (let y = 0; y < 200; y++) {
+            if (myBoard[y].letter === letter) {myBoard[y].bonus = bonus}
+        }
+
+        this.setState({ placedLetters : myBoard })
+        console.log(this.state.placedLetters)
+    }
+
     endOfRound = () => {
         
         // save dropping piece at its ending position as new pieces
         this.placeLetters();
         clearInterval(this.timerID);
+
+        // check for letter bonuses
+        this.checkForLetterBonuses();
         //build array of possible words should be ordered in decreasing point value
         this.buildPossibleWordsArray();
         //go through array of posisble words to check if there is a word
-        this.setState({ foundWordID : NaN })
+
         if (this.state.possibleWords.length > 0) {
             this.checkIfItIsAWord(0)
         } else {
@@ -505,10 +635,12 @@ class Play extends Component {
     
     }
 
-    removeFoundWord = () => {
+    removeFoundWord = (actualWords) => {
         let myBoard = [];
         let columns = [];
         let myPlacedLetters = [];
+
+        
 
         //get current heights of gameboard columns
         for (let x = 0; x<10; x++) {
@@ -528,44 +660,53 @@ class Play extends Component {
                 for (let y = x; y >= 10; y = y - 10) {
                     myBoard[y].letter = myBoard[y-10].letter;
                     myBoard[y].points = this.letterPoints[myBoard[y].letter];
+                    myBoard[y].bonus = myBoard[y-10].bonus
                     if (myBoard[y].letter !== "") {myPlacedLetters.push(y)}
                 }
                 columns[x % 10] = columns[x % 10] - 1;
             }
             for (let x = 1; x < this.state.newPlacedLetters.length; x++) {
-                myPlacedLetters.push(this.state.newPlacedLetters[x])
+                if (!myPlacedLetters.includes(this.state.newPlacedLetters[x])) {
+                    myPlacedLetters.push(this.state.newPlacedLetters[x])
+                }
             }
         } else if (this.state.foundWordType === "vertical") {
-            let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10;
+            let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10; 
             let myCol = this.state.foundWordEnd % 10;
             for (let y = 0; y< wordLength; y++) {
                 for (let x = this.state.foundWordEnd; x >= 10; x=x-10) {
                     myBoard[x].letter = myBoard[x-10].letter;
                     myBoard[x].points = this.letterPoints[myBoard[x].letter];
+                    myBoard[x].bonus = myBoard[x-10].bonus
                     if (y+1 === wordLength && myBoard[x].letter !== "") {myPlacedLetters.push(x)}
                 }
             }
-            myBoard[myCol].letter = ""
+            myBoard[myCol].letter = "";
             myBoard[myCol].points = this.letterPoints[myBoard[myCol].letter];
+            myBoard[myCol].bonus = 1;
             columns[myCol] = columns[myCol] - wordLength;
         }
         
         this.setState({ numLettersPerColumn : columns})
         this.setState({ placedLetters : myBoard })
         console.log("before update: " + this.state.newPlacedLetters)
+        myPlacedLetters.sort();
         this.setState({ newPlacedLetters : myPlacedLetters})
         console.log("after update: " + this.state.newPlacedLetters)
-        if (myPlacedLetters.length === 0) {
-            this.startTick();
-        } else {
-            this.buildPossibleWordsArray();
-            //go through array of posisble words to check if there is a word
-            this.setState({ foundWordID : NaN })
-            if (this.state.possibleWords.length > 0) {
-                this.checkIfItIsAWord(0)
-            } else {
+        if (actualWords) {
+            if (myPlacedLetters.length === 0) {
                 this.startTick();
-            };
+            } else {
+                this.checkForLetterBonuses();
+                this.buildPossibleWordsArray();
+                //go through array of posisble words to check if there is a word
+
+                if (this.state.possibleWords.length > 0) {
+                    this.checkIfItIsAWord(0)
+                } else {
+                    this.startTick();
+                };
+            }
         }
         
 
@@ -592,28 +733,28 @@ class Play extends Component {
                     }
                     
                     currentWord.word = this.state.possibleWords[index].word;
-                    currentWord.value = this.state.possibleWords[index].value;
+                    currentWord.value = this.state.possibleWords[index].value * (this.state.allFoundWords.length + 1);
+                    // need to update bonuses to say Double word and or double letters used
                     currentWord.wordBonus = this.state.allFoundWords.length + 1;
-                    // currentWord.letterBonuses = "NONE FOR NOW";
+                    currentWord.letterBonuses = "NONE FOR NOW";
 
                     myWords.push(currentWord);
 
-                    this.setState({ foundWordID : index})
-                    this.setState({ foundWord : this.state.possibleWords[index].word})
-                    this.setState({ foundWordValue : this.state.possibleWords[index].value})
-                    this.setState({ allFoundWords : myWords})
-                    this.setState({ foundWordStart : this.state.possibleWords[index].start})
-                    this.setState({ foundWordEnd : this.state.possibleWords[index].end})
-                    this.setState({ foundWordType : this.state.possibleWords[index].type})
-                    console.log("list of current words: " + JSON.stringify(this.state.allFoundWords))
+                    this.setState({ 
+                        foundWord : this.state.possibleWords[index].word,
+                        foundWordValue : this.state.possibleWords[index].value,
+                        allFoundWords : myWords,
+                        foundWordStart : this.state.possibleWords[index].start,
+                        foundWordEnd : this.state.possibleWords[index].end,
+                        foundWordType : this.state.possibleWords[index].type
+                    })
                     
                     // Update Score
                     this.setState({ score : this.state.score + this.state.foundWordValue * this.state.allFoundWords.length})
                     
                     // Remove Letter from Board
-                    this.removeFoundWord()
+                    this.removeFoundWord(true)
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
-                    this.setState({ foundWordID : NaN}) 
                     this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
                     this.checkIfItIsAWord( index + 1 )
@@ -656,7 +797,6 @@ class Play extends Component {
         this.setState({placedLetters: []});
         this.setState({newPlacedLetters: []});
         this.setState({possibleWords: []});
-        this.setState({foundWordID: NaN});
         this.setState({foundWord: ""});
         this.setState({foundWordValue: 0});
         this.setState({foundWordStart: NaN});
