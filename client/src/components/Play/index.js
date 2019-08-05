@@ -14,9 +14,10 @@ class Play extends Component {
     state = {
         instructions: true,
         playGame: false,
-
         score: 0,
         level: 1,
+        previousLevelTargetScore: 0,
+        currentLevelTargetScore: 50,
         fallSpeed: 150,
         currentPieceX: 100,
         currentColumn: 4,
@@ -439,7 +440,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=2 insures that word is 3 letters or more
                         currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter, true); //convert letters on board into string
-                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
+                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(firstLetter, lastLetter, "horizontal"),
                                 word: currentWord,
@@ -463,7 +464,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=20 insures that word is 3 letters or more
                         currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter, true);
-                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
+                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(firstLetter, lastLetter, "vertical"),
                                 word: currentWord,
@@ -507,6 +508,25 @@ class Play extends Component {
     }
 
     startTick = () => {
+        
+        
+        if (this.state.score >= this.state.currentLevelTargetScore) {
+            let newTarget = this.state.currentLevelTargetScore + this.state.previousLevelTargetScore + this.state.currentLevelTargetScore;
+            let newFallspeed = this.state.fallSpeed;
+
+            if (newFallspeed > 25) {newFallspeed = newFallspeed - 25} 
+            else {newFallspeed = newFallspeed / 2}
+            
+            console.log("New Target: " + newTarget)
+            console.log("New Fall Speed: " + newFallspeed)
+            this.setState({
+                level: this.state.level + 1,
+                previousLevelTargetScore: this.state.currentLevelTargetScore,
+                currentLevelTargetScore: newTarget,
+                fallSpeed: newFallspeed
+            })
+        }
+        
         this.timerID = setInterval(
             () => this.tick(),
             this.state.fallSpeed
@@ -593,7 +613,7 @@ class Play extends Component {
             let myBonus = this.state.foundWord.length - 1
             this.updateLetterBonuses(myLetter, myBonus)
             this.removeFoundWord(false)
-
+            
             //update bonus of all remaing letters
         }
     }
@@ -855,8 +875,6 @@ class Play extends Component {
                         <div className="mt-5">
                             <Controls 
                                 startClick={this.startClick} 
-                                stopClick={this.stopClick} 
-                                increaseClick={this.increaseClick} 
                                 downClick={this.downClick} 
                                 leftClick={this.leftClick} 
                                 cycleClick={this.cycleClick} 
