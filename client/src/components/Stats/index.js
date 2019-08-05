@@ -61,28 +61,33 @@ class Stats extends Component {
                             <h3 className="stat-header">Global Highest Scoring Words</h3>
                             <div className="row">
                                 <div className="col-md-1 score-chart">1.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
+                                <div className="col-md-4 score-chart">Player Name</div>
                                 <div className="col-md-4 text-right score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row odd-row">
                                 <div className="col-md-1 score-chart">2.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
+                                <div className="col-md-4 score-chart">Player Name</div>
                                 <div className="col-md-4 text-right score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row">
                                 <div className="col-md-1 score-chart">3.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
+                                <div className="col-md-4 score-chart">Player Name</div>
                                 <div className="col-md-4 text-right score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row odd-row">
                                 <div className="col-md-1 score-chart">4.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
+                                <div className="col-md-4 score-chart">Player Name</div>
                                 <div className="col-md-4 text-right score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row">
                                 <div className="col-md-1 score-chart">5.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
+                                <div className="col-md-4 score-chart">Player Name</div>
                                 <div className="col-md-4 text-right score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                         </div>
 
@@ -125,22 +130,27 @@ class Stats extends Component {
                             <div className="row">
                                 <div className="col-md-1 score-chart">1.</div>
                                 <div className="col-md-4 score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row odd-row">
                                 <div className="col-md-1 score-chart">2.</div>
                                 <div className="col-md-4 score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row">
                                 <div className="col-md-1 score-chart">3.</div>
                                 <div className="col-md-4 score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row odd-row">
                                 <div className="col-md-1 score-chart">4.</div>
                                 <div className="col-md-4 score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                             <div className="row">
                                 <div className="col-md-1 score-chart">5.</div>
                                 <div className="col-md-4 score-chart">Word</div>
+                                <div className="col-md-3 text-right score-chart">Score</div>
                             </div>
                         </div>
 

@@ -18,59 +18,69 @@ class Home extends Component {
     position: "relative",
     // display: 'block',
     // margin: "0 auto",
-    width: 25,
-    height: 25,
+    width: 40,
+    height: 40,
+    lineHeight: 2.5,
     borderRadius: 4,
     opacity: 1,
-    backgroundColor: "rgb(216, 203, 187)"
+    color: "#fff",
+    backgroundColor: "#560764"
   };
 
   style2 = {
     position: "relative",
     // display: 'block',
     // margin: "0 auto",
-    width: 25,
-    height: 25,
+    width: 40,
+    height: 40,
+    lineHeight: 2.5,
     borderRadius: 4,
     opacity: 1,
-    backgroundColor: "rgb(216, 203, 187)"
+    color: "#fff",
+    backgroundColor: "#560764"
   };
 
   style3 = {
     position: "relative",
     // display: 'block',
     // margin: "0 auto",
-    width: 25,
-    height: 25,
+    width: 40,
+    height: 40,
+    lineHeight: 2.5,
     borderRadius: 4,
     opacity: 1,
-    backgroundColor: "rgb(216, 203, 187)"
+    color: "#fff",
+    backgroundColor: "#560764"
   };
 
   styleA = {
     position: "absolute",
     // display: 'block',
     // margin: "0 auto",
-    top: 40,
-    left: 45,
-    width: 25,
-    height: 25,
+    top: 55,
+    left: 60,
+    width: 40,
+    height: 40,
+    lineHeight: 2.5,
     borderRadius: 4,
     opacity: 1,
-    backgroundColor: "rgb(216, 203, 187)"
+    color: "#fff",
+    backgroundColor: "#560764"
   };
 
   styleT = {
     position: "absolute",
     // display: 'block',
     // margin: "0 auto",
-    top: 40,
-    left: 70,
-    width: 25,
-    height: 25,
+    top: 55,
+    left: 100,
+    width: 40,
+    height: 40,
+    lineHeight: 2.5,
     borderRadius: 4,
     opacity: 1,
-    backgroundColor: "rgb(216, 203, 187)"
+    color: "#fff",
+    backgroundColor: "#560764"
   };
 
   inputChange = event => {
@@ -134,15 +144,114 @@ class Home extends Component {
     return (
       <div className="container text-center">
         <div className="row justify-content-center mt-5">
-          <div
-            className="col-md-6 text-left"
-            style={{ backgroundColor: "#bb8fa9" }}
-          >
+          <div className="col-md-6 text-left">
             {/*  <img src={logo} style={{ maxWidth: 400, padding: 5, position: "relative" }}/> */}
 
-            <h2 className="mt-3">Welcome to Wordtris!</h2>
-            <p>A mix between scrabble and tetris.</p>
-            <div className="row align-items-center">
+            <div className="text-center mb-3" id="bannerDiv">
+                <img id="banner" className="img-fluid" src={banner} alt="Wordtris" />
+            </div>
+            <p className="text-center mb-1">A mix between scrabble and tetris.</p>
+            <div className="row">
+                <div className="col-md-12 justify-content-center">
+                    <div style={{
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        width: "max-content",
+                        paddingRight: 80
+                    }}>
+                            <div style={{ maxWidth: 200, padding: 5, position: "relative" }}>
+                                <div style={{ padding: "10px 15px" }}>
+                                    <div style={this.style1} className="text-center">
+                                        A
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "26px",
+                                                right: "5px",
+                                                fontSize: "10px",
+                                                lineHeight: "1",
+                                                zIndex: "6"
+                                            }}>
+                                            1
+                                        </div>
+                                    </div>
+
+                                    <div style={this.style2} className="text-center">
+                                        B
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "26px",
+                                                right: "5px",
+                                                fontSize: "10px",
+                                                lineHeight: "1",
+                                                zIndex: "6"
+                                            }}>
+                                            3
+                                        </div>
+                                    </div>
+
+                                    <div style={this.styleA} className="text-center">
+                                        A
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "26px",
+                                                right: "5px",
+                                                fontSize: "10px",
+                                                lineHeight: "1",
+                                                zIndex: "6"
+                                            }}>
+                                            1
+                                        </div>
+                                    </div>
+
+                                    <div style={this.styleT} className="text-center">
+                                        T
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "26px",
+                                                right: "5px",
+                                                fontSize: "10px",
+                                                lineHeight: "1",
+                                                zIndex: "6"
+                                            }}>
+                                            1
+                                        </div>
+                                    </div>
+
+                                    <div style={this.style3} className="text-center">
+                                        C
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                top: "26px",
+                                                right: "5px",
+                                                fontSize: "10px",
+                                                lineHeight: "1",
+                                                zIndex: "6"
+                                            }}>
+                                            3
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-12 text-center mt-2">
+                    <p>Login or sign up to play!</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+            {/* <div className="row align-items-center">
               <div className="col-md-6">
                 <div
                   style={{ maxWidth: 200, padding: 5, position: "relative" }}
@@ -153,8 +262,8 @@ class Home extends Component {
                       <div
                         style={{
                           position: "absolute",
-                          top: "13px",
-                          right: "1px",
+                          top: "26px",
+                          right: "5px",
                           fontSize: "10px",
                           lineHeight: "1",
                           zIndex: "6"
@@ -169,8 +278,8 @@ class Home extends Component {
                       <div
                         style={{
                           position: "absolute",
-                          top: "13px",
-                          right: "1px",
+                          top: "26px",
+                          right: "5px",
                           fontSize: "10px",
                           lineHeight: "1",
                           zIndex: "6"
@@ -185,8 +294,8 @@ class Home extends Component {
                       <div
                         style={{
                           position: "absolute",
-                          top: "13px",
-                          right: "1px",
+                          top: "26px",
+                          right: "5px",
                           fontSize: "10px",
                           lineHeight: "1",
                           zIndex: "6"
@@ -201,8 +310,8 @@ class Home extends Component {
                       <div
                         style={{
                           position: "absolute",
-                          top: "13px",
-                          right: "1px",
+                          top: "26px",
+                          right: "5px",
                           fontSize: "10px",
                           lineHeight: "1",
                           zIndex: "6"
@@ -217,8 +326,8 @@ class Home extends Component {
                       <div
                         style={{
                           position: "absolute",
-                          top: "13px",
-                          right: "1px",
+                          top: "26px",
+                          right: "5px",
                           fontSize: "10px",
                           lineHeight: "1",
                           zIndex: "6"
@@ -234,12 +343,10 @@ class Home extends Component {
                 <p>Login or sign up to play!</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="col-md-6 text-left">
-            <div className="text-center mt-5" id="bannerDiv">
-              <img id="banner" src={banner} />
-            </div>
+            <h2 className="text-center mb-5">Welcome to Wordtris!</h2>
             <form className="">
               {this.state.error !== "" ? (
                 <FormErrors className="form-error">
@@ -248,7 +355,6 @@ class Home extends Component {
               ) : (
                 ""
               )}
-
               <div className="form-group">
                 <label htmlFor="playerName" id="playerNameText">
                   Player Name

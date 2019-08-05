@@ -17,10 +17,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="/">
-          <img
-            src={logo}
-            style={{ maxWidth: 150, padding: 0, margin: 0, position: "relative" }}
-          />
+          <img src={logo} style={{ maxWidth: 150, padding: 0, margin: 0, position: "relative" }} alt="Wordtris" />
         </a>
         <button
           className="navbar-toggler"
