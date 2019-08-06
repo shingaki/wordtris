@@ -137,13 +137,21 @@ module.exports = function(app) {
             //     })
             // })
 
-            db.Players.findOne({
-                where: {
-                    id: req.session.userId,
-                },
+            // db.Players.findOne({
+            //     where: {
+            //         id: req.session.userId,
+            //     },
                 // include: [db.playerScores, db.playerWords]
+
+            // get players scores and words / order by highest scores in descending order
+            db.PlayerWords.findAll({
+                attributes: ['PlayerId', 'playerWord', 'wordPoints', 'playerWordRanking'],
+                    where: {
+                        PlayerId: req.session.userId,
+                    },
+                order: [ ['wordPoints', 'DESC'],],
             }).then(dbResponse => {
-                console.log(dbResponse);
+                // console.log(dbResponse);
                 res.json(dbResponse);
             })
         } else {
