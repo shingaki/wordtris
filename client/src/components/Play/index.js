@@ -14,9 +14,10 @@ class Play extends Component {
     state = {
         instructions: true,
         playGame: false,
-
         score: 0,
         level: 1,
+        previousLevelTargetScore: 0,
+        currentLevelTargetScore: 50,
         fallSpeed: 150,
         currentPieceX: 100,
         currentColumn: 4,
@@ -439,7 +440,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=2 insures that word is 3 letters or more
                         currentWord = this.buildHorizontalWordFromBoard(firstLetter, lastLetter, true); //convert letters on board into string
-                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
+                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(firstLetter, lastLetter, "horizontal"),
                                 word: currentWord,
@@ -463,7 +464,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=20 insures that word is 3 letters or more
                         currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter, true);
-                        if (currentWord !== "" && this.containsVowels(currentWord)) { 
+                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(firstLetter, lastLetter, "vertical"),
                                 word: currentWord,
@@ -507,6 +508,25 @@ class Play extends Component {
     }
 
     startTick = () => {
+        
+        
+        if (this.state.score >= this.state.currentLevelTargetScore) {
+            let newTarget = this.state.currentLevelTargetScore + this.state.previousLevelTargetScore + this.state.currentLevelTargetScore;
+            let newFallspeed = this.state.fallSpeed;
+
+            if (newFallspeed > 25) {newFallspeed = newFallspeed - 25} 
+            else {newFallspeed = newFallspeed / 2}
+            
+            console.log("New Target: " + newTarget)
+            console.log("New Fall Speed: " + newFallspeed)
+            this.setState({
+                level: this.state.level + 1,
+                previousLevelTargetScore: this.state.currentLevelTargetScore,
+                currentLevelTargetScore: newTarget,
+                fallSpeed: newFallspeed
+            })
+        }
+        
         this.timerID = setInterval(
             () => this.tick(),
             this.state.fallSpeed
@@ -593,7 +613,7 @@ class Play extends Component {
             let myBonus = this.state.foundWord.length - 1
             this.updateLetterBonuses(myLetter, myBonus)
             this.removeFoundWord(false)
-
+            
             //update bonus of all remaing letters
         }
     }
@@ -670,6 +690,14 @@ class Play extends Component {
                     myPlacedLetters.push(this.state.newPlacedLetters[x])
                 }
             }
+
+            // change tile color back to default
+            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                letterDiv.style.color = "#212529";
+            }
+
         } else if (this.state.foundWordType === "vertical") {
             let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10; 
             let myCol = this.state.foundWordEnd % 10;
@@ -685,6 +713,13 @@ class Play extends Component {
             myBoard[myCol].points = this.letterPoints[myBoard[myCol].letter];
             myBoard[myCol].bonus = 1;
             columns[myCol] = columns[myCol] - wordLength;
+
+            // change tile color back to default
+            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
+                let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                letterDiv.style.color = "#212529";
+            }
         }
         
         this.setState({ numLettersPerColumn : columns})
@@ -752,8 +787,30 @@ class Play extends Component {
                     // Update Score
                     this.setState({ score : this.state.score + this.state.foundWordValue * this.state.allFoundWords.length})
                     
+                    // highlight found word
+                    console.log("highlight the word")
+                    if (this.state.foundWordType === "horizontal") {
+                        console.log("horizontal");
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            letterDiv.style.backgroundColor = "#560764";
+                            letterDiv.style.color = "#fff";
+                        }
+
+                    } else if (this.state.foundWordType === "vertical") {
+                        console.log("vertical");
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
+                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            letterDiv.style.backgroundColor = "#560764";
+                            letterDiv.style.color = "#fff";
+                        }
+                    }
+
                     // Remove Letter from Board
-                    this.removeFoundWord(true)
+                    setTimeout(() => {
+                        this.removeFoundWord(true)
+                    }, 1500)
+                    // this.removeFoundWord(true)
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                     this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
@@ -774,11 +831,17 @@ class Play extends Component {
         }
         //down arrow move down
         if (e.keyCode === 40) {
-          this.downClick();
+            // prevent default, return false to stop scroll
+            e.preventDefault()
+            this.downClick();
+            return false;
         }
         //up arrow cycles
         if (e.keyCode === 38) {
-          this.cycleClick();
+            // prevent default, return false to stop scroll
+            e.preventDefault();
+            this.cycleClick();
+            return false;
         }
       }
 
@@ -808,7 +871,7 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container" tabIndex="0" onKeyUp={this.ArrowKeys}>
+            <div className="container" tabIndex="0" onKeyDown={this.ArrowKeys}>
 
                 {this.state.isGameOver ? 
                 <GameOver  
@@ -855,8 +918,6 @@ class Play extends Component {
                         <div className="mt-5">
                             <Controls 
                                 startClick={this.startClick} 
-                                stopClick={this.stopClick} 
-                                increaseClick={this.increaseClick} 
                                 downClick={this.downClick} 
                                 leftClick={this.leftClick} 
                                 cycleClick={this.cycleClick} 
