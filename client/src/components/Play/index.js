@@ -196,11 +196,6 @@ class Play extends Component {
     componentDidMount = () => {
         // initial setup
         this.initialSetup();
-        // document.onkeydown = KD;
-        // function KD(e) {
-        //     if ()
-        //     e.returnValue = false;
-        // }
     }
 
 
