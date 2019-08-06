@@ -831,11 +831,17 @@ class Play extends Component {
         }
         //down arrow move down
         if (e.keyCode === 40) {
-          this.downClick();
+            // prevent default, return false to stop scroll
+            e.preventDefault()
+            this.downClick();
+            return false;
         }
         //up arrow cycles
         if (e.keyCode === 38) {
-          this.cycleClick();
+            // prevent default, return false to stop scroll
+            e.preventDefault();
+            this.cycleClick();
+            return false;
         }
       }
 
@@ -865,7 +871,7 @@ class Play extends Component {
     
     render() {
         return (
-            <div className="container" tabIndex="0" onKeyUp={this.ArrowKeys}>
+            <div className="container" tabIndex="0" onKeyDown={this.ArrowKeys}>
 
                 {this.state.isGameOver ? 
                 <GameOver  
