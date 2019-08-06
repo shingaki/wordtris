@@ -690,6 +690,14 @@ class Play extends Component {
                     myPlacedLetters.push(this.state.newPlacedLetters[x])
                 }
             }
+
+            // change tile color back to default
+            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                letterDiv.style.color = "#212529";
+            }
+
         } else if (this.state.foundWordType === "vertical") {
             let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10; 
             let myCol = this.state.foundWordEnd % 10;
@@ -705,6 +713,13 @@ class Play extends Component {
             myBoard[myCol].points = this.letterPoints[myBoard[myCol].letter];
             myBoard[myCol].bonus = 1;
             columns[myCol] = columns[myCol] - wordLength;
+
+            // change tile color back to default
+            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
+                let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                letterDiv.style.color = "#212529";
+            }
         }
         
         this.setState({ numLettersPerColumn : columns})
@@ -772,8 +787,30 @@ class Play extends Component {
                     // Update Score
                     this.setState({ score : this.state.score + this.state.foundWordValue * this.state.allFoundWords.length})
                     
+                    // highlight found word
+                    console.log("highlight the word")
+                    if (this.state.foundWordType === "horizontal") {
+                        console.log("horizontal");
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            letterDiv.style.backgroundColor = "#560764";
+                            letterDiv.style.color = "#fff";
+                        }
+
+                    } else if (this.state.foundWordType === "vertical") {
+                        console.log("vertical");
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
+                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            letterDiv.style.backgroundColor = "#560764";
+                            letterDiv.style.color = "#fff";
+                        }
+                    }
+
                     // Remove Letter from Board
-                    this.removeFoundWord(true)
+                    setTimeout(() => {
+                        this.removeFoundWord(true)
+                    }, 1500)
+                    // this.removeFoundWord(true)
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                     this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
