@@ -118,11 +118,11 @@ module.exports = function(app) {
     });
 
     // get players words and scores from db
-    app.get("/getplayerswordsandscores", (req, res) => {
-        console.log("getting players words and scores!!!")
+    app.get("/getplayerswords", (req, res) => {
 
         if (req.session.loggedin) {
-            console.log("logged in")
+            console.log("getting players words and scores!!!")
+
             db.PlayerWords.findAll({
                 attributes: ['PlayerId', 'playerWord', 'wordPoints', 'playerWordRanking'],
                     where: {
@@ -139,12 +139,11 @@ module.exports = function(app) {
     
     })
 
-    // get players words and scores from db
+    // get players highest scores from db
     app.get("/getplayershighestscores", (req, res) => {
-        console.log("getting players highest scores!!!")
 
         if (req.session.loggedin) {
-            console.log("logged in")
+            console.log("getting players highest scores!!!")
             db.PlayerScores.findAll({
                 attributes: ['PlayerId', 'playerScore', 'playerScoreRanking'],
                 where: {
@@ -160,6 +159,52 @@ module.exports = function(app) {
         }
 
     })
+
+
+    // get global high scores and respective players from db
+    app.get("/getglobalhighscores", (req, res) => {
+        console.log("getting global high scores!!!")
+
+            db.HighestScores.findAll({
+                attributes: ['scorePosition', 'highestScore'],
+                include: [
+                    {
+                        model: db.Players,
+                        attributes: ['playerName']
+                    }
+                ],
+                order: [['scorePosition', 'ASC']],
+
+            }).then((dbResponse) => {
+                console.log(dbResponse);
+                res.send(dbResponse);
+            }).catch(function (err) {
+                res.send(err);
+            })
+        })
+
+    // get global high words and respective players from db
+    app.get("/getglobalhighwords", (req, res) => {
+        console.log("getting global high words!!!")
+
+        db.HighestWords.findAll({
+            attributes: ['scorePosition', 'highestWord'],
+            include: [
+                {
+                    model: db.Players,
+                    attributes: ['playerName']
+                }
+            ],
+            order: [['scorePosition', 'ASC']],
+
+        }).then((dbResponse) => {
+            console.log(dbResponse);
+            res.send(dbResponse);
+        }).catch(function (err) {
+            res.send(err);
+        })
+    })
+
 
     // check if word is valid
     app.post("/verifyword", (req, res) => {

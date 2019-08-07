@@ -3,6 +3,10 @@ import "./style.css";
 import API from "../../utils/API";
 import PlayersWordsAndScores from "../PlayersWordsAndScores";
 import PlayersHighestScores from "../PlayersHighestScores";
+import GlobalHighScores from "../GlobalHighScores";
+import GlobalHighWords from "../GlobalHighWords";
+
+
 
 
 class Stats extends Component {
@@ -11,8 +15,8 @@ class Stats extends Component {
 
         playerWordsAndScores: [],
         playerHighestScores: [],
-
-
+        globalHighScores: [],
+        globalHighWords: [],
     }
 
     componentWillMount = () => {
@@ -21,22 +25,38 @@ class Stats extends Component {
             this.setState({
                 playerWordsAndScores: JSON.parse(strPlayerWordsAndScores)
             })
-
-            API.getPlayersHighestScores().then(response => {
-                var strPlayerHighestScores = JSON.stringify(response.data);
-                this.setState({
-                    playerHighestScores: JSON.parse(strPlayerHighestScores)
-                })
-            })
-
-
-            if (this.state.playerWordsAndScores.length > 0) {
-                console.log(this.state.playerWordsAndScores[0].playerWord);
-            }
-
-
         })
+
+        API.getPlayersHighestScores().then(response => {
+            var strPlayerHighestScores = JSON.stringify(response.data);
+            this.setState({
+                playerHighestScores: JSON.parse(strPlayerHighestScores)
+            })
+        })
+
+        API.getGlobalHighScores().then(response => {
+            var strGlobalHighScores = JSON.stringify(response.data);
+            this.setState({
+                globalHighScores: JSON.parse(strGlobalHighScores)
+            })
+            console.log(this.state.globalHighScores);
+        })
+
+        API.getGlobalHighWords().then(response => {
+            var strGlobalHighWords = JSON.stringify(response.data);
+            this.setState({
+                globalHighWords: JSON.parse(strGlobalHighWords)
+            })
+            console.log(this.state.globalHighWords);
+        })
+
+
+        if (this.state.globalHighScores.length > 0) {
+            console.log(this.state.globalHighScores[0].playerName);
+        }
     }
+
+
 
 
     render() {
@@ -50,70 +70,19 @@ class Stats extends Component {
                     <div className="col-md-6 mb-3">
                         <div className="score-container">
                             <h3 className="stat-header">Global High Scores</h3>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">1.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row odd-row">
-                                <div className="col-md-1 score-chart">2.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">3.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row odd-row">
-                                <div className="col-md-1 score-chart">4.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">5.</div>
-                                <div className="col-md-6 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Score</div>
-                            </div>
+                            <GlobalHighScores
+                                globalHighScores={this.state.globalHighScores}
+                            />
                         </div>
-
                     </div>
 
                     <div className="col-md-6 mb-3">
                         <div className="score-container">
                             <h3 className="stat-header">Global Highest Scoring Words</h3>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">1.</div>
-                                <div className="col-md-4 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Word</div>
-                                <div className="col-md-3 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row odd-row">
-                                <div className="col-md-1 score-chart">2.</div>
-                                <div className="col-md-4 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Word</div>
-                                <div className="col-md-3 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">3.</div>
-                                <div className="col-md-4 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Word</div>
-                                <div className="col-md-3 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row odd-row">
-                                <div className="col-md-1 score-chart">4.</div>
-                                <div className="col-md-4 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Word</div>
-                                <div className="col-md-3 text-right score-chart">Score</div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-1 score-chart">5.</div>
-                                <div className="col-md-4 score-chart">Player Name</div>
-                                <div className="col-md-4 text-right score-chart">Word</div>
-                                <div className="col-md-3 text-right score-chart">Score</div>
-                            </div>
+                            <GlobalHighWords
+                                globalHighWords={this.state.globalHighWords}
+                            />
                         </div>
-
                     </div>
                 </div>
 
@@ -126,26 +95,6 @@ class Stats extends Component {
                                 <PlayersHighestScores
                                     playerHighestScores={this.state.playerHighestScores}
                                 />
-                                {/*<div className="row">*/}
-                                {/*    <div className="col-md-1 score-chart">1.</div>*/}
-                                {/*    <div className="col-md-4 score-chart">Score</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="row odd-row">*/}
-                                {/*    <div className="col-md-1 score-chart">2.</div>*/}
-                                {/*    <div className="col-md-4 score-chart">Score</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="row">*/}
-                                {/*    <div className="col-md-1 score-chart">3.</div>*/}
-                                {/*    <div className="col-md-4 score-chart">Score</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="row odd-row">*/}
-                                {/*    <div className="col-md-1 score-chart">4.</div>*/}
-                                {/*    <div className="col-md-4 score-chart">Score</div>*/}
-                                {/*</div>*/}
-                                {/*<div className="row">*/}
-                                {/*    <div className="col-md-1 score-chart">5.</div>*/}
-                                {/*    <div className="col-md-4 score-chart">Score</div>*/}
-                                {/*</div>*/}
                             </div>
                         </div>
 

@@ -35,11 +35,21 @@ export default {
     },
 
     getPlayersWordsAndScores: function () {
-        return axios.get("/getplayerswordsandscores");
+        return axios.get("/getplayerswords");
     },
 
     getPlayersHighestScores: function () {
         return axios.get("/getplayershighestscores");
+    },
+
+    getGlobalHighScores: function () {
+        console.log("make get request to get global scores");
+        return axios.get("/getglobalhighscores");
+    },
+
+    getGlobalHighWords: function () {
+        console.log("make get request to get global words");
+        return axios.get("/getglobalhighwords");
     },
 
     // checkWord: Check if it is a word
