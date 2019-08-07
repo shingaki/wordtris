@@ -36,16 +36,16 @@ class PlacedPieces extends PureComponent {
             style.opacity = 0
           }
 
-          if (item.bonus === 2) {
+          if (item.bgColor !== "" && item.textColor !== "") {
+            style.backgroundColor = item.bgColor;
+            style.color = item.textColor;
+          } else if (item.bonus === 2) {
             style.backgroundColor = "rgb(0, 204, 255)"
           } else if (item.bonus === 3) {
             style.backgroundColor = "rgb(255,221,103)"
           } else if (item.bonus === 4) {
             style.backgroundColor = "rgb(255,143,229)"
-          } else if (item.bgColor !== "" && item.textColor !== "") {
-            style.backgroundColor = item.bgColor;
-            style.color = item.textColor;
-          }
+          } 
 
           return (
             
