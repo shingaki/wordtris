@@ -612,16 +612,15 @@ class Play extends Component {
             let myLetter = this.state.foundWord.charAt(0)
             let myBonus = this.state.foundWord.length - 1
             this.updateLetterBonuses(myLetter, myBonus)
+
             this.removeFoundWord(false)
-            
             //update bonus of all remaing letters
         }
     }
 
     updateLetterBonuses = (letter, bonus) => {
         let myBoard = [];
-       
-        //get current board of letters
+
         for (let x = 0; x<200; x++) {
             myBoard[x] = this.state.placedLetters[x]
         } 
@@ -631,7 +630,7 @@ class Play extends Component {
         }
 
         this.setState({ placedLetters : myBoard })
-        console.log(this.state.placedLetters)
+        // console.log(this.state.placedLetters)
     }
 
     endOfRound = () => {
@@ -810,7 +809,7 @@ class Play extends Component {
                     setTimeout(() => {
                         this.removeFoundWord(true)
                     }, 1500)
-                    // this.removeFoundWord(true)
+                    
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
                     this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
@@ -843,9 +842,9 @@ class Play extends Component {
             this.cycleClick();
             return false;
         }
-      }
+    }
 
-      GameNotOver =()=>{
+    GameNotOver =()=>{
         this.setState({playGame: false});
         this.setState({score: 0});
         this.setState({level: 1});
@@ -865,9 +864,12 @@ class Play extends Component {
         this.setState({foundWordStart: NaN});
         this.setState({foundWordEnd: NaN});
         this.setState({foundWordType: ""});
-        this.setState({isGameOver: false});
+        this.setState({
+            isGameOver: false,
+            allFoundWords: []
+        });
         this.initialSetup();
-      }
+    }
     
     render() {
         return (
