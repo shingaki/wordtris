@@ -2,12 +2,12 @@ import React, {Component} from "react";
 import "./style.css";
 
 
-class PlayerScores extends Component {
+class PlayersWordsAndScores extends Component {
     render() {
         // console.log(this.state.playerStats.playerWordRanking)
         return (
             <div>
-                {this.props.playerStats.map((item, i) => {
+                {this.props.playerWordsAndScores.map((item, i) => {
                     const rowColor = i % 2 === 0 ? 'row even-row' : 'row odd-row'
                     return (
                         <div className={rowColor}>
@@ -21,7 +21,7 @@ class PlayerScores extends Component {
 }
 
 
-export default PlayerScores;
+export default PlayersWordsAndScores;
 
 
 

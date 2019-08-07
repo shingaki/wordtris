@@ -117,33 +117,12 @@ module.exports = function(app) {
         });
     });
 
-    // get scores from db
-    app.get("/highscores", (req, res) => {
-        console.log("getting scores!!!")
+    // get players words and scores from db
+    app.get("/getplayerswordsandscores", (req, res) => {
+        console.log("getting players words and scores!!!")
 
         if (req.session.loggedin) {
             console.log("logged in")
-            // get global and user scores
-            // db.highestScores.findAll({
-            //     where: {
-            //        id: {
-            //         $between: [0, 4]
-            //        } 
-            //     }
-            // }).then(dbRes => {
-            //     res.json({
-            //         // highestScores: ,
-            //         // highestWords: ,
-            //     })
-            // })
-
-            // db.Players.findOne({
-            //     where: {
-            //         id: req.session.userId,
-            //     },
-                // include: [db.playerScores, db.playerWords]
-
-            // get players scores and words / order by highest scores in descending order
             db.PlayerWords.findAll({
                 attributes: ['PlayerId', 'playerWord', 'wordPoints', 'playerWordRanking'],
                     where: {
@@ -156,9 +135,30 @@ module.exports = function(app) {
             })
         } else {
             console.log("not logged in")
-            // just get global scores
         }
     
+    })
+
+    // get players words and scores from db
+    app.get("/getplayershighestscores", (req, res) => {
+        console.log("getting players highest scores!!!")
+
+        if (req.session.loggedin) {
+            console.log("logged in")
+            db.PlayerScores.findAll({
+                attributes: ['PlayerId', 'playerScore', 'playerScoreRanking'],
+                where: {
+                    PlayerId: req.session.userId,
+                },
+                order: [ ['playerScore', 'DESC'],],
+            }).then(dbResponse => {
+                // console.log(dbResponse);
+                res.json(dbResponse);
+            })
+        } else {
+            console.log("not logged in")
+        }
+
     })
 
     // check if word is valid
