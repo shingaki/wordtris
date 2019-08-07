@@ -38,9 +38,9 @@ if (process.env.NODE_ENV === "production") {
 // Define any API routes before this runs
 apiRoutes(app);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 
 db.sequelize.sync({ force: true }).then(function () {
