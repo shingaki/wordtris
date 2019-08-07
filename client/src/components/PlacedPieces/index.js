@@ -42,6 +42,9 @@ class PlacedPieces extends PureComponent {
             style.backgroundColor = "rgb(255,221,103)"
           } else if (item.bonus === 4) {
             style.backgroundColor = "rgb(255,143,229)"
+          } else if (item.bgColor !== "" && item.textColor !== "") {
+            style.backgroundColor = item.bgColor;
+            style.color = item.textColor;
           }
 
           return (

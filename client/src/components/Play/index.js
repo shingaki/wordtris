@@ -118,7 +118,9 @@ class Play extends Component {
             emptyBoard.push({
                 letter: "",
                 points: this.letterPoints[""],
-                bonus: 1
+                bonus: 1,
+                bgColor: "",
+                textColor: ""
             })
         }
 
@@ -136,7 +138,9 @@ class Play extends Component {
             nextList.push({
                 letter: randomLetter,
                 points: this.letterPoints[randomLetter],
-                bonus: 1
+                bonus: 1,
+                bgColor: "",
+                textColor: ""
             })
         }
         // move next up letters to play letters
@@ -211,7 +215,9 @@ class Play extends Component {
             nextList.push({
                 letter: randomLetter,
                 points: this.letterPoints[randomLetter],
-                bonus: 1
+                bonus: 1,
+                bgColor: "",
+                textColor: ""
             })
         }
 
@@ -223,7 +229,9 @@ class Play extends Component {
             playNow.push({
                 letter: randomLetter,
                 points: this.letterPoints[randomLetter],
-                bonus: 1
+                bonus: 1,
+                bgColor: "",
+                textColor: ""
             })
         }
         // move next up letters to play letters
@@ -691,11 +699,27 @@ class Play extends Component {
             }
 
             // change tile color back to default
+            let currentBoard = [];
+            for (let x = 0; x < 200; x++) {
+                currentBoard[x] = this.state.placedLetters[x];
+            } 
             for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
-                let letterDiv = document.querySelector('[data-id="' + i + '"]');
-                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
-                letterDiv.style.color = "#212529";
+                // let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                // letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                // letterDiv.style.color = "#212529";
+                // let currentBoard = this.state.placedLetters;
+                let updatedLetter = this.state.placedLetters[i];
+                updatedLetter.bgColor = "";
+                updatedLetter.textColor = "";
+                currentBoard[i] = updatedLetter;
+
+                // this.setState({
+                //     placedLetters: currentBoard
+                // })
             }
+            this.setState({
+                placedLetters: currentBoard
+            })
 
         } else if (this.state.foundWordType === "vertical") {
             let wordLength = (this.state.foundWordEnd - this.state.foundWordStart + 10) / 10; 
@@ -714,11 +738,28 @@ class Play extends Component {
             columns[myCol] = columns[myCol] - wordLength;
 
             // change tile color back to default
+            let currentBoard = [];
+            for (let x = 0; x < 200; x++) {
+                currentBoard[x] = this.state.placedLetters[x];
+            } 
+            console.log(currentBoard);
             for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
-                let letterDiv = document.querySelector('[data-id="' + i + '"]');
-                letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
-                letterDiv.style.color = "#212529";
+                // let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                // letterDiv.style.backgroundColor = "rgb(216, 203, 187)";
+                // letterDiv.style.color = "#212529";
+                // let currentBoard = this.state.placedLetters;
+                let updatedLetter = this.state.placedLetters[i];
+                updatedLetter.bgColor = "";
+                updatedLetter.textColor = "";
+                currentBoard[i] = updatedLetter;
+
+                // this.setState({
+                //     placedLetters: currentBoard
+                // })
             }
+            this.setState({
+                placedLetters: currentBoard
+            })
         }
         
         this.setState({ numLettersPerColumn : columns})
@@ -790,19 +831,59 @@ class Play extends Component {
                     console.log("highlight the word")
                     if (this.state.foundWordType === "horizontal") {
                         console.log("horizontal");
-                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
-                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
-                            letterDiv.style.backgroundColor = "#560764";
-                            letterDiv.style.color = "#fff";
+                        let currentBoard = [];
+                        for (let x = 0; x < 200; x++) {
+                            currentBoard[x] = this.state.placedLetters[x];
                         }
+                        console.log(currentBoard);
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                            // let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            // letterDiv.style.backgroundColor = "#560764";
+                            // letterDiv.style.color = "#fff";
+                            // let currentBoard = this.state.placedLetters;
+                            let updatedLetter = this.state.placedLetters[i];
+                            console.log(updatedLetter);
+                            updatedLetter.bgColor = "#560764";
+                            updatedLetter.textColor = "#fff";
+                            console.log(updatedLetter);
+                            currentBoard[i] = updatedLetter;
+
+                            // this.setState({
+                            //     placedLetters: currentBoard
+                            // })
+                            // console.log(this.state.placedLetters)
+                        }
+
+                        this.setState({
+                            placedLetters: currentBoard
+                        })
 
                     } else if (this.state.foundWordType === "vertical") {
                         console.log("vertical");
-                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
-                            let letterDiv = document.querySelector('[data-id="' + i + '"]');
-                            letterDiv.style.backgroundColor = "#560764";
-                            letterDiv.style.color = "#fff";
+                        let currentBoard = [];
+                        for (let x = 0; x < 200; x++) {
+                            currentBoard[x] = this.state.placedLetters[x];
                         }
+                        for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
+                            // let letterDiv = document.querySelector('[data-id="' + i + '"]');
+                            // letterDiv.style.backgroundColor = "#560764";
+                            // letterDiv.style.color = "#fff";
+                            // let currentBoard = this.state.placedLetters;
+                            // let updatedLetter = this.state.placedLetters[i];
+                            // console.log(updatedLetter);
+                            currentBoard[i].bgColor = "#560764";
+                            currentBoard[i].textColor = "#fff";
+                            // console.log(updatedLetter);
+                            // currentBoard[i] = updatedLetter;
+
+                            // this.setState({
+                            //     placedLetters: currentBoard
+                            // })
+                            // console.log(this.state.placedLetters)
+                        }
+                        this.setState({
+                            placedLetters: currentBoard
+                        })
                     }
 
                     // Remove Letter from Board
@@ -918,6 +999,7 @@ class Play extends Component {
                         <Scores score={this.state.score} level={this.state.level} />
 
                         <div className="mt-5">
+                            <button onClick={this.stopClick}>STOP</button>
                             <Controls 
                                 startClick={this.startClick} 
                                 downClick={this.downClick} 
