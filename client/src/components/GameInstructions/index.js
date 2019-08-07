@@ -16,24 +16,24 @@ class GameInstructions extends Component {
 
     style2 = {
         position: 'relative',
-        display: 'block',
+        display: 'inline-block',
         margin: "0 auto",
         width: 25,
         height: 25,
         borderRadius: 4,
         opacity: 1,
-        backgroundColor: 'rgb(216, 203, 187)',
+        backgroundColor: 'rgb(0, 204, 255)',
     };
 
     style3 = {
         position: 'relative',
-        display: 'block',
+        display: 'inline-block',
         margin: "0 auto",
         width: 25,
         height: 25,
         borderRadius: 4,
         opacity: 1,
-        backgroundColor: 'rgb(216, 203, 187)',
+        backgroundColor: 'rgb(255,221,103)',
     };
 
     render() {
@@ -63,7 +63,7 @@ class GameInstructions extends Component {
                                     }}>1</div>
                                 </div>
 
-                                <div style={this.style2}>
+                                <div style={this.style1}>
                                     B
                                     <div style={{
                                         position: "absolute",
@@ -75,7 +75,7 @@ class GameInstructions extends Component {
                                     }}>3</div>
                                 </div>
 
-                                <div style={this.style3}>
+                                <div style={this.style1}>
                                     C
                                 <div style={{
                                         position: "absolute",
@@ -114,6 +114,29 @@ class GameInstructions extends Component {
                         </div>
                     </div>
 
+                    <div className="row align-items-center mt-4">
+                        <div className="col-md-2">
+                            <div style={{ maxWidth: 200, padding: 5}}>
+                                <div style={this.style2}>
+                                    A
+                                    <div style={{
+                                        position: "absolute",
+                                        top: "13px",
+                                        right: "1px",
+                                        fontSize: "10px",
+                                        lineHeight: "1",
+                                        zIndex: "6"
+                                    }}>1</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div className="col-md-10 text-left">
+                            When you put three, four, or five letters next to each other on the board, they will disappear, and those letters will give you bonus points if you use them in a word.
+                        </div>
+                    </div>
+
                     <div className="row mt-4">
                         <div className="col-md-12 text-center">
                             When the piece lands, if it has formed a word (either horizontally or vertically), then that word's points will be added to your total score and those letters will disappear from the screen.
@@ -146,7 +169,7 @@ class GameInstructions extends Component {
                                 }}>1</div>
                             </div>
 
-                            <div style={this.style2} className="text-center">
+                            <div style={this.style1} className="text-center">
                                 B
                                 <div style={{
                                     position: "absolute",
@@ -158,7 +181,7 @@ class GameInstructions extends Component {
                                 }}>3</div>
                             </div>
 
-                            <div style={this.style3} className="text-center">
+                            <div style={this.style1} className="text-center">
                                 C
                             <div style={{
                                     position: "absolute",
@@ -193,6 +216,29 @@ class GameInstructions extends Component {
                     </div>
                     <div className="col-md-10 col-sm-9 text-left m-instructions">
                         Left and right arrows on your keyboard (or the arrows on the screen) will move the falling piece left and right, respectfully.
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-4">
+                    <div className="col-md-2 col-sm-3 text-center m-instructions">
+                        <div style={{ maxWidth: 200, padding: 5}}>
+                            <div style={this.style2}>
+                                A
+                                <div style={{
+                                    position: "absolute",
+                                    top: "13px",
+                                    right: "1px",
+                                    fontSize: "10px",
+                                    lineHeight: "1",
+                                    zIndex: "6"
+                                }}>1</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div className="col-md-10 col-sm-9 text-left m-instructions">
+                        When you put three, four, or five letters next to each other on the board, they will disappear, and those letters will give you bonus points if you use them in a word.
                     </div>
                 </div>
 
