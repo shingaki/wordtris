@@ -13,18 +13,18 @@ INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES (
 
 
 # SEED RECORDS FOR HIGHEST SCORES
-INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 20, current_date, current_date, 4);
-INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (2, 19, current_date, current_date, 4);
-INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 14, current_date, current_date, 4);
-INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 13, current_date, current_date, 2);
-INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 12, current_date, current_date, 3);
+INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (2, 2, 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
+INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 # SEED RECORDS FOR HIGHEST WORDS
-INSERT INTO highestwords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 'highway', 20, current_date, current_date, 4);
-INSERT INTO highestwords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (2, 'parkway', 19, current_date, current_date, 4);
-INSERT INTO highestwords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (3, 'roadway', 14, current_date, current_date, 4);
-INSERT INTO highestwords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (4, 'today', 13, current_date, current_date, 2);
-INSERT INTO highestwords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (5, 'country', 12, current_date, current_date, 3);
+INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 1, 'highway', 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (2, 2, 'parkway', 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (3, 3, 'roadway', 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (4, 4, 'today', 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
+INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (5, 5, 'country', 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 
 # PLAYER WORDS : TOP 5 WORDS (WORDS WITH THE HIGHEST SCORES) RECEIVED BY THE PLAYER SINCE THE PLAYER BEGAN PLAYING WORDTRIS
@@ -40,23 +40,11 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, u
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('kaleidoscope', 21, 3, current_date, current_date, 1);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('abandoned', 13, 2, current_date, current_date, 1);
 
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (24, current_date, current_date, 1);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (40, current_date, current_date, 1);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (21, current_date, current_date, 1);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (26, current_date, current_date, 1);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (48, current_date, current_date, 1);
-
-
-
 # PLAYER TWO HAS '4' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('tomorrow', 9, 4, current_date, current_date, 2);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('today', 13, 3, current_date, current_date, 2);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('knockout', 18, 1, current_date, current_date, 2);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking,createdAt, updatedAt, PlayerId) VALUES ('ladybug', 14, 2, current_date, current_date, 2);
-
-# PLAYER TWO HAS '1' SEED RECORD FOR PLAYER SCORES -
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (53, current_date, current_date, 2);
-
 
 # PLAYER THREE HAS '4' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('hamburger', 17, 4, current_date, current_date, 4);
@@ -64,25 +52,25 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, u
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('staunchest', 15, 3, current_date, current_date, 4);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('picture', 11, 2, current_date, current_date, 4);
 
-# PLAYER THREE HAS '2' SEED RECORD FOR PLAYER SCORES
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (38, current_date, current_date, 4);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (34, current_date, current_date, 4);
-
 # PLAYER FOUR HAS '4' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('avenue', 9, 1, current_date, current_date, 4);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('parkway', 19, 3, current_date, current_date, 4);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('highway', 20, 4, current_date, current_date, 4);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('roadway', 14, 2, current_date, current_date, 4);
 
-# PLAYER FOUR HAS '2' SEED RECORD FOR PLAYER SCORES
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (38, current_date, current_date, 4);
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (34, current_date, current_date, 4);
-
 # PLAYER FIVE HAS '2' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('movie', 10, 1, current_date, current_date, 5);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('sitcom', 10, 2, current_date, current_date, 5);
 
-# PLAYER FIVE HAS '1' SEED RECORD FOR PLAYER SCORES
-INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId) VALUES (20, current_date, current_date, 5);
-
-
+# PLAYERS SEED INSERT STATEMENTS FOR playerscores
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (1, 24, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 4);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (2, 40, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 2);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (3, 21, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 5);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (4, 26, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 3);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (5, 48, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 1);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (6, 53, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2, 1);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (7, 42, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 1);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (8, 38, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 2);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (9, 34, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 4);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (10, 36, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 3);
+INSERT INTO playerscores (id, playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (11, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 5, 1);
