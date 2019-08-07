@@ -833,14 +833,14 @@ class Play extends Component {
             // prevent default, return false to stop scroll
             e.preventDefault()
             this.downClick();
-            return false;
+            // return false;
         }
         //up arrow cycles
         if (e.keyCode === 38) {
             // prevent default, return false to stop scroll
             e.preventDefault();
             this.cycleClick();
-            return false;
+            // return false;
         }
     }
 
