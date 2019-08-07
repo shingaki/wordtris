@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./style.css";
+import { Link } from 'react-router-dom';
 
 class GameOver extends Component {
   render() {
@@ -19,10 +20,15 @@ class GameOver extends Component {
             >
               PLAY AGAIN &#8680;
             </button>
+
+            <Link to="/scores">
+              <button className="btn btn-primary btn-lg">
+                HIGH SCORES &#8680;
+              </button>
+            </Link>
+
           </div>
         </div>
-
-        
       </>
     );
   }

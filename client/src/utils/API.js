@@ -34,8 +34,12 @@ export default {
         return axios.post("/login", checkPlayerName);
     },
 
-    getScores: function () {
-        return axios.get("/highscores");
+    getPlayersWordsAndScores: function () {
+        return axios.get("/getplayerswordsandscores");
+    },
+
+    getPlayersHighestScores: function () {
+        return axios.get("/getplayershighestscores");
     },
 
     // checkWord: Check if it is a word
