@@ -20,11 +20,11 @@ INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt
 INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 # SEED RECORDS FOR HIGHEST WORDS
-INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 1, 'highway', 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (2, 2, 'parkway', 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (3, 3, 'roadway', 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (4, 4, 'today', 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
-INSERT INTO highestwords (id, wordPosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (5, 5, 'country', 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
+INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 1, 'highway', 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (2, 2, 'parkway', 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (3, 3, 'roadway', 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (4, 4, 'today', 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
+INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (5, 5, 'country', 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 
 # PLAYER WORDS : TOP 5 WORDS (WORDS WITH THE HIGHEST SCORES) RECEIVED BY THE PLAYER SINCE THE PLAYER BEGAN PLAYING WORDTRIS
@@ -47,10 +47,10 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, u
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking,createdAt, updatedAt, PlayerId) VALUES ('ladybug', 14, 2, current_date, current_date, 2);
 
 # PLAYER THREE HAS '4' SEED RECORDS FOR PLAYER WORDS
-INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('hamburger', 17, 4, current_date, current_date, 4);
-INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('bridge', 10, 1, current_date, current_date, 4);
-INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('staunchest', 15, 3, current_date, current_date, 4);
-INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('picture', 11, 2, current_date, current_date, 4);
+INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('hamburger', 17, 4, current_date, current_date, 3);
+INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('bridge', 10, 1, current_date, current_date, 3);
+INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('staunchest', 15, 3, current_date, current_date, 3);
+INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('picture', 11, 2, current_date, current_date, 3);
 
 # PLAYER FOUR HAS '4' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, createdAt, updatedAt, PlayerId) VALUES ('avenue', 9, 1, current_date, current_date, 4);
