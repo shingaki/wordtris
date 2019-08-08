@@ -236,6 +236,7 @@ class Play extends Component {
         }
         // move next up letters to play letters
         // save new next up letters
+        console.log(playNow, nextList)
         this.setState({
             playLetters: playNow,
             nextUp: nextList,
@@ -494,9 +495,10 @@ class Play extends Component {
     }
 
     startNextRound = () => {
+        
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
             // pick new "next up" letters, move next up to play now
-            this.pickNewLetters();
+            // this.pickNewLetters();
             // move dropping piece back to top
             this.setState({ pieceSpeed: 0}) //so piece doesn't visually move to top of board
             this.setState({ currentPieceX: 100 }) //set starting X position
@@ -656,6 +658,7 @@ class Play extends Component {
         if (this.state.possibleWords.length > 0) {
             this.checkIfItIsAWord(0)
         } else {
+            this.pickNewLetters();
             this.startTick();
         };
         this.startNextRound();
@@ -770,6 +773,7 @@ class Play extends Component {
         console.log("after update: " + this.state.newPlacedLetters)
         if (actualWords) {
             if (myPlacedLetters.length === 0) {
+                this.pickNewLetters();
                 this.startTick();
             } else {
                 this.checkForLetterBonuses();
@@ -779,6 +783,7 @@ class Play extends Component {
                 if (this.state.possibleWords.length > 0) {
                     this.checkIfItIsAWord(0)
                 } else {
+                    this.pickNewLetters();
                     this.startTick();
                 };
             }
@@ -892,6 +897,7 @@ class Play extends Component {
                     }, 1500)
                     
                 } else if (index + 1 === this.state.possibleWords.length) { //Not a word, end of array
+                    this.pickNewLetters();
                     this.startTick();
                 } else { //Not a word, go to next possible word in array (index + 1)
                     this.checkIfItIsAWord( index + 1 )
