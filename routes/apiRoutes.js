@@ -166,7 +166,7 @@ module.exports = function(app) {
         console.log("getting global high scores!!!")
 
             db.HighestScores.findAll({
-                attributes: ['scorePosition', 'highestScore'],
+                attributes: ['scorePosition', 'highestScore', 'word'],
                 include: [
                     {
                         model: db.Players,

@@ -11,7 +11,8 @@ class GlobalHighScores extends Component {
                     return (
                         <div className={rowColor}>
                             <div className="col-md-1 score-chart">{item.scorePosition}.</div>
-                            <div className="col-md-4 score-chart">{item.Player.playerName}</div>
+                            <div className="col-md-2 score-chart">{item.Player.playerName}</div>
+                            <div className="col-md-2 score-chart">{item.word}</div>
                             <div className="col-md-1 score-chart">{item.highestScore}</div>
                         </div>)
                 })} </div>)
