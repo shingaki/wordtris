@@ -49,13 +49,13 @@ db.sequelize.sync({ force: true }).then(function () {
   });
 
   // for testing
-  db.Players.create({
-    playerName: "jpaul",
-    password: "1234",
-    email: "j@test.com"
-  }).then(function (db) {
-    // console.log(db);
-  });
+  // db.Players.create({
+  //   playerName: "jpaul",
+  //   password: "1234",
+  //   email: "j@test.com"
+  // }).then(function (db) {
+  //   // console.log(db);
+  // });
 });
 
 
