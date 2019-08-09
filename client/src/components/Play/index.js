@@ -37,7 +37,47 @@ class Play extends Component {
         foundWordType: "",
         isGameOver: false,
         numPiecesPlayed: 0,
-        lastPieceThatFoundWord: 0
+        lastPieceThatFoundWord: 0,
+        myHighScores: [],
+        myTopWords: [],
+        myWorstBestWordScore: 0,
+        newWordsHigherThanWorst: []
+
+    }
+
+    componentDidMount = () => {
+        // initial setup
+        this.initialSetup();
+
+        console.log(this.props.userID)
+        // console.log(props.userID)
+
+    }
+
+    componentWillMount = () => {
+        
+        API.getPlayersWordsAndScores().then(response => {
+            let topWords = [];
+            for (let x = 0; x < response.data.length; x++) {
+                topWords.push(response.data[x])
+            }
+           
+            this.setState({
+                myTopWords: topWords
+            })
+        })
+
+        API.getPlayersHighestScores().then(response => {
+            let highScores = [];
+            for (let x = 0; x < response.data.length; x++) {
+                highScores.push(response.data[x])
+            }
+            this.setState({
+                myHighScores: highScores
+            })
+
+        })
+
     }
 
     inputChange = event => {
@@ -197,13 +237,14 @@ class Play extends Component {
      
     }
 
-    componentDidMount = () => {
-        // initial setup
-        this.initialSetup();
-    }
+
 
 
     startClick = () => {
+        this.setState({
+            myWorstBestWordScore: this.state.myTopWords[4].wordPoints
+        })
+
         var nextList = [];
         var playNow = [];
         // generate next up three letters
@@ -497,8 +538,6 @@ class Play extends Component {
     startNextRound = () => {
         
         if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
-            // pick new "next up" letters, move next up to play now
-            // this.pickNewLetters();
             // move dropping piece back to top
             this.setState({ pieceSpeed: 0}) //so piece doesn't visually move to top of board
             this.setState({ currentPieceX: 100 }) //set starting X position
@@ -512,6 +551,24 @@ class Play extends Component {
                 possibleWords : [],
                 isGameOver: true
             })
+
+            let topWords = [];
+            for (let x = 0; x < 5; x++) {
+                topWords.push(this.state.myTopWords[x])
+            }
+
+            for (let x = 0; x < this.state.newWordsHigherThanWorst.length; x++) {
+                topWords.push(this.state.newWordsHigherThanWorst[x])
+            }
+
+
+            // myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
+            topWords.sort((a, b) => (a.wordPoints < b.wordPoints) ? 1 : -1);
+            for (let x = 0; x < topWords.length; x++) {
+                topWords[x].playerWordRanking = x+1
+            }
+            topWords = topWords.slice(0,5)
+            console.log(topWords)
            
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
@@ -831,26 +888,46 @@ class Play extends Component {
                     
                     // Update Score
                     this.setState({ score : this.state.score + this.state.foundWordValue * this.state.allFoundWords.length})
-                    
+                    let newTopWords = [];
+                    for (let y = 0; y < this.state.newWordsHigherThanWorst.length; y++) {
+                        newTopWords.push(this.state.newWordsHigherThanWorst[y])
+                    }
+                    console.log("newWords length: " + this.state.newWordsHigherThanWorst.length)
+                    if (this.state.foundWordValue * this.state.allFoundWords.length > this.state.myWorstBestWordScore) {
+                        let addWord = {
+                            PlayerId: this.props.userID,
+                            playerWord: this.state.foundWord,
+                            wordPoints: this.state.foundWordValue * this.state.allFoundWords.length,
+                            playerWordRanking: NaN
+                        }
+                        newTopWords.push(addWord)
+                    }
+                    this.setState({
+                        newWordsHigherThanWorst: newTopWords
+                    })
+
+                    console.log(this.state.newWordsHigherThanWorst)
+
+
                     // highlight found word
-                    console.log("highlight the word")
+                    // console.log("highlight the word")
                     if (this.state.foundWordType === "horizontal") {
-                        console.log("horizontal");
+                        // console.log("horizontal");
                         let currentBoard = [];
                         for (let x = 0; x < 200; x++) {
                             currentBoard[x] = this.state.placedLetters[x];
                         }
-                        console.log(currentBoard);
+                        // console.log(currentBoard);
                         for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
                             // let letterDiv = document.querySelector('[data-id="' + i + '"]');
                             // letterDiv.style.backgroundColor = "#560764";
                             // letterDiv.style.color = "#fff";
                             // let currentBoard = this.state.placedLetters;
                             let updatedLetter = this.state.placedLetters[i];
-                            console.log(updatedLetter);
+                            // console.log(updatedLetter);
                             updatedLetter.bgColor = "#560764";
                             updatedLetter.textColor = "#fff";
-                            console.log(updatedLetter);
+                            // console.log(updatedLetter);
                             currentBoard[i] = updatedLetter;
 
                             // this.setState({
@@ -864,7 +941,7 @@ class Play extends Component {
                         })
 
                     } else if (this.state.foundWordType === "vertical") {
-                        console.log("vertical");
+                        // console.log("vertical");
                         let currentBoard = [];
                         for (let x = 0; x < 200; x++) {
                             currentBoard[x] = this.state.placedLetters[x];

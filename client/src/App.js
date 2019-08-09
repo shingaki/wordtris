@@ -15,7 +15,8 @@ import Stats from "./components/Stats";
 class App extends Component {
 
   state = {
-    loggedin: false
+    loggedin: false,
+    userID: NaN
   }
 
   componentWillMount = () => {
@@ -27,7 +28,7 @@ class App extends Component {
     axios.get("/auto-login").then(UserInfo => {
       console.log("are they logged in");
       console.log(UserInfo);
-      this.updateLoggedInState(UserInfo.data.loggedin);
+      this.updateLoggedInState(UserInfo.data.loggedin, UserInfo.data.userId);
       window.location.reload();
     }).catch(err => console.log(err))
   }
@@ -36,13 +37,14 @@ class App extends Component {
     axios.get("/isloggedin").then(UserInfo => {
       console.log("are they logged in");
       console.log(UserInfo.data);
-      this.updateLoggedInState(UserInfo.data.loggedin);
+      this.updateLoggedInState(UserInfo.data.loggedin, UserInfo.data.userId);
     }).catch(err => console.log(err))
   }
 
-  updateLoggedInState = (value) => {
+  updateLoggedInState = (value, ID) => {
     this.setState({
-      loggedin: value
+      loggedin: value,
+      userID: ID
     })
   }
 
@@ -72,6 +74,12 @@ class App extends Component {
     );
   }
 
+  PlayPage = (props) => {
+    return (
+      <Play userID={this.state.userID} />
+    )
+  }
+
   render() {
     return (
       <>
@@ -84,7 +92,7 @@ class App extends Component {
             <Route exact path="/login" render={this.LoginSection} />
             <Route exact path="/signup" render={this.SignUpSection} />
             {this.state.loggedin ?
-              <Route exact path="/play" component={Play} /> : <Route exact path="/play" component={LoginPrompt} />
+              <Route exact path="/play" render={this.PlayPage} /> : <Route exact path="/play" component={LoginPrompt} />
             }
             <Route exact path="/scores" render={this.StatsSection} />
             <Route component={NoMatch} />
