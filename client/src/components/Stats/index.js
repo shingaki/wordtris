@@ -39,7 +39,7 @@ class Stats extends Component {
             this.setState({
                 globalHighScores: JSON.parse(strGlobalHighScores)
             })
-            console.log(this.state.globalHighScores);
+            // console.log(this.state.globalHighScores);
         })
 
         API.getGlobalHighWords().then(response => {
