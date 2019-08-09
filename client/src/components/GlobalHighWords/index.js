@@ -10,10 +10,10 @@ class GlobalHighWords extends Component {
                     const rowColor = i % 2 === 0 ? 'row even-row' : 'row odd-row'
                     return (
                         <div className={rowColor}>
-                            <div className="col-md-1 score-chart">{item.scorePosition}.</div>
-                            <div className="col-md-2 score-chart">{item.Player.playerName}</div>
-                            <div className="col-md-2 score-chart">{item.highestWord}</div>
-                            <div className="col-md-1 score-chart">{item.score}</div>
+                            <div className="col-lg-1 col-md-1 score-chart">{item.scorePosition}.</div>
+                            <div className="col-lg-4 col-md-4 score-chart">{item.Player.playerName}</div>
+                            <div className="col-lg-4 col-md-4 score-chart">{item.highestWord}</div>
+                            <div className="col-lg-2 col-md-2 score-chart text-right">{item.score}</div>
 
                         </div>)
                 })} </div>)

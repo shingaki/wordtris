@@ -59,6 +59,13 @@ export default {
         return axios.get("/getglobalhighwords");
     },
 
+    updateGlobalBestWords: function (newWords) {
+        console.log("put request to update global highest scoring words");
+        return axios.put("/updateglobalbestwords", {
+            new: newWords
+        });
+    },
+
     // checkWord: Check if it is a word
     checkWord: function (word) {
 

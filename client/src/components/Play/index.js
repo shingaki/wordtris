@@ -1060,6 +1060,7 @@ class Play extends Component {
                 userID={this.props.userID}
                 score={this.state.score} 
                 level={this.state.level}
+                myTopWords = {this.state.myTopWords}
                 GameNotOver ={this.GameNotOver}
                 /> 
                 :  <>

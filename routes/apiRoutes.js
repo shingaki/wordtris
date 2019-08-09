@@ -186,8 +186,7 @@ module.exports = function(app) {
 
     // update global high scores
     app.put("/updateglobalhighscores", (req, res) => {
-        console.log("updating scores")
-        // console.log(req.body)
+        console.log("updating global high scores")
         let responses = [];
 
         // update all positions
@@ -211,10 +210,10 @@ module.exports = function(app) {
 
     // get global high words and respective players from db
     app.get("/getglobalhighwords", (req, res) => {
-        console.log("getting global high words!!!")
+        console.log("getting global high words")
 
         db.HighestWords.findAll({
-            attributes: ['scorePosition', 'highestWord', 'score'],
+            attributes: ['scorePosition', 'highestWord', 'score', 'playerId'],
             include: [
                 {
                     model: db.Players,
@@ -229,6 +228,32 @@ module.exports = function(app) {
         }).catch(function (err) {
             res.send(err);
         })
+    })
+
+    // update global words (highest scoring)
+    app.put("/updateglobalbestwords", (req, res) => {
+        console.log("updating global words")
+        // console.log(req.body)
+        let responses = [];
+
+        // update all positions
+        for (let i = 1; i <= req.body.new.length; i++) {
+            db.HighestWords.update({
+                PlayerId: req.body.new[i - 1].playerId,
+                highestWord: req.body.new[i - 1].word,
+                highestScore: req.body.new[i - 1].score,
+            }, {
+                    where: {
+                        scorePosition: i
+                    }
+            }).then((dbResponse) => {
+                console.log(dbResponse);
+                responses.push(dbResponse);
+            }).catch(function (err) {
+                res.send(err);
+            });
+        }
+
     })
 
 

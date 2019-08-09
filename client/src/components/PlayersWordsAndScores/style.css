@@ -1,14 +1,4 @@
-.playerscore-container {
-    border-radius: 8px;
-    border: 1px solid #560764;
-    padding: 12px 15px;
-    background-color: #bb8fa9;
-}
-
-.odd-row {
-    background-color: #d8cbbb;
-}
-
-.even-row {
-    background-color: #bb8fa9;
+.rounded-bottom-borders {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
