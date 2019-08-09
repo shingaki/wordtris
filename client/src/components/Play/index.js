@@ -40,11 +40,12 @@ class Play extends Component {
         isGameOver: false,
         numPiecesPlayed: 0,
         lastPieceThatFoundWord: 0,
-<<<<<<< HEAD
         myHighScores: [],
         myTopWords: [],
         myWorstBestWordScore: 0,
-        newWordsHigherThanWorst: []
+        newWordsHigherThanWorst: [],
+        BonusVisable: false,
+        LevelUpVisable: false
 
     }
 
@@ -81,10 +82,7 @@ class Play extends Component {
 
         })
 
-=======
-        BonusVisable: false,
-        LevelUpVisable: false
->>>>>>> 342f8dd095c7e02826f8504b229ec9e03f7b8dc3
+
     }
 
     inputChange = event => {
