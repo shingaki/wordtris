@@ -13,11 +13,11 @@ INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES (
 
 
 # SEED RECORDS FOR HIGHEST SCORES
-INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (2, 2, 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
-INSERT INTO highestscores (id, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
+INSERT INTO highestscores (id, word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 'mississippi', 1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (2, 'saturn', 2, 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 'facebook', 3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO highestscores (id, word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 'university', 4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
+INSERT INTO highestscores (id, word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 'hospital', 5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 # SEED RECORDS FOR HIGHEST WORDS
 INSERT INTO highestwords (id, scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 1, 'highway', 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
