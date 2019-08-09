@@ -11,11 +11,11 @@ INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES (
 
 
 # SEED RECORDS FOR HIGHEST SCORES
-INSERT INTO HighestScores (word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES ('mississippi', 1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO HighestScores (word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES ('saturn', 2, 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO HighestScores (word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES ('facebook', 3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
-INSERT INTO HighestScores (word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES ('university', 4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
-INSERT INTO HighestScores (word, scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES ('hospital', 5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
+INSERT INTO HighestScores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO HighestScores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (2, 19, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO HighestScores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
+INSERT INTO HighestScores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
+INSERT INTO HighestScores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
 
 # SEED RECORDS FOR HIGHEST WORDS
 INSERT INTO HighestWords (scorePosition, highestWord, score, createdAt, updatedAt, PlayerId) VALUES (1, 'highway', 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
