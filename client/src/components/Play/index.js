@@ -9,6 +9,7 @@ import API from "../../utils/API";
 import GameInstructions from "../GameInstructions";
 import GameOver from "../GameOver";
 import BonusAlert from "../BonusAlert";
+import LevelUpAlert from "../LevelUpAlert";
 
 class Play extends Component {
 
@@ -39,7 +40,8 @@ class Play extends Component {
         isGameOver: false,
         numPiecesPlayed: 0,
         lastPieceThatFoundWord: 0,
-        BonusVisable: false
+        BonusVisable: false,
+        LevelUpVisable: false
     }
 
     inputChange = event => {
@@ -535,8 +537,12 @@ class Play extends Component {
                 level: this.state.level + 1,
                 previousLevelTargetScore: this.state.currentLevelTargetScore,
                 currentLevelTargetScore: newTarget,
-                fallSpeed: newFallspeed
+                fallSpeed: newFallspeed,
+                LevelUpVisable: true
             })
+            setTimeout(function(){
+                this.setState({LevelUpVisable: false});
+           }.bind(this),2500);
         }
         
         this.timerID = setInterval(
@@ -992,6 +998,11 @@ class Play extends Component {
                         BonusVisable={this.state.BonusVisable} 
                         />
                     </div>
+                    <div className="row align-items-center">
+                       <LevelUpAlert
+                       LevelUpVisable={this.state.LevelUpVisable}
+                       /> 
+                    </div>
 
                 <div className="row desk">
                     <div className="col-md-3 text-center">
@@ -1043,6 +1054,11 @@ class Play extends Component {
                         <BonusAlert 
                         BonusVisable={this.state.BonusVisable} 
                         />
+                    </div>
+                    <div className="row align-items-center">
+                       <LevelUpAlert
+                       LevelUpVisable={this.state.LevelUpVisable}
+                       /> 
                     </div>
                     <div className="row align-items-center">
                         <div className="col-md-6 no-split text-center">
