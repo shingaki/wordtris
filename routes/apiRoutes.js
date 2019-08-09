@@ -191,14 +191,13 @@ module.exports = function(app) {
         let responses = [];
 
         // update all positions
-        for (let i = 1; i <= 5; i++) {
-            db.HighestScores.update({
-                playerId: req.body.new[i - 1].playerId,
+        for (let i = 1; i <= req.body.new.length; i++) {
+            db.HighestScores.upsert({
+                PlayerId: req.body.new[i - 1].playerId,
                 highestScore: req.body.new[i - 1].score,
+                scorePosition: i
             }, {
-                    where: {
-                        scorePosition: i
-                    }
+                    scorePosition: i
             }).then((dbResponse) => {
                 console.log(dbResponse);
                 responses.push(dbResponse);
