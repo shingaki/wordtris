@@ -47,6 +47,13 @@ export default {
         return axios.get("/getglobalhighscores");
     },
 
+    updateGlobalHighScores: function (newScores) {
+        console.log("put request to update global high scores");
+        return axios.put("/updateglobalhighscores", {
+            new: newScores
+        });
+    },
+
     getGlobalHighWords: function () {
         console.log("make get request to get global words");
         return axios.get("/getglobalhighwords");
