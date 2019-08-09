@@ -1056,7 +1056,8 @@ class Play extends Component {
             <div className="container" tabIndex="0" onKeyDown={this.ArrowKeys}>
 
                 {this.state.isGameOver ? 
-                <GameOver  
+                <GameOver
+                userID={this.props.userID}
                 score={this.state.score} 
                 level={this.state.level}
                 GameNotOver ={this.GameNotOver}
