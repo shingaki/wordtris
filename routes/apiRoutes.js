@@ -214,7 +214,7 @@ module.exports = function(app) {
         console.log("getting global high words!!!")
 
         db.HighestWords.findAll({
-            attributes: ['scorePosition', 'highestWord'],
+            attributes: ['scorePosition', 'highestWord', 'score'],
             include: [
                 {
                     model: db.Players,
