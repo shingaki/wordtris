@@ -8,6 +8,7 @@ import Controls from "../Controls";
 import API from "../../utils/API";
 import GameInstructions from "../GameInstructions";
 import GameOver from "../GameOver";
+import BonusAlert from "../BonusAlert";
 
 class Play extends Component {
 
@@ -37,7 +38,8 @@ class Play extends Component {
         foundWordType: "",
         isGameOver: false,
         numPiecesPlayed: 0,
-        lastPieceThatFoundWord: 0
+        lastPieceThatFoundWord: 0,
+        BonusVisable: false
     }
 
     inputChange = event => {
@@ -639,6 +641,13 @@ class Play extends Component {
             if (myBoard[y].letter === letter) {myBoard[y].bonus = bonus}
         }
 
+        if (bonus>1){
+            this.setState({BonusVisable: true})
+            setTimeout(function(){
+                this.setState({BonusVisable: false});
+           }.bind(this),2500);
+        }
+
         this.setState({ placedLetters : myBoard })
         // console.log(this.state.placedLetters)
     }
@@ -978,6 +987,11 @@ class Play extends Component {
 
                 <h1 className="text-center mt-5 mb-4 bring-front">Play</h1>
 
+                <div className="row align-items-center">
+                        <BonusAlert 
+                        BonusVisable={this.state.BonusVisable} 
+                        />
+                    </div>
 
                 <div className="row desk">
                     <div className="col-md-3 text-center">
@@ -989,6 +1003,9 @@ class Play extends Component {
                             allFoundWords={this.state.allFoundWords}
                         />
                     </div>
+
+                    
+
                     <div className="col-md-6 text-center">
                         <GameArea 
                             currentPieceX={this.state.currentPieceX}
@@ -1022,6 +1039,11 @@ class Play extends Component {
                 {/* MOBILE LAYOUT */}
                 <div className="mobile">
 
+                <div className="row align-items-center">
+                        <BonusAlert 
+                        BonusVisable={this.state.BonusVisable} 
+                        />
+                    </div>
                     <div className="row align-items-center">
                         <div className="col-md-6 no-split text-center">
                             <Next pickNewLetters={this.pickNewLetters} nextUp={this.state.nextUp} />
