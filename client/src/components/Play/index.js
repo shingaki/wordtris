@@ -568,7 +568,8 @@ class Play extends Component {
             })
 
             let topWords = [];
-            for (let x = 0; x < 5; x++) {
+            
+            for (let x = 0; x < this.state.myTopWords.length; x++) {
                 topWords.push(this.state.myTopWords[x])
             }
 
@@ -924,7 +925,7 @@ class Play extends Component {
                             PlayerId: this.props.userID,
                             playerWord: this.state.foundWord,
                             wordPoints: this.state.foundWordValue * this.state.allFoundWords.length,
-                            playerWordRanking: NaN
+                            playerWordRanking: 0
                         }
                         newTopWords.push(addWord)
                     }
