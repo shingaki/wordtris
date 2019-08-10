@@ -65,10 +65,13 @@ class Play extends Component {
             for (let x = 0; x < response.data.length; x++) {
                 topWords.push(response.data[x])
             }
+
+            if (response.data.length === 5) {
+                this.setState({
+                    myTopWords: topWords
+                })
+            }
            
-            this.setState({
-                myTopWords: topWords
-            })
         })
 
         API.getPlayersHighestScores().then(response => {
@@ -246,9 +249,16 @@ class Play extends Component {
 
 
     startClick = () => {
-        this.setState({
-            myWorstBestWordScore: this.state.myTopWords[4].wordPoints
-        })
+
+        if (this.state.myTopWords[4] !== undefined) {
+            this.setState({
+                myWorstBestWordScore: this.state.myTopWords[4].wordPoints
+            }) 
+        } else {
+            this.setState({
+                myWorstBestWordScore: 0
+            })
+        }
 
         var nextList = [];
         var playNow = [];
@@ -558,7 +568,8 @@ class Play extends Component {
             })
 
             let topWords = [];
-            for (let x = 0; x < 5; x++) {
+            
+            for (let x = 0; x < this.state.myTopWords.length; x++) {
                 topWords.push(this.state.myTopWords[x])
             }
 
@@ -570,10 +581,16 @@ class Play extends Component {
             // myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
             topWords.sort((a, b) => (a.wordPoints < b.wordPoints) ? 1 : -1);
             for (let x = 0; x < topWords.length; x++) {
-                topWords[x].playerWordRanking = x+1
+                topWords[x].playerWordRanking = x + 1;
             }
             topWords = topWords.slice(0,5)
+            
+            this.setState({
+                myTopWords: topWords
+            })
+
             console.log(topWords)
+            console.log(this.state.myTopWords)
            
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
@@ -926,7 +943,7 @@ class Play extends Component {
                             PlayerId: this.props.userID,
                             playerWord: this.state.foundWord,
                             wordPoints: this.state.foundWordValue * this.state.allFoundWords.length,
-                            playerWordRanking: NaN
+                            playerWordRanking: 0
                         }
                         newTopWords.push(addWord)
                     }
