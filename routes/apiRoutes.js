@@ -50,18 +50,6 @@ module.exports = function(app) {
         })
     })
 
-    // auto login for dev purposes
-    app.get("/auto-login", (req, res) => {
-        req.session.loggedin = true;
-        req.session.playerName = "jpaul";
-        req.session.userId = 1;
-        res.json({
-            loggedin: req.session.loggedin,
-            playerName: req.session.playerName,
-            userId: req.session.userId
-        });
-    });
-
     // log player in
     app.post("/login", (req, res) => {
         console.log("req body")
@@ -142,28 +130,32 @@ module.exports = function(app) {
     // update player's highest scoring words in db
     app.put("/updateplayerbestwords", (req, res) => {
         console.log("updating player's highest scoring words")
+        console.log(req.body.new);
         let responses = [];
 
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.PlayerWords.update({
-                PlayerId: req.body.new[i - 1].PlayerId,
+            db.PlayerWords.upsert({
                 playerWord: req.body.new[i - 1].playerWord,
                 wordPoints: req.body.new[i - 1].wordPoints,
-                // letterBonus: req.body.new[i - 1].letterBonus,
-                // wordBonus: req.body.new[i - 1].wordBonus
+                letterBonus: req.body.new[i - 1].letterBonus,
+                wordBonus: req.body.new[i - 1].wordBonus,
+                PlayerId: req.body.new[i - 1].PlayerId,
+                playerWordRanking: i
             }, {
                     where: {
+                        PlayerId: req.body.new[i - 1].PlayerId,
                         playerWordRanking: i
-                    }
+                }
             }).then((dbResponse) => {
                 console.log(dbResponse);
                 console.log("update player words");
                 responses.push(dbResponse);
             }).catch(function (err) {
-                res.send(err);
+                console.log(err);
             });
         }
+        // res.json(responses);
 
     })
 
@@ -204,7 +196,7 @@ module.exports = function(app) {
                 order: [['scorePosition', 'ASC']],
 
             }).then((dbResponse) => {
-                console.log(dbResponse);
+                // console.log(dbResponse);
                 res.send(dbResponse);
             }).catch(function (err) {
                 res.send(err);
@@ -233,6 +225,7 @@ module.exports = function(app) {
                 res.send(err);
             });
         }
+        res.json(responses);
 
     })
 
@@ -251,7 +244,7 @@ module.exports = function(app) {
             order: [['scorePosition', 'ASC']],
 
         }).then((dbResponse) => {
-            console.log(dbResponse);
+            // console.log(dbResponse);
             res.send(dbResponse);
         }).catch(function (err) {
             res.send(err);
@@ -270,6 +263,8 @@ module.exports = function(app) {
                 PlayerId: req.body.new[i - 1].playerId,
                 highestWord: req.body.new[i - 1].word,
                 score: req.body.new[i - 1].score,
+                letterBonus: req.body.new[i - 1].letterBonus,
+                wordBonus: req.body.new[i - 1].wordBonus
             }, {
                     where: {
                         scorePosition: i
@@ -281,6 +276,7 @@ module.exports = function(app) {
                 res.send(err);
             });
         }
+        res.json(responses);
 
     })
 

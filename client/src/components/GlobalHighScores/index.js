@@ -19,7 +19,8 @@ class GlobalHighScores extends Component {
                             <div className="col-md-5 score-chart">{item.Player.playerName}</div>
                             <div className="col-md-3 offset-2 score-chart text-right">{item.highestScore}</div>
                         </div>)
-                })} </div>)
+                })}
+            </div>)
 
     }
 }
