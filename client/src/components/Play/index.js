@@ -562,10 +562,10 @@ class Play extends Component {
 
         } else {
             //Game over
-            this.setState({
-                possibleWords : [],
-                isGameOver: true
-            })
+            // this.setState({
+            //     possibleWords : [],
+            //     isGameOver: true
+            // })
 
             let topWords = [];
             
@@ -586,7 +586,9 @@ class Play extends Component {
             topWords = topWords.slice(0,5)
             
             this.setState({
-                myTopWords: topWords
+                myTopWords: topWords,
+                possibleWords: [],
+                isGameOver: true
             })
 
             console.log(topWords)

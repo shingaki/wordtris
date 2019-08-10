@@ -241,7 +241,7 @@ module.exports = function(app) {
             db.HighestWords.update({
                 PlayerId: req.body.new[i - 1].playerId,
                 highestWord: req.body.new[i - 1].word,
-                highestScore: req.body.new[i - 1].score,
+                score: req.body.new[i - 1].score,
             }, {
                     where: {
                         scorePosition: i
