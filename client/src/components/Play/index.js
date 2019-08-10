@@ -1206,7 +1206,7 @@ class Play extends Component {
                         </div>
                     </div>
 
-                    <div className="row mt-3 mb-5 bring-front">
+                    <div className="row mt-3 mb-3 bring-front">
                         <div className="col-md-12 text-center">
                             <Found 
                                 foundWord={this.state.foundWord} 
@@ -1216,7 +1216,7 @@ class Play extends Component {
                         </div>
                     </div>
 
-                    <div className="row mt-5">
+                    <div className="row mt-4">
                         <div className="col-md-12 text-center">
                             <GameArea 
                                 currentPieceX={this.state.currentPieceX}

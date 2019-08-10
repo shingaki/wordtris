@@ -155,7 +155,7 @@ module.exports = function(app) {
                 console.log(err);
             });
         }
-        // res.json(responses);
+        res.json(responses);
 
     })
 
@@ -222,7 +222,7 @@ module.exports = function(app) {
                 console.log("global scores updated");
                 responses.push(dbResponse);
             }).catch(function (err) {
-                res.send(err);
+                // res.send(err);
             });
         }
         res.json(responses);
@@ -273,7 +273,7 @@ module.exports = function(app) {
                 console.log("global words updated");
                 responses.push(dbResponse);
             }).catch(function (err) {
-                res.send(err);
+                // res.send(err);
             });
         }
         res.json(responses);
