@@ -260,6 +260,8 @@ class Play extends Component {
             })
         }
 
+        console.log(this.state.myTopWords)
+
         var nextList = [];
         var playNow = [];
         // generate next up three letters
@@ -562,10 +564,10 @@ class Play extends Component {
 
         } else {
             //Game over
-            // this.setState({
-            //     possibleWords : [],
-            //     isGameOver: true
-            // })
+            this.setState({
+                possibleWords : [],
+                isGameOver: true
+            })
 
             let topWords = [];
             
@@ -586,9 +588,7 @@ class Play extends Component {
             topWords = topWords.slice(0,5)
             
             this.setState({
-                myTopWords: topWords,
-                possibleWords: [],
-                isGameOver: true
+                myTopWords: topWords
             })
 
             console.log(topWords)
@@ -727,19 +727,19 @@ class Play extends Component {
         if (bonus === 2){
             this.setState({BonusVisable: "two"})
             setTimeout(function(){
-                this.setState({BonusVisable: "OhTwo"});
+                this.setState({BonusVisable: "none"});
            }.bind(this),2500);
         }
         if (bonus === 3){
             this.setState({BonusVisable: "three"})
             setTimeout(function(){
-                this.setState({BonusVisable: "OhThree"});
+                this.setState({BonusVisable: "none"});
            }.bind(this),2500);
         }
         if (bonus === 4){
             this.setState({BonusVisable: "four"})
             setTimeout(function(){
-                this.setState({BonusVisable: "OhFour"});
+                this.setState({BonusVisable: "none"});
            }.bind(this),2500);
         }
 
