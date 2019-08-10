@@ -592,7 +592,7 @@ class Play extends Component {
             })
 
             console.log(topWords)
-            console.log(this.state.myTopWords)
+            console.log("final top words: " + this.state.myTopWords)
            
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
@@ -918,9 +918,8 @@ class Play extends Component {
                     
                     currentWord.word = this.state.possibleWords[index].word;
                     currentWord.value = this.state.possibleWords[index].value * (this.state.allFoundWords.length + 1);
-                    // need to update bonuses to say Double word and or double letters used
-                    currentWord.wordBonus = this.state.allFoundWords.length + 1;
-                    currentWord.letterBonuses = "NONE FOR NOW";
+                    // currentWord.wordBonus = this.state.allFoundWords.length + 1;
+                    // currentWord.letterBonuses = "NONE FOR NOW";
 
                     myWords.push(currentWord);
 
@@ -941,10 +940,22 @@ class Play extends Component {
                     }
                     console.log("newWords length: " + this.state.newWordsHigherThanWorst.length)
                     if (this.state.foundWordValue * this.state.allFoundWords.length > this.state.myWorstBestWordScore) {
+                        let myWordBonus = 0;
+                        let myLetterBonus = 0;
+                        
+                        if (this.state.allFoundWords.length > 1) {myWordBonus = 1}
+
+                        for (let y = this.state.foundWordStart; y<=this.state.foundWordEnd; y++) {
+                            if (this.state.placedLetters.bonus !== 1) {myLetterBonus = 1}
+                        }
+
+
                         let addWord = {
                             PlayerId: this.props.userID,
                             playerWord: this.state.foundWord,
                             wordPoints: this.state.foundWordValue * this.state.allFoundWords.length,
+                            letterBonus: myLetterBonus,
+                            wordBonus: myWordBonus,
                             playerWordRanking: 0
                         }
                         newTopWords.push(addWord)
