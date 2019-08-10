@@ -2,6 +2,10 @@
     border-bottom: 2px solid black;
 }
 
+.col-header {
+    font-size: 0.8rem;
+}
+
 .odd-row {
     background-color: #d8cbbb;
 }
