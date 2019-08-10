@@ -44,7 +44,7 @@ class Play extends Component {
         myTopWords: [],
         myWorstBestWordScore: 0,
         newWordsHigherThanWorst: [],
-        BonusVisable: false,
+        BonusVisable: "none",
         LevelUpVisable: false
 
     }
@@ -722,10 +722,22 @@ class Play extends Component {
             if (myBoard[y].letter === letter) {myBoard[y].bonus = bonus}
         }
 
-        if (bonus>1){
-            this.setState({BonusVisable: true})
+        if (bonus === 2){
+            this.setState({BonusVisable: "two"})
             setTimeout(function(){
-                this.setState({BonusVisable: false});
+                this.setState({BonusVisable: "none"});
+           }.bind(this),2500);
+        }
+        if (bonus === 3){
+            this.setState({BonusVisable: "three"})
+            setTimeout(function(){
+                this.setState({BonusVisable: "none"});
+           }.bind(this),2500);
+        }
+        if (bonus === 4){
+            this.setState({BonusVisable: "four"})
+            setTimeout(function(){
+                this.setState({BonusVisable: "none"});
            }.bind(this),2500);
         }
 
@@ -1094,12 +1106,13 @@ class Play extends Component {
                         <BonusAlert 
                         BonusVisable={this.state.BonusVisable} 
                         />
-                </div>
-                <div className="row align-items-center">
-                    <LevelUpAlert
-                    LevelUpVisable={this.state.LevelUpVisable}
-                    /> 
-                </div>
+                    </div>
+                    <div className="row align-items-center">
+                       <LevelUpAlert
+                       LevelUpVisable={this.state.LevelUpVisable}
+                       level={this.state.level}
+                       /> 
+                    </div>
 
                 <div className="row desk">
                     <div className="col-md-3 text-center">
@@ -1155,6 +1168,7 @@ class Play extends Component {
                     <div className="row align-items-center">
                        <LevelUpAlert
                        LevelUpVisable={this.state.LevelUpVisable}
+                       level={this.state.level}
                        /> 
                     </div>
                     <div className="row align-items-center">
