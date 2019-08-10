@@ -124,7 +124,7 @@ module.exports = function(app) {
             console.log("getting players words and scores!!!")
 
             db.PlayerWords.findAll({
-                attributes: ['PlayerId', 'playerWord', 'wordPoints', 'playerWordRanking'],
+                attributes: ['PlayerId', 'playerWord', 'wordPoints', 'letterBonus', 'wordBonus', 'playerWordRanking'],
                     where: {
                         PlayerId: req.session.userId,
                     },
@@ -213,7 +213,7 @@ module.exports = function(app) {
         console.log("getting global high words")
 
         db.HighestWords.findAll({
-            attributes: ['scorePosition', 'highestWord', 'score', 'playerId'],
+            attributes: ['scorePosition', 'highestWord', 'score', 'letterBonus', 'wordBonus', 'playerId'],
             include: [
                 {
                     model: db.Players,
