@@ -65,10 +65,13 @@ class Play extends Component {
             for (let x = 0; x < response.data.length; x++) {
                 topWords.push(response.data[x])
             }
+
+            if (response.data.length === 5) {
+                this.setState({
+                    myTopWords: topWords
+                })
+            }
            
-            this.setState({
-                myTopWords: topWords
-            })
         })
 
         API.getPlayersHighestScores().then(response => {
@@ -246,9 +249,16 @@ class Play extends Component {
 
 
     startClick = () => {
-        this.setState({
-            myWorstBestWordScore: this.state.myTopWords[4].wordPoints
-        })
+
+        if (this.state.myTopWords[4] !== undefined) {
+            this.setState({
+                myWorstBestWordScore: this.state.myTopWords[4].wordPoints
+            }) 
+        } else {
+            this.setState({
+                myWorstBestWordScore: 0
+            })
+        }
 
         var nextList = [];
         var playNow = [];
@@ -570,7 +580,7 @@ class Play extends Component {
             // myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
             topWords.sort((a, b) => (a.wordPoints < b.wordPoints) ? 1 : -1);
             for (let x = 0; x < topWords.length; x++) {
-                topWords[x].playerWordRanking = x+1
+                topWords[x].playerWordRanking = x + 1;
             }
             topWords = topWords.slice(0,5)
             console.log(topWords)
@@ -1077,12 +1087,12 @@ class Play extends Component {
                         <BonusAlert 
                         BonusVisable={this.state.BonusVisable} 
                         />
-                    </div>
-                    <div className="row align-items-center">
-                       <LevelUpAlert
-                       LevelUpVisable={this.state.LevelUpVisable}
-                       /> 
-                    </div>
+                </div>
+                <div className="row align-items-center">
+                    <LevelUpAlert
+                    LevelUpVisable={this.state.LevelUpVisable}
+                    /> 
+                </div>
 
                 <div className="row desk">
                     <div className="col-md-3 text-center">
