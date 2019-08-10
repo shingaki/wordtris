@@ -564,11 +564,6 @@ class Play extends Component {
 
         } else {
             //Game over
-            this.setState({
-                possibleWords : [],
-                isGameOver: true
-            })
-
             let topWords = [];
             
             for (let x = 0; x < this.state.myTopWords.length; x++) {
@@ -588,7 +583,9 @@ class Play extends Component {
             topWords = topWords.slice(0,5)
             
             this.setState({
-                myTopWords: topWords
+                myTopWords: topWords,
+                possibleWords : [],
+                isGameOver: true
             })
 
             console.log(topWords)
@@ -599,7 +596,22 @@ class Play extends Component {
     }
 
     startTick = () => {
-        
+        let columns = [];
+
+        for (let x = 0; x<10; x++) {
+            columns[x] = 0
+        }
+        for (let x = 10; x < 200; x++) {
+            if (this.state.placedLetters[x].letter !== "" && this.state.placedLetters[x-10].letter === "") {columns[x % 10] = 20 - parseInt(x/10)}
+        } 
+
+        console.log("columns: " + columns)
+
+        this.setState({
+            numLettersPerColumn: columns
+        })
+
+        // console.log(this.state.placedLetters)
         
         if (this.state.score >= this.state.currentLevelTargetScore) {
             let newTarget = this.state.currentLevelTargetScore + this.state.previousLevelTargetScore + this.state.currentLevelTargetScore;
