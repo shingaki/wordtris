@@ -584,7 +584,13 @@ class Play extends Component {
                 topWords[x].playerWordRanking = x + 1;
             }
             topWords = topWords.slice(0,5)
+            
+            this.setState({
+                myTopWords: topWords
+            })
+
             console.log(topWords)
+            console.log(this.state.myTopWords)
            
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
