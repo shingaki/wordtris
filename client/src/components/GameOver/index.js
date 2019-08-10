@@ -109,7 +109,6 @@ class GameOver extends Component {
       }
 
       // see if any of player's top words make the top 5 global words
-      let topWordsThisRound = this.props.myTopWords;
 
       // for each player's top words of this game
       for (let i = 0; i < playerInfo.topWords.length; i++) {
