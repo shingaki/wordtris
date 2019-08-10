@@ -49,6 +49,13 @@ export default {
         return axios.get("/getplayershighestscores");
     },
 
+    updatePlayersHighestScores: function (newScores) {
+        console.log("put request to update player high scores");
+        return axios.put("/updateplayerhighestscores", {
+            new: newScores
+        });
+    },
+
     getGlobalHighScores: function () {
         console.log("make get request to get global scores");
         return axios.get("/getglobalhighscores");

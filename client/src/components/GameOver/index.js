@@ -25,7 +25,7 @@ class GameOver extends Component {
     console.log(playerInfo);
 
     // ============================================================================
-    // pull in global high scores
+    // pull in and update global high scores
     API.getGlobalHighScores().then(response => {
       const highScores = [];
 
@@ -74,6 +74,7 @@ class GameOver extends Component {
     })
 
     // ============================================================================
+    // pull in and update global high words
     API.getGlobalHighWords().then(response => {
       console.log(response.data);
       let topWords = [];
@@ -155,6 +156,38 @@ class GameOver extends Component {
     API.updatePlayersBestWords(this.props.myTopWords).then(response => {
       console.log("updating player's top words")
     })
+
+    // ============================================================================
+    // pull in and update player scores
+    let playerScores = [];
+    for (let i = 0; i < this.props.myHighScores.length; i++) {
+      playerScores.push(this.props.myHighScores[i]);
+    }
+
+    // compare each top score against the new score
+    for (let i = 0; i < this.props.myHighScores.length; i++) {
+      // if the new score is higher than one in the top 5
+      if (playerInfo.score > this.props.myHighScores[i]) {
+
+        // reset score - adjust all below it
+
+        // add in new player score in correct position
+        playerScores.splice(i, 0, playerInfo);
+
+        // remove the lowest score so there are only top 5
+        if (this.props.myHighScores.length === 5) {
+          playerScores.pop();
+        }
+
+        // update high scores in DB
+        API.updatePlayersHighestScores(playerScores).then(res => {
+          console.log(res);
+        });
+
+        console.log(playerScores);
+        return true;
+      }
+    }
 
 
   }
