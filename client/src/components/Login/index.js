@@ -76,7 +76,6 @@ class Login extends Component {
             <div className="container">
 
                 <h1 className="text-center mt-5">Login</h1>
-                <button onClick={this.props.autoLogin}>Auto-login</button>
 
                 <div className="row justify-content-center">
                     <div className="col-lg-6 col-md-8">

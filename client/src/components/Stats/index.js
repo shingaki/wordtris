@@ -111,7 +111,7 @@ class Stats extends Component {
                 }
                     <div className="row">
                         <div className="col-md-12 text-center">
-                            *<sup><small></small></sup>: word bonus <br />
+                            <sup><small>W</small></sup>: word bonus <br />
                             <sup><small>L</small></sup>: letter bonus
                         </div>
                     </div>

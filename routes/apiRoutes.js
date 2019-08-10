@@ -139,6 +139,34 @@ module.exports = function(app) {
     
     })
 
+    // update player's highest scoring words in db
+    app.put("/updateplayerbestwords", (req, res) => {
+        console.log("updating player's highest scoring words")
+        let responses = [];
+
+        // update all positions
+        for (let i = 1; i <= req.body.new.length; i++) {
+            db.PlayerWords.update({
+                PlayerId: req.body.new[i - 1].PlayerId,
+                playerWord: req.body.new[i - 1].playerWord,
+                wordPoints: req.body.new[i - 1].wordPoints,
+                // letterBonus: req.body.new[i - 1].letterBonus,
+                // wordBonus: req.body.new[i - 1].wordBonus
+            }, {
+                    where: {
+                        playerWordRanking: i
+                    }
+            }).then((dbResponse) => {
+                console.log(dbResponse);
+                console.log("update player words");
+                responses.push(dbResponse);
+            }).catch(function (err) {
+                res.send(err);
+            });
+        }
+
+    })
+
     // get players highest scores from db
     app.get("/getplayershighestscores", (req, res) => {
 
@@ -199,7 +227,7 @@ module.exports = function(app) {
                         scorePosition: i
                     }
             }).then((dbResponse) => {
-                console.log(dbResponse);
+                console.log("global scores updated");
                 responses.push(dbResponse);
             }).catch(function (err) {
                 res.send(err);
@@ -247,7 +275,7 @@ module.exports = function(app) {
                         scorePosition: i
                     }
             }).then((dbResponse) => {
-                console.log(dbResponse);
+                console.log("global words updated");
                 responses.push(dbResponse);
             }).catch(function (err) {
                 res.send(err);

@@ -24,6 +24,7 @@ class GameOver extends Component {
 
     console.log(playerInfo);
 
+    // ============================================================================
     // pull in global high scores
     API.getGlobalHighScores().then(response => {
       const highScores = [];
@@ -72,6 +73,7 @@ class GameOver extends Component {
 
     })
 
+    // ============================================================================
     API.getGlobalHighWords().then(response => {
       console.log(response.data);
       let topWords = [];
@@ -98,30 +100,16 @@ class GameOver extends Component {
       for (let i = 0; i < globalTopWords.length; i++) {
         // compare each global word with each player word
         for (let j = 0; j < playerInfo.topWords.length; j++) {
-          // console.log("test for duplicates with global words")
-          // console.log(playerInfo.topWords[j].wordPoints)
-          // console.log(globalTopWords[i].score)
-          // console.log("=====================")
-          // console.log(playerInfo.topWords[j].playerWord)
-          // console.log(globalTopWords[i].word)
-          // console.log("=====================")
-          // console.log(playerInfo.playerId)
-          // console.log(globalTopWords[i].playerId)
-          
           // if word, word score, and playerId are the same, remove for list of potential new global high scores
           if (playerInfo.topWords[j].wordPoints === globalTopWords[i].score && playerInfo.topWords[j].playerWord === globalTopWords[i].word && playerInfo.playerId === globalTopWords[i].playerId) {
             playerInfo.topWords.splice(j, 1);
             console.log("duplicate removed");
-            console.log(playerInfo.topWords);
           }
         }
       }
-      console.log(globalTopWords);
-      console.log(this.state.globalTopWords);
 
       // see if any of player's top words make the top 5 global words
       let topWordsThisRound = this.props.myTopWords;
-      console.log(this.props.myTopWords);
 
       // for each player's top words of this game
       for (let i = 0; i < playerInfo.topWords.length; i++) {
@@ -129,11 +117,9 @@ class GameOver extends Component {
         for (let j = 0; j < this.state.globalTopWords.length; j++) {
           // if the new word's score is higher than one in the top 5
           console.log("before score comparision")
-          console.log(playerInfo)
           if (playerInfo.topWords[i].wordPoints > this.state.globalTopWords[j].score) {
             // adjust order to add in new word
-            var newWords = this.state.globalTopWords;
-            console.log(newWords);
+            // var newWords = this.state.globalTopWords;
 
             var wordToAdd = {
               playerId: playerInfo.topWords[i].PlayerId,
@@ -141,17 +127,13 @@ class GameOver extends Component {
               score: playerInfo.topWords[i].wordPoints
             }
 
-            console.log(wordToAdd);
-
             // add in new player score in correct position
-            newWords.splice(j, 0, wordToAdd);
-
+            globalTopWords.splice(j, 0, wordToAdd);
             // remove the lowest score so there are only top 5
-            newWords.pop();
-
+            globalTopWords.pop();
             // update state
             this.setState({
-              globalTopWords: newWords
+              globalTopWords: globalTopWords
             })
 
             // update high scores in DB
@@ -159,13 +141,19 @@ class GameOver extends Component {
               console.log(res);
             });
 
-            console.log(newWords);
+            console.log(globalTopWords);
             return true;
           }
         }
 
       }
 
+    })
+
+    // ============================================================================
+    // update player words in db
+    API.updatePlayersBestWords(this.props.myTopWords).then(response => {
+      console.log("updating player's top words")
     })
 
 

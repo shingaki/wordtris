@@ -38,6 +38,13 @@ export default {
         return axios.get("/getplayerswords");
     },
 
+    updatePlayersBestWords: function (newWords) {
+        console.log("put request to update player's highest scoring words");
+        return axios.put("/updateplayerbestwords", {
+            new: newWords
+        });
+    },
+
     getPlayersHighestScores: function () {
         return axios.get("/getplayershighestscores");
     },
