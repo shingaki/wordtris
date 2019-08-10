@@ -7,7 +7,7 @@ class LevelUpAlert extends Component {
     return (
       <div>
         <div className={this.props.LevelUpVisable ? "fadeIn" : "fadeOut"}>
-          LEVELED UP
+          LEVEL {this.props.level}
         </div>
       </div>
     );

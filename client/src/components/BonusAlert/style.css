@@ -4,7 +4,6 @@
   height: 0;
   font-size: 0vmax;
   transition: width 1s, height 1s, opacity 1s, font-size 1s;
-  color: #bb8fa9;
   font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
@@ -13,15 +12,17 @@
   position: absolute;
   z-index: 999;
   text-align: center;
-  margin: auto;
+  left: 25%;
+  top: 50%;
 }
-.fadeIn {
+
+.fadeInTwo {
   opacity: 1;
-  width: 100%;
+  width: 50%;
   height: 50%;
   font-size: 5vmax;
   transition: width 1s, height 1s, opacity 1s, font-size 1s;
-  color: #bb8fa9;
+  color: rgb(0, 204, 255);
   font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
@@ -30,5 +31,101 @@
   position: absolute;
   z-index: 999;
   text-align: center;
-  margin: auto;
+  left: 25%;
+  top: 50%;
+}
+
+.fadeOutTwo {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  font-size: 0vmax;
+  color: rgb(0, 204, 255);
+  transition: width 1s, height 1s, opacity 1s, font-size 1s;
+  font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    sans-serif;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  left: 25%;
+  top: 50%;
+}
+
+.fadeInThree {
+  opacity: 1;
+  width: 50%;
+  height: 50%;
+  font-size: 5vmax;
+  transition: width 1s, height 1s, opacity 1s, font-size 1s;
+  color: rgb(255, 221, 103);
+  font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    sans-serif;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  left: 25%;
+  top: 50%;
+}
+
+.fadeOutThree {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  font-size: 0vmax;
+  color: rgb(255, 221, 103);
+  transition: width 1s, height 1s, opacity 1s, font-size 1s;
+  font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    sans-serif;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  left: 25%;
+  top: 50%;
+}
+
+.fadeInFour {
+  opacity: 1;
+  width: 50%;
+  height: 50%;
+  font-size: 5vmax;
+  transition: width 1s, height 1s, opacity 1s, font-size 1s;
+  color: rgb(255, 143, 229);
+  font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    sans-serif;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  left: 25%;
+  top: 50%;
+}
+
+.fadeOutFour {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  font-size: 0vmax;
+  color: rgb(255, 143, 229);
+  transition: width 1s, height 1s, opacity 1s, font-size 1s;
+  font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji",
+    sans-serif;
+  font-weight: 500;
+  position: absolute;
+  z-index: 999;
+  text-align: center;
+  left: 25%;
+  top: 50%;
 }
