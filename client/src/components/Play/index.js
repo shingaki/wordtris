@@ -725,19 +725,19 @@ class Play extends Component {
         if (bonus === 2){
             this.setState({BonusVisable: "two"})
             setTimeout(function(){
-                this.setState({BonusVisable: "none"});
+                this.setState({BonusVisable: "OhTwo"});
            }.bind(this),2500);
         }
         if (bonus === 3){
             this.setState({BonusVisable: "three"})
             setTimeout(function(){
-                this.setState({BonusVisable: "none"});
+                this.setState({BonusVisable: "OhThree"});
            }.bind(this),2500);
         }
         if (bonus === 4){
             this.setState({BonusVisable: "four"})
             setTimeout(function(){
-                this.setState({BonusVisable: "none"});
+                this.setState({BonusVisable: "OhFour"});
            }.bind(this),2500);
         }
 
