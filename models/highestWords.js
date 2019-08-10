@@ -4,7 +4,8 @@ module.exports = function(sequelize, DataTypes) {
         scorePosition: DataTypes.INTEGER,
         highestWord: DataTypes.STRING,
         score: DataTypes.INTEGER,
-        bonusUsed: DataTypes.TINYINT,
+        letterBonus: DataTypes.TINYINT,
+        wordBonus: DataTypes.TINYINT
 
     });
 

@@ -4,7 +4,9 @@ module.exports = function(sequelize, DataTypes) {
         playerWord: DataTypes.STRING,
         wordPoints: DataTypes.INTEGER,
         playerWordRanking: DataTypes.INTEGER,
-        bonusUsed: DataTypes.TINYINT
+        letterBonus: DataTypes.TINYINT,
+        wordBonus: DataTypes.TINYINT,
+
     });
 
     PlayerWords.associate = function (models) {
