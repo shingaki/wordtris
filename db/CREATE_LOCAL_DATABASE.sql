@@ -38,7 +38,7 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus,
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('keyboard', 18, 4, 0, 0, current_date, current_date, 1);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('jubilantly', 22, 2, 0, 0, current_date, current_date, 1);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('kaleidoscope', 21, 3, 0, 0, current_date, current_date, 1);
-INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('abandoned', 13, 2, 0, 0, current_date, current_date, 1);
+INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('abandoned', 13, 5, 0, 0, current_date, current_date, 1);
 
 # PLAYER TWO HAS '4' SEED RECORDS FOR PLAYER WORDS
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('tomorrow', 9, 4, 0, 0, current_date, current_date, 2);
