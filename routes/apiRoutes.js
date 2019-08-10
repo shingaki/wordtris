@@ -135,25 +135,27 @@ module.exports = function(app) {
 
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.PlayerWords.update({
+            db.PlayerWords.upsert({
                 playerWord: req.body.new[i - 1].playerWord,
                 wordPoints: req.body.new[i - 1].wordPoints,
                 letterBonus: req.body.new[i - 1].letterBonus,
-                wordBonus: req.body.new[i - 1].wordBonus
+                wordBonus: req.body.new[i - 1].wordBonus,
+                PlayerId: req.body.new[i - 1].PlayerId,
+                playerWordRanking: i
             }, {
                     where: {
                         PlayerId: req.body.new[i - 1].PlayerId,
                         playerWordRanking: i
-                    }
+                }
             }).then((dbResponse) => {
                 console.log(dbResponse);
                 console.log("update player words");
                 responses.push(dbResponse);
             }).catch(function (err) {
-                res.send(err);
+                console.log(err);
             });
         }
-        res.json(responses);
+        // res.json(responses);
 
     })
 
@@ -194,7 +196,7 @@ module.exports = function(app) {
                 order: [['scorePosition', 'ASC']],
 
             }).then((dbResponse) => {
-                console.log(dbResponse);
+                // console.log(dbResponse);
                 res.send(dbResponse);
             }).catch(function (err) {
                 res.send(err);
@@ -242,7 +244,7 @@ module.exports = function(app) {
             order: [['scorePosition', 'ASC']],
 
         }).then((dbResponse) => {
-            console.log(dbResponse);
+            // console.log(dbResponse);
             res.send(dbResponse);
         }).catch(function (err) {
             res.send(err);

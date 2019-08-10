@@ -18,7 +18,7 @@ class GameOver extends Component {
       topWords: []
     }
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < this.props.myTopWords.length; i++) {
       playerInfo.topWords.push(this.props.myTopWords[i]);
     }
 
@@ -101,6 +101,7 @@ class GameOver extends Component {
         // compare each global word with each player word
         for (let j = 0; j < playerInfo.topWords.length; j++) {
           // if word, word score, and playerId are the same, remove for list of potential new global high scores
+          console.log(playerInfo);
           if (playerInfo.topWords[j].wordPoints === globalTopWords[i].score && playerInfo.topWords[j].playerWord === globalTopWords[i].word && playerInfo.playerId === globalTopWords[i].playerId) {
             playerInfo.topWords.splice(j, 1);
             console.log("duplicate removed");
