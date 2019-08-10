@@ -136,6 +136,7 @@ module.exports = function(app) {
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
             db.PlayerWords.upsert({
+                id: i,
                 playerWord: req.body.new[i - 1].playerWord,
                 wordPoints: req.body.new[i - 1].wordPoints,
                 letterBonus: req.body.new[i - 1].letterBonus,
@@ -144,8 +145,9 @@ module.exports = function(app) {
                 playerWordRanking: i
             }, {
                     where: {
-                        PlayerId: req.body.new[i - 1].PlayerId,
-                        playerWordRanking: i
+                        // PlayerId: req.body.new[i - 1].PlayerId,
+                        // playerWordRanking: i,
+                        id: i
                 }
             }).then((dbResponse) => {
                 console.log(dbResponse);
@@ -179,6 +181,36 @@ module.exports = function(app) {
         }
 
     })
+
+
+    // update player's highest scores in db
+    // app.put("/updateplayerhighestscores", (req, res) => {
+    //     console.log("updating player's highest scores")
+    //     let responses = [];
+
+    //     // update all positions
+    //     for (let i = 1; i <= req.body.new.length; i++) {
+    //         db.PlayerScores.upsert({
+    //             id: i,
+    //             playerScore: req.body.new[i - 1],
+    //             playerScoreRanking: i,
+    //             PlayerId: req.body.new[i - 1].PlayerId,
+    //         }, {
+    //                 where: {
+    //                     // PlayerId: req.body.new[i - 1].PlayerId,
+    //                     // playerWordRanking: i,
+    //                     id: i
+    //             }
+    //         }).then((dbResponse) => {
+    //             console.log(dbResponse);
+    //             console.log("update player words");
+    //             responses.push(dbResponse);
+    //         }).catch(function (err) {
+    //             console.log(err);
+    //         });
+    //     }
+    //     res.json(responses);
+    // })
 
 
     // get global high scores and respective players from db
