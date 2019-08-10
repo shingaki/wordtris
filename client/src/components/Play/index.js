@@ -554,7 +554,7 @@ class Play extends Component {
 
     startNextRound = () => {
         
-        if (this.state.numLettersPerColumn[this.state.currentColumn] < 21) {
+        if (this.state.numLettersPerColumn[this.state.currentColumn] < 20) {
             // move dropping piece back to top
             this.setState({ pieceSpeed: 0}) //so piece doesn't visually move to top of board
             this.setState({ currentPieceX: 100 }) //set starting X position
