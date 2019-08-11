@@ -160,32 +160,79 @@ class GameOver extends Component {
     // ============================================================================
     // pull in and update player scores
     let playerScores = [];
+    let scoreAdded = false;
     for (let i = 0; i < this.props.myHighScores.length; i++) {
       playerScores.push(this.props.myHighScores[i]);
     }
+    console.log("B4 player scores");
+    console.log(playerScores);
 
-    // compare each top score against the new score
-    for (let i = 0; i < this.props.myHighScores.length; i++) {
-      // if the new score is higher than one in the top 5
-      if (playerInfo.score > this.props.myHighScores[i]) {
+    if (!scoreAdded) {
+      // compare each top score against the new score
+      for (let i = 0; i < this.props.myHighScores.length; i++) {
+        console.log("loop here to check player high scores")
+        // if the new score is higher than one in the top 5
+        if (playerInfo.score > this.props.myHighScores[i].playerScore) {
 
-        // reset score - adjust all below it
+          let newScore = {
+            PlayerId: playerInfo.playerId,
+            playerScore: playerInfo.score,
+            playerScoreRanking: i + 1
+          }
 
-        // add in new player score in correct position
-        playerScores.splice(i, 0, playerInfo);
+          // add in new player score in correct position
+          playerScores.splice(i, 0, newScore);
+          scoreAdded = true;
 
-        // remove the lowest score so there are only top 5
-        if (this.props.myHighScores.length === 5) {
-          playerScores.pop();
+          // remove the lowest score so there are only top 5
+          if (this.props.myHighScores.length === 5) {
+            console.log("remove lowest score");
+            playerScores.pop();
+          }
+
+          console.log("NEW PLAYER HIGH SCORES");
+          console.log(playerScores);
+          // update high scores in DB
+          API.updatePlayersHighestScores(playerScores).then(res => {
+            console.log(res);
+          });
+
+          console.log(playerScores);
+          return true;
         }
 
-        // update high scores in DB
-        API.updatePlayersHighestScores(playerScores).then(res => {
-          console.log(res);
-        });
+        }
 
-        console.log(playerScores);
-        return true;
+        // if no high scores saved yet
+        if (this.props.myHighScores.length === 0) {
+          console.log("no high scores yet");
+          let newScore = {
+            PlayerId: playerInfo.playerId,
+            playerScore: playerInfo.score,
+            playerScoreRanking: 1
+          }
+          // add new score
+          playerScores.push(newScore);
+
+          // update high scores in DB
+          API.updatePlayersHighestScores(playerScores).then(res => {
+            console.log(res);
+          });
+        } else if (this.props.myHighScores.length < 5 && playerScores.length < 5 && !scoreAdded) {
+          console.log("no score added yet, 1-4 scores already")
+          let newScore = {
+            PlayerId: playerInfo.playerId,
+            playerScore: playerInfo.score,
+            playerScoreRanking: playerScores.length + 1
+          }
+          // add new score
+          playerScores.push(newScore);
+          console.log(playerScores);
+
+          // update high scores in DB
+          API.updatePlayersHighestScores(playerScores).then(res => {
+            console.log(res);
+          });
       }
     }
 
