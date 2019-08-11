@@ -49,17 +49,7 @@ class Play extends Component {
 
     }
 
-    componentDidMount = () => {
-        // initial setup
-        this.initialSetup();
-
-        console.log(this.props.userID)
-        // console.log(props.userID)
-
-    }
-
-    componentWillMount = () => {
-        
+    loadScoresAndWords = () => {
         API.getPlayersWordsAndScores().then(response => {
             let topWords = [];
             for (let x = 0; x < response.data.length; x++) {
@@ -71,7 +61,7 @@ class Play extends Component {
                     myTopWords: topWords
                 })
             }
-           
+
         })
 
         API.getPlayersHighestScores().then(response => {
@@ -84,8 +74,19 @@ class Play extends Component {
             })
 
         })
+    }
 
+    componentDidMount = () => {
+        // initial setup
+        this.initialSetup();
 
+        console.log(this.props.userID)
+        // console.log(props.userID)
+
+    }
+
+    componentWillMount = () => {
+        this.loadScoresAndWords();
     }
 
     inputChange = event => {
@@ -1102,6 +1103,7 @@ class Play extends Component {
             isGameOver: false,
             allFoundWords: []
         });
+        this.loadScoresAndWords();
         this.initialSetup();
     }
     
