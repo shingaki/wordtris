@@ -243,12 +243,14 @@ module.exports = function(app) {
 
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.HighestScores.update({
+            db.HighestScores.upsert({
+                id: i,
                 PlayerId: req.body.new[i - 1].playerId,
                 highestScore: req.body.new[i - 1].score,
+                scorePosition: i
             }, {
                     where: {
-                        scorePosition: i
+                        id: i
                     }
             }).then((dbResponse) => {
                 console.log("global scores updated");
@@ -291,15 +293,17 @@ module.exports = function(app) {
 
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.HighestWords.update({
+            db.HighestWords.upsert({
+                id: i,
                 PlayerId: req.body.new[i - 1].playerId,
                 highestWord: req.body.new[i - 1].word,
                 score: req.body.new[i - 1].score,
                 letterBonus: req.body.new[i - 1].letterBonus,
-                wordBonus: req.body.new[i - 1].wordBonus
+                wordBonus: req.body.new[i - 1].wordBonus,
+                scorePosition: i
             }, {
                     where: {
-                        scorePosition: i
+                        id: i
                     }
             }).then((dbResponse) => {
                 console.log("global words updated");
