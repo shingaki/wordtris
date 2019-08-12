@@ -25,6 +25,7 @@ class Stats extends Component {
             this.setState({
                 playerWordsAndScores: JSON.parse(strPlayerWordsAndScores)
             })
+            console.log("playerWordsAndScores: " + this.state.playerWordsAndScores)
         })
 
         API.getPlayersHighestScores().then(response => {
