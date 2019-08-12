@@ -56,11 +56,10 @@ class Play extends Component {
                 topWords.push(response.data[x])
             }
 
-            if (response.data.length === 5) {
-                this.setState({
-                    myTopWords: topWords
-                })
-            }
+            this.setState({
+                myTopWords: topWords
+            })
+            console.log(this.state.myTopWords);
 
         })
 
