@@ -259,7 +259,7 @@ class Play extends Component {
         //     })
         // }
 
-        if (this.state.myTopWords.length > 0) {
+        if (this.state.myTopWords.length === 5) {
             let bottomScore = this.state.myTopWords[this.state.myTopWords.length - 1].wordPoints;
 
             this.setState({
@@ -983,7 +983,6 @@ class Play extends Component {
                     this.setState({
                         newWordsHigherThanWorst: newTopWords
                     })
-                    console.log(this.state.newWordsHigherThanWorst);
 
                     // highlight found word
                     let currentBoard = [];

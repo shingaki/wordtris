@@ -88,7 +88,7 @@ class GameOver extends Component {
         }
 
         // if no high scores, or less than 5 high scores and score wasn't updated in previous loop
-        if (this.state.globalHighScores.length === 0 || (this.state.globalHighScores.length < 5 && !scoreAdded)) {
+        if (this.state.globalHighScores.length < 5 && !scoreAdded) {
           console.log("no global high scores yet");
           let newScore = {
             playerId: playerInfo.playerId,
@@ -151,7 +151,8 @@ class GameOver extends Component {
           console.log(playerInfo);
           if (playerInfo.topWords[j].wordPoints === globalTopWords[i].score && playerInfo.topWords[j].playerWord === globalTopWords[i].word && playerInfo.playerId === globalTopWords[i].playerId) {
             // if there's a duplicate, remove it from array
-            console.log(playerInfo.topWords[j]);
+            console.log(playerInfo.topWords[j].playerWord);
+            console.log(globalTopWords[i].word);
             playerInfo.topWords.splice(j, 1);
             console.log("duplicate removed");
           }
@@ -192,11 +193,6 @@ class GameOver extends Component {
                 globalTopWords: globalTopWords
               })
 
-              // update high scores in DB
-              // API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
-              //   console.log(res);
-              // });
-
               console.log(globalTopWords);
             }
           }
@@ -219,23 +215,18 @@ class GameOver extends Component {
           this.setState({
             globalTopWords: globalTopWords
           })
-
           console.log(globalTopWords)
 
-          // update high scores in DB
-          // API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
-          //   console.log(res);
-          // });
-
         }
-        API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
-          console.log(res);
-        });
 
         console.log(this.state.globalTopWords);
 
       }
 
+    }).then(() => {
+      API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
+        console.log(res);
+      });
     })
 
     // ============================================================================
