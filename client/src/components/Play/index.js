@@ -888,6 +888,16 @@ class Play extends Component {
 
     }
 
+    uniqueWord = (topWordsArray, newWord) => {
+        console.log(topWordsArray, newWord)
+        for (let x = 0; x < topWordsArray.length; x++) {
+            if (topWordsArray[x].playerWord === newWord.playerWord && topWordsArray[x].wordPoints === newWord.wordPoints) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     checkIfItIsAWord = (index) => {
         //recursively checks possibleWords array... 
         //if a word is found, updates score & removes letters from board
@@ -950,7 +960,10 @@ class Play extends Component {
                             wordBonus: myWordBonus,
                             playerWordRanking: 0
                         }
-                        newTopWords.push(addWord)
+                        if (this.uniqueWord(newTopWords, addWord)) {
+                            newTopWords.push(addWord)
+                        }
+                        
                     }
                     this.setState({
                         newWordsHigherThanWorst: newTopWords
