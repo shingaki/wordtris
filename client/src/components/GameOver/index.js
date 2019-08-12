@@ -183,7 +183,7 @@ class GameOver extends Component {
               wordAdded = true;
 
               // if already 5 top words, remove the lowest score
-              if (originalTopWords.length === 5) {
+              if (globalTopWords.length === 5) {
                 globalTopWords.pop();
                 console.log("added global word and popped lowest score")
               }
@@ -193,9 +193,9 @@ class GameOver extends Component {
               })
 
               // update high scores in DB
-              API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
-                console.log(res);
-              });
+              // API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
+              //   console.log(res);
+              // });
 
               console.log(globalTopWords);
             }
@@ -223,11 +223,14 @@ class GameOver extends Component {
           console.log(globalTopWords)
 
           // update high scores in DB
-          API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
-            console.log(res);
-          });
+          // API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
+          //   console.log(res);
+          // });
 
         }
+        API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
+          console.log(res);
+        });
 
         console.log(this.state.globalTopWords);
 
