@@ -27,9 +27,19 @@ class GameOver extends Component {
     // ============================================================================
     // pull in and update global high scores
     API.getGlobalHighScores().then(response => {
-      const highScores = [];
+      // original scores pulled in for reference
+      let originalHighScores = [];
+      // var to update before state
+      let highScores = [];
+      // know if the score has been added to top scores
+      let scoreAdded = false;
 
       for (let i = 0; i < response.data.length; i++) {
+        originalHighScores.push({
+          playerId: response.data[i].playerId,
+          score: response.data[i].highestScore
+        });
+
         highScores.push({
           playerId: response.data[i].playerId,
           score: response.data[i].highestScore
@@ -40,36 +50,65 @@ class GameOver extends Component {
         globalHighScores: highScores
       })
 
-      // compare each score against current player's new score
-      for (let i = 0; i < this.state.globalHighScores.length; i++) {
-        // if the new score is higher than one in the top 5
-        if (playerInfo.score > this.state.globalHighScores[i].score) {
+      if (!scoreAdded) {
+        // compare each score against current player's new score
+        for (let i = 0; i < this.state.globalHighScores.length; i++) {
+          // if the new score is higher than one in the top 5
+          if (playerInfo.score > this.state.globalHighScores[i].score) {
 
-          // reset score - adjust all below it
-          var newScores = this.state.globalHighScores;
-          console.log(newScores);
+            let newScore = {
+              playerId: playerInfo.playerId,
+              score: playerInfo.score,
+            }
 
-          // add in new player score in correct position
-          newScores.splice(i, 0, playerInfo);
+            // add in new player score in correct position
+            highScores.splice(i, 0, newScore);
+            // score has been added
+            scoreAdded = true;
 
-          // remove the lowest score so there are only top 5
-          newScores.pop();
+            // if there were already 5 scores, remove lowest score
+            if (originalHighScores.length === 5) {
+              console.log("remove global lowest score");
+              highScores.pop();
+            }
+
+            // update state
+            this.setState({
+              globalHighScores: highScores
+            })
+
+            // update high scores in DB
+            API.updateGlobalHighScores(this.state.globalHighScores).then(res => {
+              console.log(res);
+            });
+
+            console.log(highScores);
+            return true;
+          }
+        }
+
+        // if no high scores, or less than 5 high scores and score wasn't updated in previous loop
+        if (this.state.globalHighScores.length === 0 || (this.state.globalHighScores.length < 5 && !scoreAdded)) {
+          console.log("no global high scores yet");
+          let newScore = {
+            playerId: playerInfo.playerId,
+            score: playerInfo.score,
+          }
+
+          // add new score to bottom of top 5
+          highScores.push(newScore);
 
           // update state
           this.setState({
-            globalHighScores: newScores
+            globalHighScores: highScores
           })
 
-          // update high scores in DB
+          // update high scores in db
           API.updateGlobalHighScores(this.state.globalHighScores).then(res => {
             console.log(res);
-          });
-
-          console.log(newScores);
-          return true;
+          })
         }
       }
-
 
     })
 
