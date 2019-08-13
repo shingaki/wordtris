@@ -56,11 +56,9 @@ class Play extends Component {
                 topWords.push(response.data[x])
             }
 
-            if (response.data.length === 5) {
-                this.setState({
-                    myTopWords: topWords
-                })
-            }
+            this.setState({
+                myTopWords: topWords
+            })
 
         })
 
@@ -80,7 +78,7 @@ class Play extends Component {
         // initial setup
         this.initialSetup();
 
-        console.log(this.props.userID)
+        // console.log(this.props.userID)
         // console.log(props.userID)
 
     }
@@ -251,9 +249,21 @@ class Play extends Component {
 
     startClick = () => {
 
-        if (this.state.myTopWords[4] !== undefined) {
+        // if (this.state.myTopWords[4] !== undefined) {
+        //     this.setState({
+        //         myWorstBestWordScore: this.state.myTopWords[4].wordPoints
+        //     }) 
+        // } else {
+        //     this.setState({
+        //         myWorstBestWordScore: 0
+        //     })
+        // }
+
+        if (this.state.myTopWords.length === 5) {
+            let bottomScore = this.state.myTopWords[this.state.myTopWords.length - 1].wordPoints;
+
             this.setState({
-                myWorstBestWordScore: this.state.myTopWords[4].wordPoints
+                myWorstBestWordScore: bottomScore
             }) 
         } else {
             this.setState({
@@ -261,7 +271,7 @@ class Play extends Component {
             })
         }
 
-        console.log(this.state.myTopWords)
+        // console.log(this.state.myTopWords)
 
         var nextList = [];
         var playNow = [];
@@ -295,7 +305,7 @@ class Play extends Component {
         }
         // move next up letters to play letters
         // save new next up letters
-        console.log(playNow, nextList)
+        // console.log(playNow, nextList)
         this.setState({
             playLetters: playNow,
             nextUp: nextList,
@@ -553,7 +563,7 @@ class Play extends Component {
         myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
         //set state with possibleWords array
         this.setState({ possibleWords : myPossibleWords })
-        console.log(this.state.possibleWords)
+        // console.log(this.state.possibleWords)
     }
 
     notInArray = (myArray, start, end) => {
@@ -601,12 +611,13 @@ class Play extends Component {
             
             this.setState({
                 myTopWords: topWords,
+                newWordsHigherThanWorst: [],
                 possibleWords : [],
                 isGameOver: true
             })
 
             console.log(topWords)
-            console.log("final top words: " + this.state.myTopWords)
+            // console.log("final top words: " + this.state.myTopWords)
            
             clearInterval(this.timerID); //Stop falling effect of moving piece
         }
@@ -622,7 +633,7 @@ class Play extends Component {
             if (this.state.placedLetters[x].letter !== "" && this.state.placedLetters[x-10].letter === "") {columns[x % 10] = 20 - parseInt(x/10)}
         } 
 
-        console.log("columns: " + columns)
+        // console.log("columns: " + columns)
 
         this.setState({
             numLettersPerColumn: columns
@@ -637,8 +648,8 @@ class Play extends Component {
             if (newFallspeed > 25) {newFallspeed = newFallspeed - 25} 
             else {newFallspeed = newFallspeed / 2}
             
-            console.log("New Target: " + newTarget)
-            console.log("New Fall Speed: " + newFallspeed)
+            // console.log("New Target: " + newTarget)
+            // console.log("New Fall Speed: " + newFallspeed)
             this.setState({
                 level: this.state.level + 1,
                 previousLevelTargetScore: this.state.currentLevelTargetScore,
@@ -868,7 +879,7 @@ class Play extends Component {
             for (let x = 0; x < 200; x++) {
                 currentBoard[x] = this.state.placedLetters[x];
             } 
-            console.log(currentBoard);
+            // console.log(currentBoard);
             for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i = i + 10) {
                 currentBoard[i].bgColor = "";
                 currentBoard[i].textColor = "";
@@ -880,10 +891,10 @@ class Play extends Component {
         
         this.setState({ numLettersPerColumn : columns})
         this.setState({ placedLetters : myBoard })
-        console.log("before update: " + this.state.newPlacedLetters)
+        // console.log("before update: " + this.state.newPlacedLetters)
         myPlacedLetters.sort();
         this.setState({ newPlacedLetters : myPlacedLetters})
-        console.log("after update: " + this.state.newPlacedLetters)
+        // console.log("after update: " + this.state.newPlacedLetters)
         if (actualWords) {
             if (myPlacedLetters.length === 0) {
                 this.pickNewLetters();
@@ -906,7 +917,7 @@ class Play extends Component {
     }
 
     uniqueWord = (topWordsArray, newWord) => {
-        console.log(topWordsArray, newWord)
+        // console.log(topWordsArray, newWord)
         for (let x = 0; x < topWordsArray.length; x++) {
             if (topWordsArray[x].playerWord === newWord.playerWord && topWordsArray[x].wordPoints === newWord.wordPoints) {
                 return false;
@@ -922,7 +933,7 @@ class Play extends Component {
             let word = this.state.possibleWords[index].word
             API.checkWord(word).then(wordData => { 
                 if (wordData.data) { //is a word, update state, score and clear letters
-                    console.log("found word: " + word)
+                    // console.log("found word: " + word)
                     if (this.state.numPiecesPlayed !== this.state.lastPieceThatFoundWord) {
                         this.setState({ 
                             allFoundWords : [],
@@ -957,7 +968,7 @@ class Play extends Component {
                     for (let y = 0; y < this.state.newWordsHigherThanWorst.length; y++) {
                         newTopWords.push(this.state.newWordsHigherThanWorst[y])
                     }
-                    console.log("newWords length: " + this.state.newWordsHigherThanWorst.length)
+                    // console.log("newWords length: " + this.state.newWordsHigherThanWorst.length)
                     if (this.state.foundWordValue * this.state.allFoundWords.length > this.state.myWorstBestWordScore) {
                         let myWordBonus = 0;
                         let myLetterBonus = 0;
@@ -980,14 +991,14 @@ class Play extends Component {
                         if (this.uniqueWord(newTopWords, addWord)) {
                             newTopWords.push(addWord)
                         }
+                        for (var i = 0; i < newTopWords.length; i++) {
+                            console.log(newTopWords[i]);
+                        }
                         
                     }
                     this.setState({
                         newWordsHigherThanWorst: newTopWords
                     })
-
-                    console.log(this.state.newWordsHigherThanWorst)
-
 
                     // highlight found word
                     let currentBoard = [];
