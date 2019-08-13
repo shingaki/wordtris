@@ -58,7 +58,7 @@ class Login extends Component {
                 } else {
                     // show error message - invalid login credentials
                     this.setState({
-                        error: "Error: invalid username or password."
+                        error: "Error: invalid player name or password."
                     })
                 }
             });
