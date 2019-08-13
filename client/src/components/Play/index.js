@@ -484,15 +484,18 @@ class Play extends Component {
         ];
         let current2LetterCombination;
 
-        for (let x = start; x <= stop; x=x+10) {
-            if (x > start) { 
-                current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
-            };
-            if (x > start && check2letters && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
-                return ""
-            } else {
-                myWord = myWord + this.state.placedLetters[x].letter //build string
-            }    
+        if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
+            for (let x = start; x <= stop; x=x+10) {
+                if (x > start) { 
+                    current2LetterCombination = this.state.placedLetters[x-10].letter + this.state.placedLetters[x].letter 
+                };
+                if (x > start && check2letters && invalidLetterCombinations.includes(current2LetterCombination.toLowerCase())) {
+                    return ""
+                } else {
+                    myWord = myWord + this.state.placedLetters[x].letter //build string
+                }    
+            }
+            return myWord;
         }
         return myWord;
     }
@@ -533,7 +536,7 @@ class Play extends Component {
             
             //adds all vertical words to myPossibleWords
             //set paramenters of current row to be evaluated
-            minLetter = currentLetter  
+            minLetter = (20 - this.state.numLettersPerColumn[currentLetter % 10]) * 10 + (currentLetter % 10)
             maxLetter = 190 + this.state.currentColumn; //bottom of current column
             //nested for loop runs through all combinations of minLetter & maxLetter
             for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter=firstLetter+10) {
@@ -542,7 +545,7 @@ class Play extends Component {
                         //above if statement makes sure current letter is included in evaluation
                         //and >=20 insures that word is 3 letters or more
                         currentWord = this.buildVerticalWordFromBoard(firstLetter, lastLetter, true);
-                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2) { 
+                        if (currentWord !== "" && this.containsVowels(currentWord) && currentWord.length > 2 && this.notInArray(myPossibleWords, firstLetter, lastLetter)) { 
                             myPossibleWords.push({ //push string and other values to array
                                 value: this.wordValue(firstLetter, lastLetter, "vertical"),
                                 word: currentWord,
@@ -561,6 +564,19 @@ class Play extends Component {
         //set state with possibleWords array
         this.setState({ possibleWords : myPossibleWords })
         // console.log(this.state.possibleWords)
+    }
+
+    notInArray = (myArray, start, end) => {
+        if (myArray.length > 0) {
+            for (let x =0; x< myArray.length; x++) {
+                if (myArray[x].start === start && myArray[x].end === end) {
+                    return false
+                }
+            }
+            return true
+        } else {
+            return true
+        }
     }
 
     startNextRound = () => {
