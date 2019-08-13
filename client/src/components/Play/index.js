@@ -249,16 +249,7 @@ class Play extends Component {
 
     startClick = () => {
 
-        // if (this.state.myTopWords[4] !== undefined) {
-        //     this.setState({
-        //         myWorstBestWordScore: this.state.myTopWords[4].wordPoints
-        //     }) 
-        // } else {
-        //     this.setState({
-        //         myWorstBestWordScore: 0
-        //     })
-        // }
-
+        //set state for the Worst of the players top5 words before the games starts, also handle for new players not having 5 top words yet
         if (this.state.myTopWords.length === 5) {
             let bottomScore = this.state.myTopWords[this.state.myTopWords.length - 1].wordPoints;
 
@@ -270,8 +261,6 @@ class Play extends Component {
                 myWorstBestWordScore: 0
             })
         }
-
-        // console.log(this.state.myTopWords)
 
         var nextList = [];
         var playNow = [];
@@ -321,7 +310,7 @@ class Play extends Component {
     }
 
     increaseClick = () => {
-        //increases fallSpeed
+        //increases fallSpeed (only used during dev)
         this.setState({ fallSpeed: this.state.fallSpeed / 2 })
         clearInterval(this.timerID);
         this.startTick();
@@ -375,8 +364,8 @@ class Play extends Component {
     }
 
     wordValue = (start, end, type) => {
+        // returns the word value of given string of letters on board
         let myValue = 0;
-        // let myBoard = [];
         let delta = 0;
 
         if (type === "horizontal") {
@@ -385,11 +374,6 @@ class Play extends Component {
             delta = 10
         }
 
-        // //get current board of letters
-        // for (let x = 0; x<200; x++) {
-        //     myBoard[x] = this.state.placedLetters[x]
-        // } 
-
         for (let y = start; y <= end; y=y+delta) {
             myValue = myValue + this.state.placedLetters[y].points * this.state.placedLetters[y].bonus
         }
@@ -397,6 +381,7 @@ class Play extends Component {
     }
 
     containsVowels = (word) => {
+        // returns true if word contains at least one vowel or 'Y'
         let vowels = ['A', 'E', 'I', 'O', 'U', 'Y']
         
         for (let x = 0; x < word.length; x++) {
@@ -409,6 +394,7 @@ class Play extends Component {
         //using state.placedLetters, builds a string based on given start & stop position (horizontal)
         let myWord = "";
         
+        // list of rarely seen 2 letter combinations in the english language
         let invalidLetterCombinations = [
             "bf", "bk", "bg", "bq", "bx", "bz", 
             "cf", "cj", "cv", "cx", "cz", 
@@ -437,7 +423,7 @@ class Play extends Component {
 
         if ((this.state.placedLetters[start].letter !== "") && this.state.placedLetters[stop].letter !== "") {
             for (let x = start; x <= stop; x++) {
-                if (x > start && this.state.placedLetters[x].letter !== "") { 
+                if (x > start && this.state.placedLetters[x].letter !== "") { //confirm word being built doesn't contain invalid 2 letter combination
                     current2LetterCombination = this.state.placedLetters[x-1].letter + this.state.placedLetters[x].letter;
                 };
                 if (this.state.placedLetters[x].letter === "") { 
@@ -458,6 +444,8 @@ class Play extends Component {
     buildVerticalWordFromBoard = (start, stop, check2letters) => {
         //using state.placedLetters, builds a string based on given start & stop position (vertical)
         let myWord = ""
+        
+        // list of rarely seen 2 letter combinations in the english language
         let invalidLetterCombinations = [
             "bf", "bk", "bg", "bq", "bx", "bz", 
             "cf", "cj", "cv", "cx", "cz", 
@@ -537,7 +525,7 @@ class Play extends Component {
             //adds all vertical words to myPossibleWords
             //set paramenters of current row to be evaluated
             minLetter = (20 - this.state.numLettersPerColumn[currentLetter % 10]) * 10 + (currentLetter % 10)
-            maxLetter = 190 + this.state.currentColumn; //bottom of current column
+            maxLetter = 190 + (currentLetter % 10); //bottom of current column
             //nested for loop runs through all combinations of minLetter & maxLetter
             for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter=firstLetter+10) {
                 for (let lastLetter = currentLetter; lastLetter <= maxLetter; lastLetter=lastLetter+10) {
@@ -567,6 +555,7 @@ class Play extends Component {
     }
 
     notInArray = (myArray, start, end) => {
+        //function returns true if myArray doesn't already include word with same start and end points
         if (myArray.length > 0) {
             for (let x =0; x< myArray.length; x++) {
                 if (myArray[x].start === start && myArray[x].end === end) {
@@ -593,21 +582,22 @@ class Play extends Component {
             //Game over
             let topWords = [];
             
+            // combine original topWords with new top words found during game            
             for (let x = 0; x < this.state.myTopWords.length; x++) {
                 topWords.push(this.state.myTopWords[x])
             }
 
+            // combine original topWords with new top words found during game
             for (let x = 0; x < this.state.newWordsHigherThanWorst.length; x++) {
                 topWords.push(this.state.newWordsHigherThanWorst[x])
             }
 
-
-            // myPossibleWords.sort((a, b) => (a.value < b.value) ? 1 : -1)
+            // sort by value of word
             topWords.sort((a, b) => (a.wordPoints < b.wordPoints) ? 1 : -1);
             for (let x = 0; x < topWords.length; x++) {
                 topWords[x].playerWordRanking = x + 1;
             }
-            topWords = topWords.slice(0,5)
+            topWords = topWords.slice(0,5) // only keep the top 5
             
             this.setState({
                 myTopWords: topWords,
@@ -626,6 +616,7 @@ class Play extends Component {
     startTick = () => {
         let columns = [];
 
+        // confirm column heights and update state
         for (let x = 0; x<10; x++) {
             columns[x] = 0
         }
@@ -633,15 +624,13 @@ class Play extends Component {
             if (this.state.placedLetters[x].letter !== "" && this.state.placedLetters[x-10].letter === "") {columns[x % 10] = 20 - parseInt(x/10)}
         } 
 
-        // console.log("columns: " + columns)
-
         this.setState({
             numLettersPerColumn: columns
         })
 
-        // console.log(this.state.placedLetters)
-        
+       
         if (this.state.score >= this.state.currentLevelTargetScore) {
+            // check to see if level and fallspeed need to be increased
             let newTarget = this.state.currentLevelTargetScore + this.state.previousLevelTargetScore + this.state.currentLevelTargetScore;
             let newFallspeed = this.state.fallSpeed;
 
@@ -669,6 +658,7 @@ class Play extends Component {
     }
 
     containsSingleLetter = (word) => {
+        // checking that word is actually comprised of a single letter, this check is used to confirm bonus letter activation 
         let letter = word.charAt(0)
         
         for (let x = 1; x < word.length; x++) {
@@ -754,8 +744,9 @@ class Play extends Component {
     }
 
     updateLetterBonuses = (letter, bonus) => {
+        // search entire board for occurences of 'letter' to change its color and bonus value
         let myBoard = [];
-
+        
         for (let x = 0; x<200; x++) {
             myBoard[x] = this.state.placedLetters[x]
         } 
@@ -800,7 +791,7 @@ class Play extends Component {
         //go through array of posisble words to check if there is a word
 
         if (this.state.possibleWords.length > 0) {
-            this.checkIfItIsAWord(0)
+            this.checkIfItIsAWord(0) // begin recursively checking possibleWordsArray
         } else {
             this.pickNewLetters();
             this.startTick();
@@ -905,7 +896,7 @@ class Play extends Component {
                 //go through array of posisble words to check if there is a word
 
                 if (this.state.possibleWords.length > 0) {
-                    this.checkIfItIsAWord(0)
+                    this.checkIfItIsAWord(0) // begin recursively checking possibleWordsArray
                 } else {
                     this.pickNewLetters();
                     this.startTick();
@@ -917,7 +908,7 @@ class Play extends Component {
     }
 
     uniqueWord = (topWordsArray, newWord) => {
-        // console.log(topWordsArray, newWord)
+        // function confirms that new found word doesn't already exist in topWords at the same point value
         for (let x = 0; x < topWordsArray.length; x++) {
             if (topWordsArray[x].playerWord === newWord.playerWord && topWordsArray[x].wordPoints === newWord.wordPoints) {
                 return false;
@@ -933,7 +924,7 @@ class Play extends Component {
             let word = this.state.possibleWords[index].word
             API.checkWord(word).then(wordData => { 
                 if (wordData.data) { //is a word, update state, score and clear letters
-                    // console.log("found word: " + word)
+                    // check which piece the word was found with to determine if the allFoundWords should be reset or not
                     if (this.state.numPiecesPlayed !== this.state.lastPieceThatFoundWord) {
                         this.setState({ 
                             allFoundWords : [],
@@ -968,13 +959,15 @@ class Play extends Component {
                     for (let y = 0; y < this.state.newWordsHigherThanWorst.length; y++) {
                         newTopWords.push(this.state.newWordsHigherThanWorst[y])
                     }
-                    // console.log("newWords length: " + this.state.newWordsHigherThanWorst.length)
+                    // check to see if new word should be added to topWords array
                     if (this.state.foundWordValue * this.state.allFoundWords.length > this.state.myWorstBestWordScore) {
                         let myWordBonus = 0;
                         let myLetterBonus = 0;
                         
+                        // store if word score used word bonus
                         if (this.state.allFoundWords.length > 1) {myWordBonus = 1}
-
+                        
+                        // store if word score used letter bonus
                         for (let y = this.state.foundWordStart; y<=this.state.foundWordEnd; y++) {
                             if (this.state.placedLetters[y].bonus !== 1) {myLetterBonus = 1}
                         }
@@ -991,9 +984,7 @@ class Play extends Component {
                         if (this.uniqueWord(newTopWords, addWord)) {
                             newTopWords.push(addWord)
                         }
-                        for (var i = 0; i < newTopWords.length; i++) {
-                            console.log(newTopWords[i]);
-                        }
+
                         
                     }
                     this.setState({
