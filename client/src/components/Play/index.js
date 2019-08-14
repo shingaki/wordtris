@@ -703,20 +703,6 @@ class Play extends Component {
                                 foundWordType : "horizontal"
                             })
 
-                            // highlight letter bonuses
-                            let currentBoard = [];
-                            for (let x = 0; x < 200; x++) {
-                                currentBoard[x] = this.state.placedLetters[x];
-                            }
-                            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
-                                currentBoard[i].bgColor = "rgb(0, 204, 255)";
-                                currentBoard[i].textColor = "#000";
-                            }
-
-
-
-
-
                         }
                     }
                 }
@@ -741,16 +727,6 @@ class Play extends Component {
                                 foundWordEnd : lastLetter,
                                 foundWordType : "vertical"
                             })
-
-                            // highlight letter bonuses
-                            let currentBoard = [];
-                            for (let x = 0; x < 200; x++) {
-                                currentBoard[x] = this.state.placedLetters[x];
-                            }
-                            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
-                                currentBoard[i].bgColor = "rgb(0, 204, 255)";
-                                currentBoard[i].textColor = "#000";
-                            }
                         }
                     }
                 }
