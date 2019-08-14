@@ -249,16 +249,6 @@ class Play extends Component {
 
     startClick = () => {
 
-        // if (this.state.myTopWords[4] !== undefined) {
-        //     this.setState({
-        //         myWorstBestWordScore: this.state.myTopWords[4].wordPoints
-        //     }) 
-        // } else {
-        //     this.setState({
-        //         myWorstBestWordScore: 0
-        //     })
-        // }
-
         if (this.state.myTopWords.length === 5) {
             let bottomScore = this.state.myTopWords[this.state.myTopWords.length - 1].wordPoints;
 
@@ -713,6 +703,21 @@ class Play extends Component {
                                 foundWordEnd : lastLetter,
                                 foundWordType : "horizontal"
                             })
+
+                            // highlight letter bonuses
+                            let currentBoard = [];
+                            for (let x = 0; x < 200; x++) {
+                                currentBoard[x] = this.state.placedLetters[x];
+                            }
+                            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                                currentBoard[i].bgColor = "rgb(0, 204, 255)";
+                                currentBoard[i].textColor = "#000";
+                            }
+
+
+
+
+
                         }
                     }
                 }
@@ -737,6 +742,16 @@ class Play extends Component {
                                 foundWordEnd : lastLetter,
                                 foundWordType : "vertical"
                             })
+
+                            // highlight letter bonuses
+                            let currentBoard = [];
+                            for (let x = 0; x < 200; x++) {
+                                currentBoard[x] = this.state.placedLetters[x];
+                            }
+                            for (let i = this.state.foundWordStart; i <= this.state.foundWordEnd; i++) {
+                                currentBoard[i].bgColor = "rgb(0, 204, 255)";
+                                currentBoard[i].textColor = "#000";
+                            }
                         }
                     }
                 }
@@ -748,7 +763,10 @@ class Play extends Component {
             let myBonus = this.state.foundWord.length - 1
             this.updateLetterBonuses(myLetter, myBonus)
 
-            this.removeFoundWord(false)
+            // this.removeFoundWord(false)
+            setTimeout(() => {
+                this.removeFoundWord(false)
+            }, 500)
             //update bonus of all remaing letters
         }
     }

@@ -87,7 +87,7 @@ class GameOver extends Component {
           }
         }
 
-        // if no high scores, or less than 5 high scores and score wasn't updated in previous loop
+        // if less than 5 high scores and score wasn't updated in previous loop
         if (this.state.globalHighScores.length < 5 && !scoreAdded) {
           console.log("no global high scores yet");
           let newScore = {
@@ -148,11 +148,8 @@ class GameOver extends Component {
         // compare each global word with each player word
         for (let j = 0; j < playerInfo.topWords.length; j++) {
           // if word, word score, and playerId are the same, remove from list of potential new global high scores
-          console.log(playerInfo);
           if (playerInfo.topWords[j].wordPoints === globalTopWords[i].score && playerInfo.topWords[j].playerWord === globalTopWords[i].word && playerInfo.playerId === globalTopWords[i].playerId) {
             // if there's a duplicate, remove it from array
-            console.log(playerInfo.topWords[j].playerWord);
-            console.log(globalTopWords[i].word);
             playerInfo.topWords.splice(j, 1);
             console.log("duplicate removed");
           }
@@ -160,8 +157,6 @@ class GameOver extends Component {
       }
 
       // see if any of player's top words make the top 5 global words
-      console.log(originalTopWords);
-      console.log(originalTopWords.length);
       // for each player's top words of this game
       for (let i = 0; i < playerInfo.topWords.length; i++) {
         let wordAdded = false;
@@ -199,8 +194,8 @@ class GameOver extends Component {
           
         }
 
-        // if no global best words yet, or less than 5 global best words and word wasn't added in loop above
-        if (originalTopWords.length === 0 || originalTopWords.length < 5 && !wordAdded) {
+        // if less than 5 global best words and word wasn't added in loop above
+        if (this.state.globalTopWords.length < 5 && !wordAdded) {
           console.log("less than 5 top words and word not added yet");
           var wordToAdd = {
             playerId: playerInfo.topWords[i].PlayerId,
@@ -224,6 +219,7 @@ class GameOver extends Component {
       }
 
     }).then(() => {
+      // update db for global top words
       API.updateGlobalBestWords(this.state.globalTopWords).then(res => {
         console.log(res);
       });
@@ -282,21 +278,7 @@ class GameOver extends Component {
         }
 
         // if no high scores saved yet
-        if (this.props.myHighScores.length === 0) {
-          console.log("no high scores yet");
-          let newScore = {
-            PlayerId: playerInfo.playerId,
-            playerScore: playerInfo.score,
-            playerScoreRanking: 1
-          }
-          // add new score
-          playerScores.push(newScore);
-
-          // update high scores in DB
-          API.updatePlayersHighestScores(playerScores).then(res => {
-            console.log(res);
-          });
-        } else if (this.props.myHighScores.length < 5 && playerScores.length < 5 && !scoreAdded) {
+        if (playerScores.length < 5 && !scoreAdded) {
           // if less than 5 words saved and score wasn't updated in loop above
           console.log("no score added yet, 1-4 scores already")
           let newScore = {
