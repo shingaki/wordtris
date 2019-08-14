@@ -179,7 +179,7 @@ class GameOver extends Component {
               wordAdded = true;
 
               // if already 5 top words, remove the lowest score
-              if (globalTopWords.length === 5) {
+              if (globalTopWords.length >= 5) {
                 globalTopWords.pop();
                 console.log("added global word and popped lowest score")
               }
