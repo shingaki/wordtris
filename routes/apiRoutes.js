@@ -123,6 +123,7 @@ module.exports = function(app) {
             })
         } else {
             console.log("not logged in")
+            res.json("not logged in");
         }
     
     })
@@ -178,6 +179,7 @@ module.exports = function(app) {
             })
         } else {
             console.log("not logged in")
+            res.json("not logged in")
         }
 
     })

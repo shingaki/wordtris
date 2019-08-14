@@ -248,7 +248,6 @@ class Play extends Component {
 
 
     startClick = () => {
-
         //set state for the Worst of the players top5 words before the games starts, also handle for new players not having 5 top words yet
         if (this.state.myTopWords.length === 5) {
             let bottomScore = this.state.myTopWords[this.state.myTopWords.length - 1].wordPoints;
@@ -703,6 +702,7 @@ class Play extends Component {
                                 foundWordEnd : lastLetter,
                                 foundWordType : "horizontal"
                             })
+
                         }
                     }
                 }
@@ -738,7 +738,10 @@ class Play extends Component {
             let myBonus = this.state.foundWord.length - 1
             this.updateLetterBonuses(myLetter, myBonus)
 
-            this.removeFoundWord(false)
+            // this.removeFoundWord(false)
+            setTimeout(() => {
+                this.removeFoundWord(false)
+            }, 500)
             //update bonus of all remaing letters
         }
     }
