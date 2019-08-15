@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   checkLoggedInState = () => {
-    axios.get("/isloggedin", { withCredentials: true }).then(UserInfo => {
+    axios.get("/isloggedin").then(UserInfo => {
       console.log("are they logged in");
       console.log(UserInfo.data);
       this.updateLoggedInState(UserInfo.data.loggedin, UserInfo.data.userId);
