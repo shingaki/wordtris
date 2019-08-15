@@ -31,7 +31,7 @@ export default {
         }
 
         console.log("make post request to check player validity")
-        return axios.post("/login", checkPlayerName, { withCredentials: true });
+        return axios.post("/login", checkPlayerName);
     },
 
     getPlayersWordsAndScores: function () {

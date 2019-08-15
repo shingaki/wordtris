@@ -47,15 +47,6 @@ db.sequelize.sync({ force: false }).then(function () {
   app.listen(PORT, () => {
     console.log(`🌎 ==> API server now on port ${PORT}!`);
   });
-
-  // for testing
-  // db.Players.create({
-  //   playerName: "jpaul",
-  //   password: "1234",
-  //   email: "j@test.com"
-  // }).then(function (db) {
-  //   // console.log(db);
-  // });
 });
 
 
