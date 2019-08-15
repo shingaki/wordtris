@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3001;
 var sess = {
   secret: "wordTris",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { secure: false }
 };
 
