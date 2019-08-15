@@ -102,6 +102,7 @@ class Play extends Component {
             instructions: false,
             playGame: true
         })
+        this.startClick()
     }
 
     letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
@@ -710,8 +711,10 @@ class Play extends Component {
             
             //adds all vertical words to myPossibleWords
             //set paramenters of current row to be evaluated
-            minLetter = currentLetter  
-            maxLetter = 190 + this.state.currentColumn; //bottom of current column
+            minLetter = (20 - this.state.numLettersPerColumn[currentLetter % 10]) * 10 + (currentLetter % 10)
+            maxLetter = 190 + (currentLetter % 10); //bottom of current column
+            // minLetter = currentLetter  
+            // maxLetter = 190 + this.state.currentColumn; //bottom of current column
             //nested for loop runs through all combinations of minLetter & maxLetter
             for (let firstLetter = minLetter; firstLetter <= currentLetter; firstLetter=firstLetter+10) {
                 for (let lastLetter = currentLetter; lastLetter <= maxLetter; lastLetter=lastLetter+10) {
@@ -1086,6 +1089,7 @@ class Play extends Component {
         });
         this.loadScoresAndWords();
         this.initialSetup();
+        this.startClick();
     }
     
     render() {
@@ -1152,7 +1156,7 @@ class Play extends Component {
                         <Scores score={this.state.score} level={this.state.level} />
 
                         <div className="mt-5">
-                            <button onClick={this.stopClick}>STOP</button>
+                            {/* <button onClick={this.stopClick}>STOP</button> */}
                             <Controls 
                                 startClick={this.startClick} 
                                 downClick={this.downClick} 
