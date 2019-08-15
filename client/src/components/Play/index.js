@@ -1167,7 +1167,7 @@ class Play extends Component {
                 
 
                 {/* MOBILE LAYOUT */}
-                <div className="mobile">
+                <div className="mobile mb-5">
 
                 <div className="row align-items-center">
                         <BonusAlert 
