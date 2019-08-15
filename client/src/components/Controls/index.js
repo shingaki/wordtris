@@ -7,7 +7,7 @@ class Controls extends Component {
         return (
             <div className="row">
                 <div className="col-md-12 text-center main">
-                    <button onClick={this.props.startClick}>Start</button>
+                    {/* <button onClick={this.props.startClick}>Start</button> */}
                                                            
                     <br></br>
 
@@ -26,7 +26,7 @@ class Controls extends Component {
 
 
                 <div className="col-md-12 text-center mid-mobile">
-                    <button onClick={this.props.startClick}>Start</button>
+                    {/* <button onClick={this.props.startClick}>Start</button> */}
 
                     <br></br>
 
