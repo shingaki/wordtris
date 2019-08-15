@@ -41,6 +41,7 @@ module.exports = function(app) {
             req.session.loggedin = true;
             req.session.playerName = req.body.playerName;
             req.session.userId = response.dataValues.id;
+            req.session.save();
             // res.json(response);
             res.json({
                 loggedin: req.session.loggedin,
@@ -68,6 +69,7 @@ module.exports = function(app) {
                 req.session.loggedin = true;
                 req.session.playerName = dbResponse.dataValues.playerName;
                 req.session.userId = dbResponse.dataValues.id;
+                req.session.save();
                 res.json({
                     loggedin: req.session.loggedin,
                     playerName: req.session.playerName,

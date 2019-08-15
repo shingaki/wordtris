@@ -153,7 +153,7 @@ class GameInstructions extends Component {
             </div>                
 
             {/* MOBILE */}
-            <div className="mobile mt-3">
+            <div className="mobile mt-3 mb-5">
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-2 col-sm-3 m-instructions">
                         <div style={{ maxWidth: 200, padding: 5, backgroundColor: "#393e46"}}>

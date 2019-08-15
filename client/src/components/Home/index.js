@@ -142,7 +142,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="container text-center">
+      <div className="container text-center mb-5">
         <div className="row justify-content-center mt-5">
           <div className="col-md-6 text-left">
             {/*  <img src={logo} style={{ maxWidth: 400, padding: 5, position: "relative" }}/> */}
@@ -246,104 +246,6 @@ class Home extends Component {
                 </div>
             </div>
         </div>
-
-
-
-
-
-            {/* <div className="row align-items-center">
-              <div className="col-md-6">
-                <div
-                  style={{ maxWidth: 200, padding: 5, position: "relative" }}
-                >
-                  <div style={{ padding: "10px 15px" }}>
-                    <div style={this.style1} className="text-center">
-                      A
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "26px",
-                          right: "5px",
-                          fontSize: "10px",
-                          lineHeight: "1",
-                          zIndex: "6"
-                        }}
-                      >
-                        1
-                      </div>
-                    </div>
-
-                    <div style={this.style2} className="text-center">
-                      B
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "26px",
-                          right: "5px",
-                          fontSize: "10px",
-                          lineHeight: "1",
-                          zIndex: "6"
-                        }}
-                      >
-                        3
-                      </div>
-                    </div>
-
-                    <div style={this.styleA} className="text-center">
-                      A
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "26px",
-                          right: "5px",
-                          fontSize: "10px",
-                          lineHeight: "1",
-                          zIndex: "6"
-                        }}
-                      >
-                        1
-                      </div>
-                    </div>
-
-                    <div style={this.styleT} className="text-center">
-                      T
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "26px",
-                          right: "5px",
-                          fontSize: "10px",
-                          lineHeight: "1",
-                          zIndex: "6"
-                        }}
-                      >
-                        1
-                      </div>
-                    </div>
-
-                    <div style={this.style3} className="text-center">
-                      C
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "26px",
-                          right: "5px",
-                          fontSize: "10px",
-                          lineHeight: "1",
-                          zIndex: "6"
-                        }}
-                      >
-                        3
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <p>Login or sign up to play!</p>
-              </div>
-            </div>
-          </div> */}
 
           <div className="col-md-6 text-left">
             <h2 className="text-center mb-5">Welcome to Wordtris!</h2>
