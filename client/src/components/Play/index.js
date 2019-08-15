@@ -494,6 +494,7 @@ class Play extends Component {
         let currentLetter;
         let minLetter; 
         let maxLetter; 
+        
 
         for (let x = 0; x < this.state.newPlacedLetters.length; x++) { //loops 3 times, once for each new placed letter
             currentLetter = this.state.newPlacedLetters[x];
@@ -742,9 +743,9 @@ class Play extends Component {
             this.updateLetterBonuses(myLetter, myBonus)
 
             // this.removeFoundWord(false)
-            setTimeout(() => {
+            // setTimeout(() => {
                 this.removeFoundWord(false)
-            }, 500)
+            // }, 500)
             //update bonus of all remaing letters
         }
     }
