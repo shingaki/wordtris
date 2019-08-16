@@ -197,14 +197,14 @@ class GameOver extends Component {
         // if less than 5 global best words and word wasn't added in loop above
         if (this.state.globalTopWords.length < 5 && !wordAdded) {
           console.log("less than 5 top words and word not added yet");
-          var wordToAdd = {
+          var newWord = {
             playerId: playerInfo.topWords[i].PlayerId,
             word: playerInfo.topWords[i].playerWord,
             score: playerInfo.topWords[i].wordPoints
           }
 
           // add new word to bottom of top 5
-          globalTopWords.push(wordToAdd);
+          globalTopWords.push(newWord);
 
           // update state
           this.setState({

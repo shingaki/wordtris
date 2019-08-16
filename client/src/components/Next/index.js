@@ -34,7 +34,7 @@ class Next extends PureComponent {
 
             return(
               <div
-                style={ style }>
+                style={ style } key={i}>
                 {item.letter}
                 <div style={{
                   position: "absolute",

@@ -15,7 +15,7 @@ class GlobalHighWords extends Component {
                 {this.props.globalHighWords.map((item, i) => {
                     const rowColor = i % 2 === 0 ? 'row even-row' : 'row odd-row'
                     return (
-                        <div className={rowColor}>
+                        <div className={rowColor} key={i}>
                             <div className="col-lg-1 col-md-1 score-chart">{item.scorePosition}.</div>
                             <div className="col-lg-4 col-md-4 score-chart">{item.Player.playerName}</div>
                             <div className="col-lg-4 col-md-4 score-chart">{item.highestWord}</div>

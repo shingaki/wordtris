@@ -14,7 +14,7 @@ class GlobalHighScores extends Component {
                 {this.props.globalHighScores.map((item, i) => {
                     const rowColor = i % 2 === 0 ? 'row even-row' : 'row odd-row'
                     return (
-                        <div className={rowColor}>
+                        <div className={rowColor} key={i}>
                             <div className="col-md-1 score-chart">{item.scorePosition}.</div>
                             <div className="col-md-5 score-chart">{item.Player.playerName}</div>
                             <div className="col-md-3 offset-2 score-chart text-right">{item.highestScore}</div>
