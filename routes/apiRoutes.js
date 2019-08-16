@@ -125,7 +125,7 @@ module.exports = function(app) {
             })
         } else {
             console.log("not logged in")
-            res.json("not logged in");
+            // res.json("not logged in");
         }
     
     })
@@ -136,30 +136,82 @@ module.exports = function(app) {
         console.log(req.body.new);
         let responses = [];
 
-        // update all positions
+        // update all player word positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.PlayerWords.upsert({
-                id: i,
-                playerWord: req.body.new[i - 1].playerWord,
-                wordPoints: req.body.new[i - 1].wordPoints,
-                letterBonus: req.body.new[i - 1].letterBonus,
-                wordBonus: req.body.new[i - 1].wordBonus,
-                PlayerId: req.body.new[i - 1].PlayerId,
-                playerWordRanking: i
-            }, {
-                    where: {
-                        // PlayerId: req.body.new[i - 1].PlayerId,
-                        // playerWordRanking: i,
-                        id: i
+            // find it
+            db.PlayerWords.findOne({
+                where: {
+                    PlayerId: req.body.new[i - 1].PlayerId,
+                    playerWordRanking: i
                 }
-            }).then((dbResponse) => {
+            }).then(dbResponse => {
+                console.log("PLAYER BEST WORDS HERE");
                 console.log(dbResponse);
-                console.log("update player words");
-                responses.push(dbResponse);
-            }).catch(function (err) {
-                console.log(err);
-            });
+                // if this rank already exists, update it
+                if (dbResponse !== null) {
+                    db.PlayerWords.update({
+                        playerWord: req.body.new[i - 1].playerWord,
+                        wordPoints: req.body.new[i - 1].wordPoints,
+                        letterBonus: req.body.new[i - 1].letterBonus,
+                        wordBonus: req.body.new[i - 1].wordBonus,
+                    }, {
+                            where: {
+                                PlayerId: req.body.new[i - 1].PlayerId,
+                                playerWordRanking: i,
+                            }
+                    }).then((dbResponse) => {
+                        console.log(dbResponse);
+                        console.log("update player words");
+                        responses.push(dbResponse);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+
+                } else {
+                    // if doesn't exist, create it
+                    db.PlayerWords.create({
+                        playerWordRanking: i,
+                        PlayerId: req.body.new[i - 1].PlayerId,
+                        playerWord: req.body.new[i - 1].playerWord,
+                        wordPoints: req.body.new[i - 1].wordPoints,
+                        letterBonus: req.body.new[i - 1].letterBonus,
+                        wordBonus: req.body.new[i - 1].wordBonus,
+                    }).then((dbResponse) => {
+                        console.log(dbResponse);
+                        console.log("update player words");
+                        responses.push(dbResponse);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+
+                }
+            })
         }
+
+        // update all positions
+        // for (let i = 1; i <= req.body.new.length; i++) {
+        //     db.PlayerWords.upsert({
+        //         id: i,
+        //         playerWord: req.body.new[i - 1].playerWord,
+        //         wordPoints: req.body.new[i - 1].wordPoints,
+        //         letterBonus: req.body.new[i - 1].letterBonus,
+        //         wordBonus: req.body.new[i - 1].wordBonus,
+        //         PlayerId: req.body.new[i - 1].PlayerId,
+        //         playerWordRanking: i
+        //     }, {
+        //             where: {
+        //                 // PlayerId: req.body.new[i - 1].PlayerId,
+        //                 // playerWordRanking: i,
+        //                 id: i
+        //         }
+        //     }).then((dbResponse) => {
+        //         console.log(dbResponse);
+        //         console.log("update player words");
+        //         responses.push(dbResponse);
+        //     }).catch(function (err) {
+        //         console.log(err);
+        //     });
+        // }
         res.json(responses);
 
     })
@@ -181,7 +233,7 @@ module.exports = function(app) {
             })
         } else {
             console.log("not logged in")
-            res.json("not logged in")
+            // res.json("not logged in")
         }
 
     })
@@ -194,25 +246,78 @@ module.exports = function(app) {
 
         // update all positions
         for (let i = 1; i <= req.body.new.length; i++) {
-            db.PlayerScores.upsert({
-                id: i,
-                playerScore: req.body.new[i - 1].playerScore,
-                playerScoreRanking: i,
-                PlayerId: req.body.new[i - 1].PlayerId
-            }, {
-                    where: {
-                        // PlayerId: req.body.new[i - 1].PlayerId,
-                        // playerWordRanking: i,
-                        id: i
+            // find it
+            db.PlayerScores.findOne({
+                where: {
+                    PlayerId: req.body.new[i - 1].PlayerId,
+                    playerScoreRanking: i,
                 }
-            }).then((dbResponse) => {
+            }).then(dbResponse => {
+                console.log("PLAYER BEST WORDS HERE");
                 console.log(dbResponse);
-                console.log("update player words");
-                responses.push(dbResponse);
-            }).catch(function (err) {
-                console.log(err);
-            });
+                // if this rank already exists, update it
+                if (dbResponse !== null) {
+                    db.PlayerScores.update({
+                        playerScore: req.body.new[i - 1].playerScore,
+                    }, {
+                            where: {
+                                PlayerId: req.body.new[i - 1].PlayerId,
+                                playerScoreRanking: i,
+                            }
+                    }).then((dbResponse) => {
+                        console.log(dbResponse);
+                        console.log("update player words");
+                        responses.push(dbResponse);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+
+                } else {
+                    // if doesn't exist, create it
+                    db.PlayerScores.create({
+                        PlayerId: req.body.new[i - 1].PlayerId,
+                        playerScoreRanking: i,
+                        playerScore: req.body.new[i - 1].playerScore,
+                    }).then((dbResponse) => {
+                        console.log(dbResponse);
+                        console.log("update player words");
+                        responses.push(dbResponse);
+                    }).catch(function (err) {
+                        console.log(err);
+                    });
+
+                }
+            })
         }
+
+
+
+
+
+
+
+
+
+        // for (let i = 1; i <= req.body.new.length; i++) {
+        //     db.PlayerScores.upsert({
+        //         id: i,
+        //         playerScore: req.body.new[i - 1].playerScore,
+        //         playerScoreRanking: i,
+        //         PlayerId: req.body.new[i - 1].PlayerId
+        //     }, {
+        //             where: {
+        //                 // PlayerId: req.body.new[i - 1].PlayerId,
+        //                 // playerWordRanking: i,
+        //                 id: i
+        //         }
+        //     }).then((dbResponse) => {
+        //         console.log(dbResponse);
+        //         console.log("update player words");
+        //         responses.push(dbResponse);
+        //     }).catch(function (err) {
+        //         console.log(err);
+        //     });
+        // }
         res.json(responses);
     })
 
@@ -235,7 +340,7 @@ module.exports = function(app) {
                 // console.log(dbResponse);
                 res.send(dbResponse);
             }).catch(function (err) {
-                res.send(err);
+                console.log(err);
             })
         })
 
@@ -285,7 +390,7 @@ module.exports = function(app) {
             // console.log(dbResponse);
             res.send(dbResponse);
         }).catch(function (err) {
-            res.send(err);
+            console.log(err);
         })
     })
 
