@@ -1,29 +1,35 @@
-# Create React Express App
+# WordTris
 
-## About This Boilerplate
+## Concept
+Like tetris + scrabble combined!
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+Pieces fall from the top of the screen, each containing three random letters on it.  Swap the order of the letters and place it on the board to make words!  Each letter has a number of points assigned to it, so each word you successfully make will add to your score.
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+Bonuses:
+- Place 3+ letters next to each other on the board, and they will disappear.  If there are more of those letters on the board already, they will receive a point bonus (3 letters together = 3X the points, etc.).
+- After a word is found and removed, if the remaining letters make another word, that counts as well and gets double the points!
 
-## Starting the app locally
+As you play, you will reach new levels of the game, and the speed of the falling piece will increase.
 
-Start by installing front and backend dependencies. While in this directory, run the following command:
+After gameover, you can view your personal best scores and best words played, as well as the global high scores and words.
 
-```
-npm install
-```
 
-This should install node modules within the server and the client folder.
+## Built with:
+- React
+- Node.js
+- Express
+- Express-session
+- React-move Animate
+- Trie
+- MySQL
+- Sequelize
 
-After both installations complete, run the following command in your terminal:
 
-```
-npm start
-```
+![game screenshot](./client/public/wordtris-screenshot.png)
 
-Your app should now be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
+## Setup Instructions
+- clone repository
+- in project folder:
+    - run "npm install", then
+    - run "npm start"
 
-## Deployment (Heroku)
-
-To deploy, simply add and commit your changes, and push to Heroku. As is, the NPM scripts should take care of the rest.
