@@ -50,7 +50,7 @@ class PlacedPieces extends PureComponent {
           return (
             
             <div
-              style={style} data-id={i}
+              style={style} key={i} data-id={i}
               >
               {item.letter}
               <div style={{

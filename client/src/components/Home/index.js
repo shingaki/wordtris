@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
 import FormErrors from "../FormErrors";
-import logo from "./logo.png";
 import banner from "./TaglineBanner.png";
 
 class Home extends Component {

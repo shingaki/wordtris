@@ -1,5 +1,7 @@
 const express = require("express");
 var session = require("express-session");
+var enforce = require('express-sslify');
+
 const path = require("path");
 var trie = require('trie-prefix-tree');
 const fs = require("fs");
@@ -18,6 +20,7 @@ var sess = {
 };
 
 if (app.get("env") === "production") {
+  app.use(enforce.HTTPS({ trustProtoHeader: true })); // force https
   app.set("trust proxy", 1); // trust first proxy
   sess.cookie.secure = true; // serve secure cookies
 };
@@ -27,7 +30,7 @@ app.use(session(sess));
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// Serve up static assets (usually on heroku)
+// Serve up static assets
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }

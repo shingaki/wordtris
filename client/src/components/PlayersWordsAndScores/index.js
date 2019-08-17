@@ -15,7 +15,7 @@ class PlayersWordsAndScores extends Component {
                 {this.props.playerWordsAndScores.map((item, i) => {
                     let rowColor = i % 2 === 0 ? 'row even-row' : 'row odd-row'
                     return (
-                        <div className={rowColor}>
+                        <div className={rowColor} key={i}>
                             <div className="col-lg-1 col-md-1 score-chart">{item.playerWordRanking}.</div>
                             <div className="col-lg-6 col-md-6 score-chart">{item.playerWord}</div>
                             <div className="col-lg-5 col-md-4 text-right score-chart">{item.wordPoints} {item.wordBonus ? <sup><small>W</small></sup> : ""}{item.letterBonus ? <sup><small>L</small></sup> : ""}</div>

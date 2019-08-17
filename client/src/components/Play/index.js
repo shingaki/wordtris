@@ -265,7 +265,7 @@ class Play extends Component {
         var nextList = [];
         var playNow = [];
         // generate next up three letters
-        for (var i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             // let random = Math.floor(Math.random() * this.letters.length);
             let random = Math.floor(Math.random() * this.weightedLetters.length);
             let randomLetter = this.weightedLetters[random];
@@ -280,7 +280,7 @@ class Play extends Component {
         }
 
         // generate play now three letters
-        for (var i = 0; i < 3; i++) {
+        for (let i = 0; i < 3; i++) {
             let random = Math.floor(Math.random() * this.weightedLetters.length);
             let randomLetter = this.weightedLetters[random];
             // save each letter and its score

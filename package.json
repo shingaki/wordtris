@@ -21,6 +21,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "express-session": "^1.16.2",
+    "express-sslify": "^1.2.0",
     "fs": "0.0.1-security",
     "if-env": "^1.0.4",
     "mysql2": "^1.6.5",
