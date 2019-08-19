@@ -133,7 +133,6 @@ module.exports = function(app) {
     // update player's highest scoring words in db
     app.put("/updateplayerbestwords", (req, res) => {
         console.log("updating player's highest scoring words")
-        console.log(req.body.new);
         let responses = [];
 
         // update all player word positions
@@ -188,30 +187,6 @@ module.exports = function(app) {
             })
         }
 
-        // update all positions
-        // for (let i = 1; i <= req.body.new.length; i++) {
-        //     db.PlayerWords.upsert({
-        //         id: i,
-        //         playerWord: req.body.new[i - 1].playerWord,
-        //         wordPoints: req.body.new[i - 1].wordPoints,
-        //         letterBonus: req.body.new[i - 1].letterBonus,
-        //         wordBonus: req.body.new[i - 1].wordBonus,
-        //         PlayerId: req.body.new[i - 1].PlayerId,
-        //         playerWordRanking: i
-        //     }, {
-        //             where: {
-        //                 // PlayerId: req.body.new[i - 1].PlayerId,
-        //                 // playerWordRanking: i,
-        //                 id: i
-        //         }
-        //     }).then((dbResponse) => {
-        //         console.log(dbResponse);
-        //         console.log("update player words");
-        //         responses.push(dbResponse);
-        //     }).catch(function (err) {
-        //         console.log(err);
-        //     });
-        // }
         res.json(responses);
 
     })
@@ -290,34 +265,6 @@ module.exports = function(app) {
             })
         }
 
-
-
-
-
-
-
-
-
-        // for (let i = 1; i <= req.body.new.length; i++) {
-        //     db.PlayerScores.upsert({
-        //         id: i,
-        //         playerScore: req.body.new[i - 1].playerScore,
-        //         playerScoreRanking: i,
-        //         PlayerId: req.body.new[i - 1].PlayerId
-        //     }, {
-        //             where: {
-        //                 // PlayerId: req.body.new[i - 1].PlayerId,
-        //                 // playerWordRanking: i,
-        //                 id: i
-        //         }
-        //     }).then((dbResponse) => {
-        //         console.log(dbResponse);
-        //         console.log("update player words");
-        //         responses.push(dbResponse);
-        //     }).catch(function (err) {
-        //         console.log(err);
-        //     });
-        // }
         res.json(responses);
     })
 
@@ -397,7 +344,7 @@ module.exports = function(app) {
     // update global words (highest scoring)
     app.put("/updateglobalbestwords", (req, res) => {
         console.log("updating global words")
-        // console.log(req.body)
+        console.log(req.body)
         let responses = [];
 
         // update all positions

@@ -124,13 +124,17 @@ class GameOver extends Component {
         originalTopWords.push({
           playerId: response.data[i].playerId,
           word: response.data[i].highestWord,
-          score: response.data[i].score
+          score: response.data[i].score,
+          letterBonus: response.data[i].letterBonus,
+          wordBonus: response.data[i].wordBonus,
         });
         
         topWords.push({
           playerId: response.data[i].playerId,
           word: response.data[i].highestWord,
-          score: response.data[i].score
+          score: response.data[i].score,
+          letterBonus: response.data[i].letterBonus,
+          wordBonus: response.data[i].wordBonus,
         });
       }
       console.log(topWords);
@@ -171,7 +175,9 @@ class GameOver extends Component {
               var wordToAdd = {
                 playerId: playerInfo.topWords[i].PlayerId,
                 word: playerInfo.topWords[i].playerWord,
-                score: playerInfo.topWords[i].wordPoints
+                score: playerInfo.topWords[i].wordPoints,
+                letterBonus: playerInfo.topWords[i].letterBonus,
+                wordBonus: playerInfo.topWords[i].wordBonus,
               }
 
               // add in new player score in correct position
@@ -200,7 +206,9 @@ class GameOver extends Component {
           var newWord = {
             playerId: playerInfo.topWords[i].PlayerId,
             word: playerInfo.topWords[i].playerWord,
-            score: playerInfo.topWords[i].wordPoints
+            score: playerInfo.topWords[i].wordPoints,
+            letterBonus: playerInfo.topWords[i].letterBonus,
+            wordBonus: playerInfo.topWords[i].wordBonus,
           }
 
           // add new word to bottom of top 5
