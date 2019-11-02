@@ -27,7 +27,7 @@
     "mysql2": "^1.6.5",
     "react": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "sequelize": "^5.11.0",
+    "sequelize": "^5.15.1",
     "trie-prefix-tree": "^1.5.1"
   }
 }
