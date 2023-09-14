@@ -4,13 +4,35 @@ CREATE DATABASE wordtris_db;
 
 USE wordtris_db;
 
-# SEED RECORDS FOR PLAYERS
-INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES ('jpaul', '1234', 'j@smu.com', current_date, current_date);
-INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES ('Gabriela', 'A1234', 'gabrielaruizblake@gmail.com', current_date, current_date);
-INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES ('Tamami', 'tamami', 'tamami@smu.com', current_date, current_date);
-INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES ('Julia', 'julia', 'julia@smu.com', current_date, current_date);
-INSERT INTO Players (playerName, password, email, createdAt, updatedAt) VALUES ('Michael', 'michael', 'michael@smu.com', current_date, current_date);
+# CREATE TABLE FOR PLAYERS
+create table players (
+--                          playerId   BIGINT  not null auto_increment,
+                         playerName VARCHAR(50) not null,
+                         password   VARCHAR(50) not null,
+                         email      VARCHAR(75) not null,
+                         createdAt  timestamp   not null,
+                         updatedAt  timestamp   not null,
+                         primary key (playerId)
+);
 
+# SEED RECORDS FOR PLAYERS
+INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES ('jpaul', '1234', 'j@smu.com', current_date, current_date);
+INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES ('Gabriela', 'A1234', 'gabrielaruizblake@gmail.com', current_date, current_date);
+INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES ('Tamami', 'tamami', 'tamami@smu.com', current_date, current_date);
+INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES ('Julia', 'julia', 'julia@smu.com', current_date, current_date);
+INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES ('Michael', 'michael', 'michael@smu.com', current_date, current_date);
+
+
+# CREATE HIGHEST SCORES TABLE
+create table highestscores (
+--                                highestscoresId    BIGINT  not null auto_increment,
+                               scorePosition      BIGINT not null,
+                               highestScore       BIGINT not null,
+                               createdAt          timestamp   not null,
+                               updatedAt          timestamp   not null,
+                               playerId           BIGINT not null,
+                               primary key (highestscoresId)
+);
 
 # SEED RECORDS FOR HIGHEST SCORES
 INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (1, 20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
@@ -18,6 +40,21 @@ INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, Pl
 INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (3, 14, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
 INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (4, 13, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 2);
 INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, PlayerId) VALUES (5, 12, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 3);
+
+
+# CREATE HIGHEST WORDS TABLE
+create table highestwords (
+--                               highestwordsId     BIGINT  not null auto_increment,
+                              scorePosition      BIGINT not null,
+                              highestWord        VARCHAR(50) not null,
+                              score              BIGINT not null,
+                              letterBonus        BIGINT not null,
+                              wordBonus          BIGINT not null,
+                              createdAt          timestamp  not null,
+                              updatedAt          timestamp  not null,
+                              playerId           BIGINT not null,
+                              primary key (highestwordsId)
+);
 
 # SEED RECORDS FOR HIGHEST WORDS
 INSERT INTO highestwords (scorePosition, highestWord, score, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES (1, 'highway', 20, 0, 0, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4);
@@ -30,8 +67,21 @@ INSERT INTO highestwords (scorePosition, highestWord, score, letterBonus, wordBo
 # PLAYER WORDS : TOP 5 WORDS (WORDS WITH THE HIGHEST SCORES) RECEIVED BY THE PLAYER SINCE THE PLAYER BEGAN PLAYING WORDTRIS
 # PLAYER SCORES: UP TO TOP 5 SCORES FOR THE PLAYER - PLAYER EARNS A SCORE FOR EACH GAME COMPLETED
 
-# CREATED SEED RECORDS FOR PLAYERS. PLAYERS HAVE DIFFERENT NUMBER OF SEEDS RECORDS FOR TESTING PURPOSES.
+# CREATE PLAYER WORDS TABLE
+create table playerwords (
+--                              playerWordId              BIGINT  not null auto_increment,
+                             playerWord                VARCHAR(50) not null,
+                             wordPoints                BIGINT not null,
+                             playerWordRanking         BIGINT not null,
+                             letterBonus               BIGINT not null,
+                             wordBonus                 BIGINT not null,
+                             createdAt                 timestamp  not null,
+                             updatedAt                 timestamp  not null,
+                             playerId                  BIGINT not null,
+                             primary key (playerWordId)
+);
 
+# CREATED SEED RECORDS FOR PLAYERS. PLAYERS HAVE DIFFERENT NUMBER OF SEEDS RECORDS FOR TESTING PURPOSES.
 
 # PLAYER ONE HAS '5' SEED RECORDS FOR PLAYER WORDS AND PLAYER SCORES
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('knowledgeable', 24, 1, 0, 0, current_date, current_date, 1);
@@ -62,6 +112,19 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus,
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('movie', 10, 1, 0, 0, current_date, current_date, 5);
 INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus, wordBonus, createdAt, updatedAt, PlayerId) VALUES ('sitcom', 10, 2, 0, 0, current_date, current_date, 5);
 
+# CREATE PLAYER SCORES TABLE
+
+create table playerscores (
+--                               playerScoreId            BIGINT  not null auto_increment,
+                              playerScore               BIGINT not null,
+                              createdAt                 timestamp  not null,
+                              updatedAt                 timestamp  not null,
+                              playerId                  BIGINT not null,
+                              playerScoreRanking        BIGINT not null,
+
+                              primary key (playerScoreId)
+);
+
 # PLAYERS SEED INSERT STATEMENTS FOR playerscores
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (24, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 4);
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (40, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 1, 2);
@@ -74,3 +137,4 @@ INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerSco
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (34, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 4);
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (36, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 3);
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 5, 1);
+
