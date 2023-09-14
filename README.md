@@ -32,4 +32,10 @@ After gameover, you can view your personal best scores and best words played, as
 - in project folder:
     - run "npm install", then
     - run "npm start"
+ 
+Docker Command to create MySql Database (if needed) - must install Docker
+
+docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=snizz11bre -e MYSQL_DATABASE=wordtris_db -e MYSQL_USER=wordtris -e MYSQL_PASSWORD=snizz11bre -d amd64/mysql:5.7 mysqld --lower_case_table_names=1 --explicit-defaults-for-timestamp=ON
+
+
 
