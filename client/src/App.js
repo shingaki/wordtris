@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Routes } from "react-router"
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
 // import logo from "./logo.svg";
 import "./App.css";
@@ -75,7 +76,7 @@ class App extends Component {
       <>
         <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
         <Router>
-          <Switch>
+          <Routes>
             {!this.state.loggedin ?
               <Route exact path="/" render={this.HomePage} /> : <Route exact path="/" render={this.StatsSection} />
             }
@@ -86,7 +87,7 @@ class App extends Component {
             }
             <Route exact path="/scores" render={this.StatsSection} />
             <Route component={NoMatch} />
-          </Switch>
+          </Routes>
         </Router>
       </>
     );
