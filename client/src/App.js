@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Routes } from "react-router"
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import axios from "axios";
 // import logo from "./logo.svg";
 import "./App.css";
@@ -14,13 +14,12 @@ import LoginPrompt from "./components/LoginPrompt";
 import Stats from "./components/Stats";
 
 class App extends Component {
-
   state = {
     loggedin: false,
     userID: NaN
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.checkLoggedInState();
   }
 
@@ -38,8 +37,6 @@ class App extends Component {
       userID: ID
     })
   }
-
-
 
   LoginSection = (props) => {
     return (
@@ -75,20 +72,20 @@ class App extends Component {
     return (
       <>
         <Navbar loggedin={this.state.loggedin} updateLoggedInState={this.updateLoggedInState} />
-        <Router>
+        <BrowserRouter>
           <Routes>
             {!this.state.loggedin ?
-              <Route exact path="/" render={this.HomePage} /> : <Route exact path="/" render={this.StatsSection} />
+              <Route exact path="/" element={<this.HomePage/>} /> : <Route exact path="/" element={<this.StatsSection/>} />
             }
-            <Route exact path="/login" render={this.LoginSection} />
-            <Route exact path="/signup" render={this.SignUpSection} />
+            <Route exact path="/login" element={<this.LoginSection/>} />
+            <Route exact path="/signup" element={<this.SignUpSection/>} />
             {this.state.loggedin ?
-              <Route exact path="/play" render={this.PlayPage} /> : <Route exact path="/play" component={LoginPrompt} />
+                <Route exact path="/play" element={<this.PlayPage/>} /> : <Route exact path="/play" element={<LoginPrompt/>} />
             }
-            <Route exact path="/scores" render={this.StatsSection} />
-            <Route component={NoMatch} />
+            <Route exact path="/scores" element={<this.StatsSection/>} />
+            <Route element={<NoMatch/>} />
           </Routes>
-        </Router>
+        </BrowserRouter>
       </>
     );
   }
