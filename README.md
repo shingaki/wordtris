@@ -37,5 +37,11 @@ Docker Command to create MySql Database (if needed) - must install Docker
 
 docker run -p 3306:3306 -e MYSQL_ROOT_PASSWORD=snizz11bre -e MYSQL_DATABASE=wordtris_db -e MYSQL_USER=wordtris -e MYSQL_PASSWORD=snizz11bre -d amd64/mysql:5.7 mysqld --lower_case_table_names=1 --explicit-defaults-for-timestamp=ON
 
+1. git status —> (your changes will be displayed in red text)
+2. git add . -A (adds all changes to your local repo)
+3. git status —> (your changes will be displayed in green text)
+4. git commit -m’Description of your change’ (commits your changes)
+5. git push -u origin <YOUR BRANCH NAME>
+
 
 
