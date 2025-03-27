@@ -105,7 +105,8 @@ Resources:
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 0, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 0, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PublicSubnet1CIDR
       MapPublicIpOnLaunch: true
       Tags:
@@ -117,7 +118,8 @@ Resources:
   PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 1, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 1, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PublicSubnet2CIDR
       MapPublicIpOnLaunch: true
       Tags:
@@ -160,7 +162,8 @@ Resources:
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 0, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 0, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PrivateSubnet1CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -172,7 +175,8 @@ Resources:
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 1, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 1, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PrivateSubnet2CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -184,7 +188,8 @@ Resources:
   PrivateSubnet3:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 0, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 0, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PrivateSubnet3CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -196,7 +201,8 @@ Resources:
   PrivateSubnet4:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select [ 1, !GetAZs, '' ]
+      AvailabilityZone:
+        Fn::Select: [ 1, { Fn::GetAZs: '' } ]
       CidrBlock: !Ref PrivateSubnet4CIDR
       MapPublicIpOnLaunch: false
       Tags:
@@ -334,7 +340,7 @@ Outputs:
     Description: Database Security Group ID
     Export:
       Name: !Sub ${AWS::StackName}-DatabaseSecurityGroup
-    Value: !Ref DatabaseSecurityGroup
+    Value: !Ref DataBaseSecurityGroup
 
   SSHSecurityGroup:
     Description: SSH Security Group ID
