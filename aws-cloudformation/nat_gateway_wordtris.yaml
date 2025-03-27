@@ -32,7 +32,7 @@ Resources:
     Properties:
       AllocationId: !GetAtt NatGateway1EIP.AllocationId
       SubnetId:
-        fn::ImportValue:  !Sub ${ExportedVPCStackName}-PublicSubnet1
+        Fn::ImportValue:  !Sub ${ExportedVPCStackName}-PublicSubnet1
       Tags:
         - Key: Name
           Value: nat gateway for public subnet 1
@@ -43,7 +43,7 @@ Resources:
     Properties:
       AllocationId: !GetAtt NatGateway2EIP.AllocationId
       SubnetId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-PublicSubnet2
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-PublicSubnet2
       Tags:
         - Key: Name
           Value: nat gateway for public subnet 2
@@ -56,7 +56,7 @@ Resources:
         - Key: Name
           Value: Private Route Table 1
       VpcId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-VPC
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-VPC
 
   # Add a route to point internet-bound traffic to Nat Gateway 1
   PrivateRoute1:
@@ -72,7 +72,7 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable1
       SubnetId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet1
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet1
 
   # Associate Private Subnet 3 with Private Route Table 1
   PrivateSubnet3RouteTableAssociation:
@@ -80,7 +80,7 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable1
       SubnetId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet3
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet3
 
   # Create Private Route Table 2
   PrivateRouteTable2:
@@ -90,7 +90,7 @@ Resources:
         - Key: Name
           Value: Private Route Table 2
       VpcId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-VPC
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-VPC
 
   # Add a route to point internet-bound traffic to Nat Gateway 2
   PrivateRoute2:
@@ -106,7 +106,7 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable2
       SubnetId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet2
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet2
 
   # Associate Private Subnet 4 with Private Route Table 2
   PrivateSubnet4RouteTableAssociation:
@@ -114,4 +114,4 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable2
       SubnetId:
-        fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet4
+        Fn::ImportValue: !Sub ${ExportedVPCStackName}-PrivateSubnet4

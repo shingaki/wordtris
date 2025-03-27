@@ -167,7 +167,7 @@ Resources:
       CidrBlock: !Ref PrivateSubnet1CIDR
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris private subnet 1 | app tier
       VpcId: !Ref VPC
 
@@ -180,7 +180,7 @@ Resources:
       CidrBlock: !Ref PrivateSubnet2CIDR
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris private subnet 2 | app tier
       VpcId: !Ref VPC
 
@@ -193,7 +193,7 @@ Resources:
       CidrBlock: !Ref PrivateSubnet3CIDR
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris private subnet 3 | database tier
       VpcId: !Ref VPC
 
@@ -206,7 +206,7 @@ Resources:
       CidrBlock: !Ref PrivateSubnet4CIDR
       MapPublicIpOnLaunch: false
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris private subnet 4 | database tier
       VpcId: !Ref VPC
 
@@ -225,7 +225,7 @@ Resources:
           ToPort: 443
           CidrIp: 0.0.0.0/0
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris application load balancer security group
       VpcId: !Ref VPC
 
@@ -240,7 +240,7 @@ Resources:
           ToPort: 22
           CidrIp: !Ref SSHLocation
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris SSH security group
       VpcId: !Ref VPC
 
@@ -261,9 +261,9 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          SourceSecurityGroupId: !Ref SSHLocation
+          SourceSecurityGroupId: !Ref SSHSecurityGroup
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris Security Group for the Web Server
       VpcId: !Ref VPC
   # Create Security Group for the DataBase
@@ -277,9 +277,9 @@ Resources:
           ToPort: 3306
           SourceSecurityGroupId: !Ref WebServerSecurityGroup
       Tags:
-        - Key: name
+        - Key: Name
           Value: Wordtris Security Group for the database
-      VpcId:
+      VpcId: !Ref VPC
 
 Outputs:
   VPC:
@@ -316,13 +316,13 @@ Outputs:
     Description: Private Subnet 3 ID
     Export:
       Name: !Sub ${AWS::StackName}-PrivateSubnet3
-    Value: !Ref PrivateSubnet1
+    Value: !Ref PrivateSubnet3
 
   PrivateSubnet4:
     Description: Private Subnet 4 ID
     Export:
       Name: !Sub ${AWS::StackName}-PrivateSubnet4
-    Value: !Ref PrivateSubnet2
+    Value: !Ref PrivateSubnet4
 
   ALBSecurityGroup:
     Description: Application Load Balancer Security Group ID

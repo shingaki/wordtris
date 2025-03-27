@@ -89,8 +89,9 @@ Parameters:
       - db.m1.small
       - db.m1.medium
       - db.m1.large
+      - db.t4g.micro
     ConstraintDescription: Must select a valid database instance type
-    Default: db.t2.micro
+    Default: db.t4g.micro
     Description:  The database instance type
     Type: String
 
@@ -109,8 +110,8 @@ Resources:
     Properties:
       DBSubnetGroupDescription: Subnet group for RDS database
       SubnetIds:
-        - fn::ImportValue: !Sub ${ExportVpcStackName}-PrivateSubnet3
-        - fn::ImportValue: !Sub ${ExportVpcStackName}-PrivateSubnet4
+        - Fn::ImportValue: !Sub ${ExportVpcStackName}-PrivateSubnet3
+        - Fn::ImportValue: !Sub ${ExportVpcStackName}-PrivateSubnet4
       Tags:
         - Key: Name
           Value: database subnets
@@ -127,9 +128,9 @@ Resources:
       DBName: !Ref WordtrisDatabase
       DBSubnetGroupName: !Ref DatabaseSubnetGroup
       Engine: MySQL
-      EngineVersion: 5.7.31
+      EngineVersion: 8.0
       MasterUsername: !Ref DatabaseUser
       MasterUserPassword: !Ref DatabasePassword
       MultiAZ: !Ref MultiAZDatabase
       VPCSecurityGroups:
-        - fn::ImportValue: !Sub ${ExportVpcStackName}-DatabaseSecurityGroup
+        - Fn::ImportValue: !Sub ${ExportVpcStackName}-DatabaseSecurityGroup
