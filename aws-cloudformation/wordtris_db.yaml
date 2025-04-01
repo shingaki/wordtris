@@ -40,7 +40,7 @@ Parameters:
   WordtrisDatabase:
     AllowedPattern: '[a-zA-z][a-zA-Z0-9]*'
     ConstraintDescription: Must begin with a letter and contain alpha numeric characters
-    Default: applicationdb
+    Default: wordtris_db
     Description: MySQL database name
     MaxLength: 64
     MinLength: 1
@@ -49,7 +49,7 @@ Parameters:
   DatabaseUser:
     AllowedPattern: '[a-zA-z][a-zA-Z0-9]*'
     ConstraintDescription: Must begin with a letter and contain alpha numeric characters
-    Default: dbadmin
+    Default: wordtris
     Description: User name for database access
     MaxLength: 16
     MinLength: 1
@@ -59,7 +59,7 @@ Parameters:
   DatabasePassword:
     AllowedPattern: '[a-zA-Z0-9]*'
     ConstraintDescription: Must contain only alpha numeric characters
-    Default: Test1234
+    Default: yXpVH0HJSz08
     Description: Password for MySQL database access
     MaxLength: 41
     MinLength: 8
@@ -105,6 +105,30 @@ Parameters:
     Type: String
 
 Resources:
+  # Create Security Group for the DataBase
+  DataBaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable database access only from the web server
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId:
+            Fn::ImportValue: !Sub ${ExportVpcStackName}-WebServerSecurityGroup
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: !Sub
+            - ${BastionPrivateIp}/32
+            - BastionPrivateIp:
+                Fn::ImportValue: BastionPrivateIp
+      Tags:
+        - Key: Name
+          Value: Wordtris Security Group for the database
+      VpcId:
+        Fn::ImportValue: !Sub ${ExportVpcStackName}-VPC
+
   DatabaseSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
@@ -118,6 +142,8 @@ Resources:
 
   DatabaseInstance:
     Type: AWS::RDS::DBInstance
+    DependsOn:
+      - DataBaseSecurityGroup
     Properties:
       AllocatedStorage: !Ref DatabaseAllocatedStorage
       AvailabilityZone:
@@ -133,4 +159,17 @@ Resources:
       MasterUserPassword: !Ref DatabasePassword
       MultiAZ: !Ref MultiAZDatabase
       VPCSecurityGroups:
-        - Fn::ImportValue: !Sub ${ExportVpcStackName}-DatabaseSecurityGroup
+        - !Ref DataBaseSecurityGroup
+
+Outputs:
+  DatabaseSecurityGroup:
+    Description: Database Security Group ID
+    Export:
+      Name: !Sub ${AWS::StackName}-DatabaseSecurityGroup
+    Value: !Ref DataBaseSecurityGroup
+
+  DatabaseConnection:
+    Description: Wordtris database endpoint
+    Value: !Join ['', ['jdbc:mysql://', !GetAtt 'DatabaseInstance.Endpoint.Address', ':3306/', !Ref 'WordtrisDatabase']]
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ComponentDBUri' ] ]

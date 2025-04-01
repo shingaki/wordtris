@@ -266,20 +266,6 @@ Resources:
         - Key: Name
           Value: Wordtris Security Group for the Web Server
       VpcId: !Ref VPC
-  # Create Security Group for the DataBase
-  DataBaseSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: Enable database access only from the web server
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 3306
-          ToPort: 3306
-          SourceSecurityGroupId: !Ref WebServerSecurityGroup
-      Tags:
-        - Key: Name
-          Value: Wordtris Security Group for the database
-      VpcId: !Ref VPC
 
 Outputs:
   VPC:
@@ -335,12 +321,6 @@ Outputs:
     Export:
       Name: !Sub ${AWS::StackName}-WebServerSecurityGroup
     Value: !Ref WebServerSecurityGroup
-
-  DatabaseSecurityGroup:
-    Description: Database Security Group ID
-    Export:
-      Name: !Sub ${AWS::StackName}-DatabaseSecurityGroup
-    Value: !Ref DataBaseSecurityGroup
 
   SSHSecurityGroup:
     Description: SSH Security Group ID
