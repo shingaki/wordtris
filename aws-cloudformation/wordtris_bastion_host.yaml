@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: This template creates a bastion host in the public subnet
+
+Parameters:
+  ExportVpcStackName:
+    Description: The name of the VPC stack that exports values
+    Type: String
+
+  BastionKeyPair:
+    Description: Which Key Pair would you like to use for remote access?
+    Type: AWS::EC2::KeyPair::KeyName
+
+  EC2InstanceType:
+    Type: String
+    Default: t2.micro
+
+  EC2AMI:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+
+Resources:
+
+  BastionHostInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref EC2AMI
+      InstanceType: !Ref EC2InstanceType
+      KeyName: !Ref BastionKeyPair
+      SubnetId:
+        Fn::ImportValue: !Sub ${ExportVpcStackName}-PublicSubnet1
+      SecurityGroupIds:
+        - Fn::ImportValue: !Sub ${ExportVpcStackName}-SSHSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${AWS::StackName}-BastionHostInstance
+
+Outputs:
+  BastionPublicIp:
+    Description: Bastion Public IP
+    Value: !GetAtt BastionHostInstance.PublicIp
+    Export:
+      Name: BastionPublicIp
+
+  BastionPrivateIp:
+    Description: Bastion Private IP
+    Value: !GetAtt BastionHostInstance.PrivateIp
+    Export:
+      Name: BastionPrivateIp
