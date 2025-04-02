@@ -6,13 +6,13 @@ USE wordtris_db;
 
 # CREATE TABLE FOR PLAYERS
 create table players (
---                          playerId   BIGINT  not null auto_increment,
+                         id   BIGINT  not null auto_increment,
                          playerName VARCHAR(50) not null,
                          password   VARCHAR(50) not null,
                          email      VARCHAR(75) not null,
-                         createdAt  timestamp   not null,
-                         updatedAt  timestamp   not null,
-                         primary key (playerId)
+                         createdAt  TIMESTAMP   not null,
+                         updatedAt  TIMESTAMP   not null DEFAULT CURRENT_TIMESTAMP ,
+                         primary key (id)
 );
 
 # SEED RECORDS FOR PLAYERS
@@ -25,11 +25,11 @@ INSERT INTO players (playerName, password, email, createdAt, updatedAt) VALUES (
 
 # CREATE HIGHEST SCORES TABLE
 create table highestscores (
---                                highestscoresId    BIGINT  not null auto_increment,
+                               highestscoresId    BIGINT  not null auto_increment,
                                scorePosition      BIGINT not null,
                                highestScore       BIGINT not null,
                                createdAt          timestamp   not null,
-                               updatedAt          timestamp   not null,
+                               updatedAt          timestamp   not null DEFAULT CURRENT_TIMESTAMP ,
                                playerId           BIGINT not null,
                                primary key (highestscoresId)
 );
@@ -44,14 +44,14 @@ INSERT INTO highestscores (scorePosition, highestScore, createdAt, updatedAt, Pl
 
 # CREATE HIGHEST WORDS TABLE
 create table highestwords (
---                               highestwordsId     BIGINT  not null auto_increment,
+                              highestwordsId     BIGINT  not null auto_increment,
                               scorePosition      BIGINT not null,
                               highestWord        VARCHAR(50) not null,
                               score              BIGINT not null,
                               letterBonus        BIGINT not null,
                               wordBonus          BIGINT not null,
                               createdAt          timestamp  not null,
-                              updatedAt          timestamp  not null,
+                              updatedAt          timestamp  not null DEFAULT CURRENT_TIMESTAMP ,
                               playerId           BIGINT not null,
                               primary key (highestwordsId)
 );
@@ -69,14 +69,14 @@ INSERT INTO highestwords (scorePosition, highestWord, score, letterBonus, wordBo
 
 # CREATE PLAYER WORDS TABLE
 create table playerwords (
---                              playerWordId              BIGINT  not null auto_increment,
+                             playerWordId              BIGINT  not null auto_increment,
                              playerWord                VARCHAR(50) not null,
                              wordPoints                BIGINT not null,
                              playerWordRanking         BIGINT not null,
                              letterBonus               BIGINT not null,
                              wordBonus                 BIGINT not null,
                              createdAt                 timestamp  not null,
-                             updatedAt                 timestamp  not null,
+                             updatedAt                 timestamp  not null DEFAULT CURRENT_TIMESTAMP ,
                              playerId                  BIGINT not null,
                              primary key (playerWordId)
 );
@@ -115,10 +115,10 @@ INSERT INTO playerwords (playerWord, wordPoints, playerWordRanking, letterBonus,
 # CREATE PLAYER SCORES TABLE
 
 create table playerscores (
---                               playerScoreId            BIGINT  not null auto_increment,
+                              playerScoreId            BIGINT  not null auto_increment,
                               playerScore               BIGINT not null,
                               createdAt                 timestamp  not null,
-                              updatedAt                 timestamp  not null,
+                              updatedAt                 timestamp  not null DEFAULT CURRENT_TIMESTAMP ,
                               playerId                  BIGINT not null,
                               playerScoreRanking        BIGINT not null,
 
@@ -137,4 +137,3 @@ INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerSco
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (34, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 4);
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (36, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 4, 3);
 INSERT INTO playerscores (playerScore, createdAt, updatedAt, PlayerId, playerScoreRanking) VALUES (20, '2019-08-06 00:00:00', '2019-08-06 00:00:00', 5, 1);
-
